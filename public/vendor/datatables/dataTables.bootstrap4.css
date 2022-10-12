@@ -11,6 +11,7 @@ table.dataTable td,
 table.dataTable th {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
+  text-align: center;
 }
 table.dataTable td.dataTables_empty,
 table.dataTable th.dataTables_empty {
@@ -19,6 +20,7 @@ table.dataTable th.dataTables_empty {
 table.dataTable.nowrap th,
 table.dataTable.nowrap td {
   white-space: nowrap;
+  
 }
 
 div.dataTables_wrapper div.dataTables_length label {
@@ -208,3 +210,4 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:first
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-child {
   padding-right: 0;
 }
+

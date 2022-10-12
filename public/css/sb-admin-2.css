@@ -1493,6 +1493,8 @@ pre code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #e3e6f0;
+  text-align: center;
+  align-items: center;
 }
 
 .table thead th {
@@ -1516,6 +1518,7 @@ pre code {
 .table-bordered th,
 .table-bordered td {
   border: 1px solid #e3e6f0;
+  
 }
 
 .table-bordered thead th,
@@ -5694,6 +5697,8 @@ a.close.disabled {
   overflow: hidden;
 }
 
+
+
 .modal-dialog-scrollable .modal-header,
 .modal-dialog-scrollable .modal-footer {
   flex-shrink: 0;
@@ -5744,6 +5749,8 @@ a.close.disabled {
   border-radius: 0.3rem;
   outline: 0;
 }
+
+
 
 .modal-backdrop {
   position: fixed;

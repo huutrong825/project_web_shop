@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class User_Cus extends Model
 {
     use HasFactory;
 
-    protected $table='admin_user';
+    protected $table='user_cus';
 
     protected $fillable=[
         'name',
@@ -20,8 +20,6 @@ class Admin extends Model
         'phone',
         'birth',
         'address',
-        'is_active',
-        'group_role',
         'last_login_at',
     ];
 }

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 use App\Http\Requests\LoginRequest;
-
 use App\Models\User;
 
 class AuthController extends Controller
@@ -58,5 +57,15 @@ class AuthController extends Controller
         Auth::logout();
 
         return redirect('/login');
+    }
+
+    public function getProfile(){
+        if(Auth::check())
+        {
+            $id=Auth::id();
+            $user=User::find($id);
+        }
+
+        return dd($user);
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_user', function (Blueprint $table) {
+        Schema::create('user_cus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
@@ -24,9 +24,7 @@ return new class extends Migration
             $table->date('birth')->nullable();
             $table->string('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
-            $table->tinyInteger('is_active')->default(1);
-            $table->tinyInteger('group_role');
+            $table->rememberToken(); 
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });

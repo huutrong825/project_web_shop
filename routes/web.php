@@ -23,8 +23,19 @@ Route::post('/login',['uses'=>'AuthController@postLogin']);
 Route::get('/register',['uses'=>'AuthController@getRegister']);
 Route::post('/register',['uses'=>'AuthController@postRegister']);
 
-Route::get('/logout',['uses'=>'AuthController@getLogout']);
+Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
 
-Route::get('/admin',function(){
-    return view('layout_admin');
+    Route::get('/',function(){
+        return view('Admin/admin_index');
+    });
+
+    Route::get('/profile', ['uses'=>'AuthController@getProfile']);
+    Route::get('/logout', ['uses'=>'AuthController@getLogout']);
+
+    Route::group(['prefix'=>'user'],function(){
+        Route::get('/',['uses'=>'UserManagerController@listAdmin']);
+
+        Route::post('/',['uses'=>'UserManagerController@postAddUser']);
+    });
+
 });
