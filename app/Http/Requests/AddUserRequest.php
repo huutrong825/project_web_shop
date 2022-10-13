@@ -27,7 +27,7 @@ class AddUserRequest extends FormRequest
             'txtname'=>'required|min:5',
             'email'=>'required|unique:users|',
             'password'=>'required|min:6|',
-            'repass'=>'requires|same:password',
+            'repass'=>'required|same:password',
             'group_role'=>'required'
         ];
     }

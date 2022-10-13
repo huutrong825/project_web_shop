@@ -35,7 +35,17 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
     Route::group(['prefix'=>'user'],function(){
         Route::get('/',['uses'=>'UserManagerController@listAdmin']);
 
-        Route::post('/',['uses'=>'UserManagerController@postAddUser']);
+        // Route::get('/add',['uses'=>'UserManagerController@getAddUser']);
+        Route::post('/add',['uses'=>'UserManagerController@postAddUser']);
+
+        Route::get('/delete/{id}',['uses'=>'UserManagerController@deleteUser']);
+
+        Route::get('/block/{id}',['uses'=>'UserManagerController@blockUser']);
+
+        Route::get('/fix/{id}',['uses'=>'UserManagerController@getFixUser']);
+        Route::post('/fix/{id}',['uses'=>'UserManagerController@postFixUser']);
+
+        Route::get('/search',['uses'=>'UserManagerController@search']);
     });
 
 });

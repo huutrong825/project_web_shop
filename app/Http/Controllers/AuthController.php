@@ -66,6 +66,6 @@ class AuthController extends Controller
             $user=User::find($id);
         }
 
-        return dd($user);
+        return view('Admin.profile');
     }
 }
