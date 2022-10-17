@@ -33,7 +33,7 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
     Route::get('/logout', ['uses'=>'AuthController@getLogout']);
 
     Route::group(['prefix'=>'user'],function(){
-        Route::get('/',['uses'=>'UserManagerController@listAdmin']);
+        Route::get('/',['uses'=>'UserManagerController@listUser']);
 
         // Route::get('/add',['uses'=>'UserManagerController@getAddUser']);
         Route::post('/add',['uses'=>'UserManagerController@postAddUser']);
@@ -48,4 +48,23 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
         Route::get('/search',['uses'=>'UserManagerController@search']);
     });
 
+    Route::group(['prefix'=>'supplier'],function(){
+        Route::get('/',['uses'=>'SupplierController@getList']);
+
+        Route::post('/add',['uses'=>'SupplierController@postAddSupplier']);
+
+        Route::get('/delete/{id}',['uses'=>'SupplierController@deleteSupplier']);
+
+        Route::get('/block/{id}',['uses'=>'SupplierController@blockSupplier']);
+    });
+
+    Route::group(['prefix'=>'category'],function(){
+        Route::get('/',['uses'=>'CategoryController@getList']);
+
+        Route::post('/add',['uses'=>'SupplierController@postAddSupplier']);
+
+        Route::get('/delete/{id}',['uses'=>'SupplierController@deleteSupplier']);
+
+        Route::get('/block/{id}',['uses'=>'SupplierController@blockSupplier']);
+    });
 });

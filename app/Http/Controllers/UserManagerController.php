@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserManagerController extends Controller
 {
-    public function listAdmin(){
+    public function listUser(){
 
-        $user=DB::table('users')->orderBy('id','desc')->get();
+        $user=User::orderBy('id','desc')->search()->paginate(10);
 
         return view('Admin.User.user_list',compact('user'));
     }
@@ -41,7 +41,7 @@ class UserManagerController extends Controller
         
     }
 
-    public function deleteUser($id){
+    public function deleteUser( $id){
         User::where('id',$id)->delete();
         return back()->with('thongbao','Đã xóa');
     }
@@ -101,12 +101,5 @@ class UserManagerController extends Controller
             ]);
         }
         return back()->with('thongbao','Đã lưu');
-    }
-
-    public function search(Request $req){       
-        if ($request->ajax()) {
-            $user = DB::table('users')->where('name', 'like', '%' . $req->txtSearch . '%')->get(); 
-        }            
-        return view('Admin.User.user_list',compact('user'));
     }
 }

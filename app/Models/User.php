@@ -49,4 +49,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Thêm localScope
+    public function scopeSearch($query){
+        if($key=request()->key)
+            $query->where('name','like','%'.$key.'%')
+                ->orWhere('email','like','%'.$key.'%');
+        return $query;
+    }
 }

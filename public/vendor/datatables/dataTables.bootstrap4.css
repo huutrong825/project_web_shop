@@ -121,7 +121,7 @@ table.dataTable > thead .sorting_desc:after {
 }
 table.dataTable > thead .sorting_asc_disabled:before,
 table.dataTable > thead .sorting_desc_disabled:after {
-  opacity: 0;
+  opacity: 0; 
 }
 
 div.dataTables_scrollHead table.dataTable {
@@ -211,3 +211,6 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-
   padding-right: 0;
 }
 
+#dataTable{
+  text-align: center;
+}
