@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -63,9 +64,87 @@ class AuthController extends Controller
         if(Auth::check())
         {
             $id=Auth::id();
-            $user=User::find($id);
+            $user=DB::table('users')->where('id',$id)->get();
         }
 
-        return view('Admin.profile');
+        return view('Admin.profile',compact('user'));
+    }
+
+    public function updateProfile(Request $req)
+    {
+        
+        $id=Auth::id();
+        $user=User::find($id);
+        $img_name='';
+        
+        if($req->file('avatar')){
+            if ($req->file('avatar')->isValid())
+            {
+                $img=$req->avatar;
+                 $img_name=$img->getClientOriginalName();
+                 $img->move(public_path('img'),$img_name);              
+                
+            }
+            else{
+
+            }
+        }
+        if($req->checkPass!='on'){
+            if($img_name!=null)
+            {
+                $user->update([
+                    'name'=>$req->name,
+                    'sex'=>$req->sex,
+                    'phone'=>$req->phone,
+                    'birth'=>$req->birth,
+                    'address'=>$req->address,
+                    'avatar'=>$img_name
+                ]);
+            }
+            else{
+                $user->update([
+                    'name'=>$req->name,
+                    'sex'=>$req->sex,
+                    'phone'=>$req->phone,
+                    'birth'=>$req->birth,
+                    'address'=>$req->address,
+                ]);
+            }
+        }else
+        {
+            if($img_name!=null)
+            {
+                $user->update([
+                    'name'=>$req->name,
+                    'sex'=>$req->sex,
+                    'phone'=>$req->phone,
+                    'birth'=>$req->birth,
+                    'address'=>$req->address,
+                    'avatar'=>$img_name,
+                    'password'=>Hash::make($req->repass)
+                ]);
+            }
+            else{
+                $user->update([
+                    'name'=>$req->name,
+                    'sex'=>$req->sex,
+                    'phone'=>$req->phone,
+                    'birth'=>$req->birth,
+                    'address'=>$req->address,
+                    'password'=>Hash::make($req->repass)
+                ]);
+            }
+            $user->update([
+                'name'=>$req->name,
+                'sex'=>$req->sex,
+                'phone'=>$req->phone,
+                'birth'=>$req->birth,
+                'address'=>$req->address,
+                'avatar'=>$img_name,
+                
+            ]);
+        }
+
+        return back()->with('thongbao','Cập nhật thành công');
     }
 }

@@ -30,6 +30,8 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
     });
 
     Route::get('/profile', ['uses'=>'AuthController@getProfile']);
+    Route::post('/profile', ['uses'=>'AuthController@updateProfile']);
+
     Route::get('/logout', ['uses'=>'AuthController@getLogout']);
 
     Route::group(['prefix'=>'user'],function(){
@@ -42,8 +44,8 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
 
         Route::get('/block/{id}',['uses'=>'UserManagerController@blockUser']);
 
-        Route::get('/fix/{id}',['uses'=>'UserManagerController@getFixUser']);
-        Route::post('/fix/{id}',['uses'=>'UserManagerController@postFixUser']);
+        Route::get('/update/{id}',['uses'=>'UserManagerController@getUpdateUser']);
+        Route::put('/update/{id}',['uses'=>'UserManagerController@putUpdateUser']);
 
         Route::get('/search',['uses'=>'UserManagerController@search']);
     });

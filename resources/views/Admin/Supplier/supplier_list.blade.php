@@ -15,12 +15,16 @@
     </div>
     <form active="/admin/user" method="get">
     <div class="input-group mb-3">
-        <input type="text" class="form-control" id='txtSearch' name="txtSearch" placeholder="Search">
+        <input type="text" class="form-control" id='key' name="key" placeholder="Search">
         <div class="input-group-append">
             <button class="btn btn-success" type="submit" id='btSearch'>Go</button>
         </div>
+        <div class="input-group-append">
+            <a href='#' class='btn'><i class=''></i>Reset</a>
+        </div>
     </div>
     </form>
+    
 </div>
 @if(session('thongbao'))
     <div class="alert alert-success">

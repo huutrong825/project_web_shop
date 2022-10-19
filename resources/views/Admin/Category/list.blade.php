@@ -100,7 +100,7 @@
                     <h1 class="h4 text-gray-900 mb-4">Thêm loại hàng</h1>
                 </div>
                 <div class="modal-body">
-                    <form action="/admin/supplier/add" class="user" method="post">  
+                    <form action="/admin/category/add" class="user" method="post">  
                         @csrf                      
                         <div class="form-group">
                             <div class="">

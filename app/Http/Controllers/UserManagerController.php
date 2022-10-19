@@ -64,42 +64,65 @@ class UserManagerController extends Controller
         return redirect('/admin/user')->with('thongbao','Đã lưu thay đổi');
     }
 
-    public function getFixUser($id){
-        $user=User::where('id',$id)->first();
-
-        return view('Admin.User.fix_user',compact('user'));
+    public function getUpdateUser($id){
+        
+        $userUp=User::where('id',$id)->first();
+        if ($userUp)
+        {
+            return response()->json([
+                'status'=>200,
+                'user'=>$userUp
+            ]);
+        }else{
+            return response()->json([
+                'status'=>404,
+                'mess'=>'Not find'
+            ]);
+        }
     }
 
-    public function postFixUser(Request $req,$id)
+    public function putUpdateUser(Request $req,$id)
     {
-        $user=User::where('id',$id)->first();
-        
-        if ($req->checkPass=="on"){
-            $this->validate($req,[
-                
-                'password'=>'required|min:6|',
-                'newpass'=>'required|min:6|',
-                'renewpass'=>'required|same:newpass',
-            ],[
-                'password.required'=>'Mật khẩu không được trống',
-                'password.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
-                'newpass.required'=>'Mật khẩu mới không được trống',
-                'newpass.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
-                'renewpass.required'=>'Mật khẩu xác nhận không được trống',
-                'renewpass.same'=>'Mật khẩu xác nhận lại chưa đúng',
+        $userUp=User::where('id',$id)->first();
+        if ($userUp )
+        {
+            if ($req->checks!=true){                
+                $userUp->update([
+                    'name'=>$req->names,
+                    'group_role'=>$req->group_roles,
+                    ]);                          
+            }
+            else{
+                $this->validate($req,[
+                    
+                    'password'=>'required|min:6|',
+                    'newpass'=>'required|min:6|',
+                    'renewpass'=>'required|same:newpass',
+                ],[
+                    'password.required'=>'Mật khẩu không được trống',
+                    'password.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
+                    'newpass.required'=>'Mật khẩu mới không được trống',
+                    'newpass.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
+                    'renewpass.required'=>'Mật khẩu xác nhận không được trống',
+                    'renewpass.same'=>'Mật khẩu xác nhận lại chưa đúng',
+                ]);
+
+                $userUp->update([
+                    'name'=>$req->names,
+                    'group_role'=>$req->group_roles,
+                    'password'=>Hash::make($req->renewpass),
+                ]);  
+            }
+        return response()->json([
+        'status'=>200, 
+        'mess'=>'Success Update'
+        ]);  
+
+        }else{
+            return response()->json([
+                'status'=>400,
+                'mess'=>'Not find'
             ]);
-            $user->update([
-                'name'=>$req->txtname,
-                'group_role'=>$req->group_role,
-                'password'=>Hash::make($req->renewpass),
-            ]);            
         }
-        else{
-            $user->update([
-            'name'=>$req->txtname,
-            'group_role'=>$req->group_role,
-            ]);
-        }
-        return back()->with('thongbao','Đã lưu');
     }
 }
