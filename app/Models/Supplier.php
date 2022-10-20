@@ -18,7 +18,8 @@ class Supplier extends Model
         'is_state'
     ];
 
-    public function product(){
-        return $this->hasMany(Product::class,'supplier_id','id');
+    public function product()
+    {
+        return $this->hasMany(Product::class, 'supplier_id', 'id');
     }
 }

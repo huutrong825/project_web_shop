@@ -13,29 +13,33 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    //
-    public function getLogin(){
+    
+    public function getLogin()
+    {
         return view('login');
     }
 
-    public function postLogin(LoginRequest $req){
-        if(Auth::attempt(['email'=>$req->email,'password'=>$req->password]))
+    public function postLogin(LoginRequest $req)
+    {
+        if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password]))
         {
             return redirect('/admin');
         }
-        else{
-
-            return redirect('/login')->with('thongbao','Đăng nhập không thành công');
+        else
+        {
+            return redirect('/login')->with('thongbao', 'Đăng nhập không thành công');
         }
     }
-    public function getRegister(){
-
+    public function getRegister()
+    {
         return view('register');
     }
 
-    public function postRegister(Request $req){
+    public function postRegister(Request $req)
+    {
 
-        $u=User::create([
+        $u=User::create(
+            [
             'name'=>$req->txtname,
             'email'=>$req->email,
             'password'=>Hash::make($req->repass),            
@@ -47,27 +51,30 @@ class AuthController extends Controller
             'last_login_ip'=>fake()->numerify($string = '###.##.###'),
             'created_at'=>date("Y-m-d"),
             'updated_at'=>date("Y-m-d")
-        ]);
+            ]
+        );
 
         $u->save();
 
         return redirect('/login');
     }
 
-    public function getLogout(){
+    public function getLogout()
+    {
         Auth::logout();
 
         return redirect('/login');
     }
 
-    public function getProfile(){
+    public function getProfile()
+    {
         if(Auth::check())
         {
             $id=Auth::id();
-            $user=DB::table('users')->where('id',$id)->get();
+            $user=DB::table('users')->where('id', $id)->get();
         }
 
-        return view('Admin.profile',compact('user'));
+        return view('Admin.profile', compact('user'));
     }
 
     public function updateProfile(Request $req)
@@ -77,44 +84,50 @@ class AuthController extends Controller
         $user=User::find($id);
         $img_name='';
         
-        if($req->file('avatar')){
+        if($req->file('avatar'))
+        {
             if ($req->file('avatar')->isValid())
             {
                 $img=$req->avatar;
                  $img_name=$img->getClientOriginalName();
-                 $img->move(public_path('img'),$img_name);              
+                 $img->move(public_path('img'), $img_name);              
                 
             }
-            else{
-
-            }
         }
-        if($req->checkPass!='on'){
+        if($req->checkPass!='on')
+        {
             if($img_name!=null)
             {
-                $user->update([
+                $user->update(
+                    [
                     'name'=>$req->name,
                     'sex'=>$req->sex,
                     'phone'=>$req->phone,
                     'birth'=>$req->birth,
                     'address'=>$req->address,
                     'avatar'=>$img_name
-                ]);
+                    ]
+                );
             }
-            else{
-                $user->update([
+            else
+            {
+                $user->update(
+                    [
                     'name'=>$req->name,
                     'sex'=>$req->sex,
                     'phone'=>$req->phone,
                     'birth'=>$req->birth,
                     'address'=>$req->address,
-                ]);
+                    ]
+                );
             }
-        }else
+        }
+        else
         {
-            if($img_name!=null)
+            if ($img_name!=null)
             {
-                $user->update([
+                $user->update(
+                    [
                     'name'=>$req->name,
                     'sex'=>$req->sex,
                     'phone'=>$req->phone,
@@ -122,29 +135,23 @@ class AuthController extends Controller
                     'address'=>$req->address,
                     'avatar'=>$img_name,
                     'password'=>Hash::make($req->repass)
-                ]);
+                    ]
+                );
             }
-            else{
-                $user->update([
+            else
+            {
+                $user->update(
+                    [
                     'name'=>$req->name,
                     'sex'=>$req->sex,
                     'phone'=>$req->phone,
                     'birth'=>$req->birth,
                     'address'=>$req->address,
-                    'password'=>Hash::make($req->repass)
-                ]);
+                        'password'=>Hash::make($req->repass)
+                    ]
+                );
             }
-            $user->update([
-                'name'=>$req->name,
-                'sex'=>$req->sex,
-                'phone'=>$req->phone,
-                'birth'=>$req->birth,
-                'address'=>$req->address,
-                'avatar'=>$img_name,
-                
-            ]);
         }
-
-        return back()->with('thongbao','Cập nhật thành công');
+        return back()->with('thongbao', 'Cập nhật thành công');
     }
 }

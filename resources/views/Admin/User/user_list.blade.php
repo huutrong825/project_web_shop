@@ -8,7 +8,7 @@
 @section('content')
 <div class="input-group">
     <div class="input-group mb-3">
-        <a href='#' class="btn btn-primary btn-icon-user" data-toggle="modal" data-target="#AddUserModal">
+        <a class="btn btn-primary btn-icon-user btAddUser" >
             <span class="icon text-white-50">
                 <i class="fas fa-user-plus"></i>
             </span>
@@ -75,10 +75,10 @@
                              <td>Errol</td>
                         @endswitch
                         <td>
-                            <a href='' value='{{$u->id}}'  class="btn btn-success btn-circle btn-sm btUpdate">
+                            <a value='{{$u->id}}'  class="btn btn-success btn-circle btn-sm btUpdate">
                                 <i class="fas fa-pen"></i>
                             </a>
-                            <a href='/admin/user/delete/{{$u->id}}' class="btn btn-danger btn-circle btn-sm" >
+                            <a href='' value='{{$u->id}}' class="btn btn-danger btn-circle btn-sm btDelete" >
                                 <i class="fas fa-trash"></i>
                             </a>
                             <a href='/admin/user/block/{{$u->id}}' class="btn btn-warning btn-circle btn-sm">
@@ -92,14 +92,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
                                     </div>
-                                    <div class="modal-body">Xác nhận xóa người dùng {{ $u->name }}!</div>
+                                    <div class="">
+                                        <input type="hidden" class="form-control form-control-user" id='idDelete' >
+                                    </div>
+                                    <div class="modal-body">Xác nhận xóa người dùng <span id='nameDelete'></span></div>
                                     <div class="modal-footer">
-                                        <a class="btn btn-primary" href="/admin/user/delete/{{$u->id}}">Xác nhận</a>
-                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
+                                        <a class="btn btn-primary btDSubmitDelete">Xác nhận</a>
+                                        <button class="btn btn-danger " type="button" data-dismiss="modal">Cancel</button>                    
                                     </div>
                                 </div>
                             </div>
@@ -114,76 +114,132 @@
 
 
     <!-- Add User Modal-->
-    @include('Admin.User.add_user')
+    <div class="modal fade" id="AddUserModal" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content add-user">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Thêm user mới</h1>
+                </div>
+                <div class="modal-body form-add">  
+                    <form class="form-group" id='form-add-user'>
+                        <fieldset>                
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="text" class="form-control form-control-user" id='addtxtname' name="txtname"
+                                        placeholder="Nhập họ tên" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-user" id='addemail' name="email"
+                                    placeholder="Nhập Email" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="password" class="form-control form-control-user"
+                                        name="password" id='addpassword' placeholder="Tạo mật khẩu mới" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="password" class="form-control form-control-user"
+                                        name="repass" id='addrepass' placeholder="Xác nhận lại mật khẩu" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control " id="addgroup_role" name="group_role" required>
+                                    <option disabled selected hidden>Chọn nhóm</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Employee</option>
+                                </select>
+                            </div>
+                            <div class="form-group custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="addactive" name="addactive">  
+                                <label class="custom-control-label" for="addactive">Trạng thái hoạt động</label>                      
+                            </div>
+                            <div class="form-group">
+                                <input id='btSubmitAdd' class="btn btn-success btn-user btn-block " value="Thêm mới"> 
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Update User Model -->
     <div class="modal fade" id="UpdateUserModal" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content add-user">
-        <div class="modal-header">
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="text-center">
-            <h1 class="h4 text-gray-900 mb-4">Chỉnh sửa User</h1>
-        </div>
-        <div class="modal-body">
-               
-                <div class="form-group">
-                    <div class="">
-                        <input type="hidden" class="form-control form-control-user" id='ID' >
-                    </div>
-                </div>  
-                <div class="form-group">
-                    <div class="">
-                        <input type="text" class="form-control form-control-user" id='nameUpdate' name="txtname" >
-                    </div>
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content add-user">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-                <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id='emailUpdate' name="email"
-                        value="" disabled>
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Chỉnh sửa User</h1>
                 </div>
-                <div class="form-group">
-                    <select class="form-control " id="role" name="group_role" >
-                        <option  selected id='txtrole'></option>
-                        <option value="1">Admin</option>
-                        <option value="2">Employee</option>
-                    </select>
+                <div class="modal-body">               
+                        <div class="form-group">
+                            <div class="">
+                                <input type="hidden" class="form-control form-control-user" id='ID' >
+                            </div>
+                        </div>  
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user" id='nameUpdate' name="txtname" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user" id='emailUpdate' name="email"
+                                value="" disabled>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control " id="role" name="group_role" >
+                                <option  selected id='txtrole'></option>
+                                <option value="1">Admin</option>
+                                <option value="2">Employee</option>
+                            </select>
+                        </div>
+                        <div class=" form-group custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck" name="checkPass">
+                            <label class="custom-control-label" for="customCheck">Thay đổi mật khẩu</label>
+                        </div>        
+                        <div class="form-group" id='pass1' style="display:none">
+                            <div class="">
+                                <input type="password" class="form-control form-control-user"
+                                    name="password" id='oldpass' placeholder="Nhập mật khẩu cũ">
+                            </div>
+                            <p style="color:red" class="help is-danger">{{ $errors->first('password') }}</p>
+                        </div>
+                        <div class="form-group" id='pass2' style="display:none">
+                            <div class="">
+                                <input type="password" class="form-control form-control-user"
+                                    name="newpass" id='newpass' placeholder="Nhập mật khẩu mới">
+                            </div>
+                            <p style="color:red" class="help is-danger">{{ $errors->first('newpass') }}</p>
+                        </div>
+                        <div class="form-group" id='pass3' style="display:none">
+                            <div class="">
+                                <input type="password" class="form-control form-control-user"
+                                    name="renewpass" id='renewpass' placeholder="Xác nhận lại mật khẩu mới">
+                                <p style="color:red" class="help is-danger">{{ $errors->first('renewpass') }}</p>
+                            </div>
+                        </div>        
+                        <div class="form-group">
+                            <input type='submit' id='submitUpdate' class="btn btn-success btn-user btn-block" value="Lưu"> 
+                        </div>
                 </div>
-                <div class=" form-group custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck" name="checkPass">
-                    <label class="custom-control-label" for="customCheck">Thay đổi mật khẩu</label>
-                </div>        
-                <div class="form-group" id='pass1' style="display:none">
-                    <div class="">
-                        <input type="password" class="form-control form-control-user"
-                            name="password" id='oldpass' placeholder="Nhập mật khẩu cũ">
-                    </div>
-                    <p style="color:red" class="help is-danger">{{ $errors->first('password') }}</p>
-                </div>
-                <div class="form-group" id='pass2' style="display:none">
-                    <div class="">
-                        <input type="password" class="form-control form-control-user"
-                            name="newpass" id='newpass' placeholder="Nhập mật khẩu mới">
-                    </div>
-                    <p style="color:red" class="help is-danger">{{ $errors->first('newpass') }}</p>
-                </div>
-                <div class="form-group" id='pass3' style="display:none">
-                    <div class="">
-                        <input type="password" class="form-control form-control-user"
-                            name="renewpass" id='renewpass' placeholder="Xác nhận lại mật khẩu mới">
-                        <p style="color:red" class="help is-danger">{{ $errors->first('renewpass') }}</p>
-                    </div>
-                </div>        
-                <div class="form-group">
-                    <input type='submit' id='submitUpdate' class="btn btn-success btn-user btn-block" value="Lưu"> 
-                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
+
 
 {{$user->links()}}
 @endsection
@@ -194,9 +250,7 @@ aria-hidden="true">
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
 <!-- Page level custom scripts -->
+<script src="{{asset('js/ajax/ajax_user.js')}}"></script>
 
-
-
-<script src="{{asset('js/ajax/update_user.js')}}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 @endsection

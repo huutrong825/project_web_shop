@@ -15,7 +15,8 @@ class Unit extends Model
         'unit'
     ];
 
-    public function product(){
-        return $this->hasMany(Product::class,'unit','id');
+    public function product()
+    {
+        return $this->hasMany(Product::class, 'unit', 'id');
     }
 }

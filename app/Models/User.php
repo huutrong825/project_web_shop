@@ -51,10 +51,11 @@ class User extends Authenticatable
     ];
 
     // Thêm localScope
-    public function scopeSearch($query){
+    public function scopeSearch($query)
+    {
         if($key=request()->key)
-            $query->where('name','like','%'.$key.'%')
-                ->orWhere('email','like','%'.$key.'%');
+            $query->where('name', 'like', '%'.$key.'%')
+                ->orWhere('email', 'like', '%'.$key.'%');
         return $query;
     }
 }

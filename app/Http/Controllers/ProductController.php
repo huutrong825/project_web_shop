@@ -7,31 +7,38 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function listProduct(){
+    public function listProduct()
+    {
 
     }
 
-    public function addProduct(){
+    public function addProduct()
+    {
 
     }
 
-    public function getfixProdudct(){
+    public function getfixProdudct()
+    {
 
     }
 
-    public function postFixProduct(){
+    public function postFixProduct()
+    {
 
     }
 
-    public function deleteProduct(){
+    public function deleteProduct()
+    {
 
     }
 
-    public function getDetailProduct(){
+    public function getDetailProduct()
+    {
 
     }
 
-    public function postDetailProduct(){
+    public function postDetailProduct()
+    {
 
     }
 }

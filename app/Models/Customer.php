@@ -18,7 +18,8 @@ class Customer extends Model
         'address'
     ];
 
-    public function order(){
-        return $this->hasMany(Order::class,'customer_id','customer_id');
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'customer_id');
     }
 }

@@ -15,7 +15,8 @@ class Order_State extends Model
         'state_order'
     ];
 
-    public function order(){
-        return $this->hasMany(Order::class,'state','id');
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'state', 'id');
     }
 }

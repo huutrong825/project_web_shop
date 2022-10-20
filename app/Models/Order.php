@@ -21,19 +21,23 @@ class Order extends Model
         'state'
     ];
 
-    public function history(){
+    public function history()
+    {
         return $this->hasOne(Order_History::class);
     }
 
-    public function state(){
-        return $this->belongsTo(Order_State::class,'state','id');
+    public function state()
+    {
+        return $this->belongsTo(Order_State::class, 'state', 'id');
     }
 
-    public function customer(){
-        return $this->belongsTo(Customer::class,'customer_id','customer_id');
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
     }
 
-    public function product(){
+    public function product()
+    {
         return $this->belongsToMany(Product::class);
     }
 }

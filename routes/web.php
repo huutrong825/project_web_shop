@@ -17,15 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login',['uses'=>'AuthController@getLogin']);
-Route::post('/login',['uses'=>'AuthController@postLogin']);
+Route::get('/login', ['uses'=>'AuthController@getLogin']);
+Route::post('/login', ['uses'=>'AuthController@postLogin']);
 
-Route::get('/register',['uses'=>'AuthController@getRegister']);
-Route::post('/register',['uses'=>'AuthController@postRegister']);
+Route::get('/register', ['uses'=>'AuthController@getRegister']);
+Route::post('/register', ['uses'=>'AuthController@postRegister']);
 
-Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
+Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
 
-    Route::get('/',function(){
+    Route::get('/', function(){
         return view('Admin/admin_index');
     });
 
@@ -34,39 +34,42 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'],function(){
 
     Route::get('/logout', ['uses'=>'AuthController@getLogout']);
 
-    Route::group(['prefix'=>'user'],function(){
-        Route::get('/',['uses'=>'UserManagerController@listUser']);
+    Route::group(['prefix'=>'user'], function(){
 
-        // Route::get('/add',['uses'=>'UserManagerController@getAddUser']);
-        Route::post('/add',['uses'=>'UserManagerController@postAddUser']);
+        Route::get('/', ['uses'=>'UserManagerController@listUser']);
 
-        Route::get('/delete/{id}',['uses'=>'UserManagerController@deleteUser']);
+        Route::post('/add', ['uses'=>'UserManagerController@postAddUser']);
 
-        Route::get('/block/{id}',['uses'=>'UserManagerController@blockUser']);
+        Route::get('/getUserDelete/{id}', ['uses'=>'UserManagerController@getUser']);
+        Route::get('/delete/{id}', ['uses'=>'UserManagerController@deleteUser']);
 
-        Route::get('/update/{id}',['uses'=>'UserManagerController@getUpdateUser']);
-        Route::put('/update/{id}',['uses'=>'UserManagerController@putUpdateUser']);
+        Route::get('/block/{id}', ['uses'=>'UserManagerController@blockUser']);
 
-        Route::get('/search',['uses'=>'UserManagerController@search']);
+        Route::get('/update/{id}', ['uses'=>'UserManagerController@getUser']);
+        Route::put('/update/{id}', ['uses'=>'UserManagerController@putUpdateUser']);
+
+        Route::get('/search', ['uses'=>'UserManagerController@search']);
     });
 
-    Route::group(['prefix'=>'supplier'],function(){
-        Route::get('/',['uses'=>'SupplierController@getList']);
+    Route::group(['prefix'=>'supplier'], function(){
 
-        Route::post('/add',['uses'=>'SupplierController@postAddSupplier']);
+        Route::get('/', ['uses'=>'SupplierController@getList']);
 
-        Route::get('/delete/{id}',['uses'=>'SupplierController@deleteSupplier']);
+        Route::post('/add', ['uses'=>'SupplierController@postAddSupplier']);
 
-        Route::get('/block/{id}',['uses'=>'SupplierController@blockSupplier']);
+        Route::get('/delete/{id}', ['uses'=>'SupplierController@deleteSupplier']);
+
+        Route::get('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
     });
 
-    Route::group(['prefix'=>'category'],function(){
-        Route::get('/',['uses'=>'CategoryController@getList']);
+    Route::group(['prefix'=>'category'], function(){
 
-        Route::post('/add',['uses'=>'SupplierController@postAddSupplier']);
+        Route::get('/', ['uses'=>'CategoryController@getList']);
 
-        Route::get('/delete/{id}',['uses'=>'SupplierController@deleteSupplier']);
+        Route::post('/add', ['uses'=>'SupplierController@postAddSupplier']);
 
-        Route::get('/block/{id}',['uses'=>'SupplierController@blockSupplier']);
+        Route::get('/delete/{id}', ['uses'=>'SupplierController@deleteSupplier']);
+
+        Route::get('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
     });
 });
