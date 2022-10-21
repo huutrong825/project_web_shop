@@ -27,7 +27,7 @@ class AuthController extends Controller
         }
         else
         {
-            return redirect('/login')->with('thongbao', 'Đăng nhập không thành công');
+            return redirect('/login')->with('thongbao', 'Email hoặc mật khẩu không đúng');
         }
     }
     public function getRegister()

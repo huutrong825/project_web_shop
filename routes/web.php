@@ -43,6 +43,7 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
         Route::get('/getUserDelete/{id}', ['uses'=>'UserManagerController@getUser']);
         Route::get('/delete/{id}', ['uses'=>'UserManagerController@deleteUser']);
 
+        Route::get('/getUserBlock/{id}', ['uses'=>'UserManagerController@getUser']);
         Route::get('/block/{id}', ['uses'=>'UserManagerController@blockUser']);
 
         Route::get('/update/{id}', ['uses'=>'UserManagerController@getUser']);

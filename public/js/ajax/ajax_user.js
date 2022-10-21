@@ -48,49 +48,27 @@ $(document).ready(function(){
     $("#submitUpdate").click(function(e){
         e.preventDefault();
         var id_update=$('#ID').val();
-        var checked=$('#customCheck').prop('checked');  
-        var data={
-            'names':$('#nameUpdate').val(),
-            'emails':$('#emailUpdate').val(),
-            'group_roles':$('#role').val(),
-            'checks':$('#customCheck').prop('checked'),
-            'password':$('#oldpass').val(),
-            'newpass':$('#newpass').val(),
-            'renewpass':$('#renewpass').val(),            
+        if ($('#customCheck').is(':checked'))
+        {
+            var data={
+                'names':$('#nameUpdate').val(),
+                'emails':$('#emailUpdate').val(),
+                'group_roles':$('#role').val(),
+                'checks':$('#customCheck').prop('checked'),
+                'password':$('#oldpass').val(),
+                'newpass':$('#newpass').val(),
+                'renewpass':$('#renewpass').val(),            
+            }
         }
-        // if (checked==true)
-        // {
-        //     $('.modal-body').validate({
-        //         rule:{
-        //             'oldpass':{
-        //                 required:true,
-        //                 minlenght:6
-        //             },
-        //             'newpass':{
-        //                 required:true,
-        //                 minlenght:6
-        //             },
-        //             'renewpass':{
-        //                 required:true,
-        //                 equalTo:'#newpass'
-        //             }
-        //         },
-        //         messages:{
-        //             oldpass:{
-        //                 required:'Mật khẩu không được trống',
-        //                 minlenght:'Mật khẩu không được nhỏ hơn 6 ký tự'
-        //             },
-        //             newpass:{
-        //                 required:'Mật khẩu không được trống',
-        //                 minlenght:'Mật khẩu không được nhỏ hơn 6 ký tự'
-        //             },
-        //             oldpass:{
-        //                 required:'Mật khẩu không được trống',
-        //                 eqiualTo:'Mật khẩu xác nhận lại chưa đúng'
-        //             }
-        //         }
-        //     });
-        // }
+        else
+        {
+            var data={
+                'names':$('#nameUpdate').val(),
+                'emails':$('#emailUpdate').val(),
+                'group_roles':$('#role').val(),
+                'checks':$('#customCheck').prop('checked'),           
+            }
+        }       
         console.log(data);
         $.ajax({
             url:'/admin/user/update/' + id_update,
@@ -101,9 +79,19 @@ $(document).ready(function(){
             data:data,
             dataType:'json',
             success:function(response){
-                // alert('Thành công');
-                $('#UpdateUserModal').modal('hide');
-                window.location.reload();
+                if(response.status==412)
+                {
+                    $(".print-error-up").css('display','block');
+                    $('#error_up').html('');
+                    $.each(response.errors, function(keys, err_values){
+                        $('#error_up').append('<li>'+err_values+'</i>');
+                    });
+                }
+                else
+                {
+                    $('#UpdateUserModal').modal('hide');
+                    window.location.reload();
+                }                
             },
             error: function (err) {
                 alert('Lỗi');
@@ -118,7 +106,12 @@ $(document).ready(function(){
         $('#AddUserModal').modal('show');
     });    
 });
-
+$(document).ready(function(){
+    $(".close").click(function(e){
+        $('#AddUserModal').modal('hide');
+        window.location.reload();
+    });
+});
 // thêm use bằng ajax
 $(document).ready(function(){
     $("#btSubmitAdd").click(function(e){
@@ -130,43 +123,35 @@ $(document).ready(function(){
             'repass':$('#addrepass').val(),
             'group_role':$('#addgroup_role').val(),
             'active':$('#addactive').prop('checked'),            
-        }
-        $('#form-add-user').validate({
-            rule:{
-                txtname:"required",
-                email:"required",
-                password:{
-                    required:true,
-                    minlenght:6
-                },
-                repass:{
-                    required:true,
-                    equalTo:"#addpassword"
-                },
-                group_role:"required"   
+        }   
+        $.ajax({
+            url:'/admin/user/add',
+            type:"post",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            messages:{
-                txtname:"nhập tên"
-            }
-        });
-        
-            $.ajax({
-                url:'/admin/user/add',
-                type:"post",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data:data,
-                dataType:'json',
-                success:function(response){                
-                    $('#UpdateUserModal').modal('hide');
-                    window.location.reload();
-                    alert('Thành công');
-                },
-                error: function (err) {
-                    alert('Lỗi');
+            data:data,
+            dataType:'json',
+            success:function(response){    
+                if(response.status==400)
+                {
+                    $(".print-error-msg").css('display','block');
+                    $('#error_mes').html('');
+                    $('#error_mes').addClass('alert alert_danger');
+                    $.each(response.errors, function(keys, err_values){
+                        $('#error_mes').append('<li>'+err_values+'</i>');
+                    });
                 }
-            });
+                else
+                {
+                    $('#AddUserModal').modal('hide');
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                alert('Lỗi');
+            }
+        });        
     });
     
 });
@@ -206,6 +191,54 @@ $(document).ready(function(){
             success:function(response)
             {
                 $('#DeleteModal').modal('hide');
+                window.location.reload();
+            },
+            error: function (err)
+            {
+                alert('Lỗi');
+            }
+        });
+    });
+});
+
+
+//Alert Block
+$(document).ready(function(){    
+    $(".btBlock").click(function(e)
+    {
+        e.preventDefault();
+        var _id=$(this).attr('value');
+        $('#BlockModal').modal('show');
+        $.ajax({
+            url:'/admin/user/getUserBlock/' +_id,
+            type:"GET",
+            success:function(response)
+            {
+                $('#idBlock').val(response.user.id);
+                $('#nameBlock').html(response.user.name); 
+            },
+            error: function (err)
+            {
+                alert('Lỗi');
+            }
+        });
+    });
+});
+// Xác nhận block/open
+$(document).ready(function(){    
+    $(".btDSubmitBlock").click(function(e)
+    {
+        e.preventDefault();
+        var _id=$('#idBlock').val();
+        console.log(_id);
+        $.ajax({
+            url:'/admin/user/block/' +_id,
+            type:"GET",
+            success:function(response)
+            {               
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.mess);
+                $('#BlockModal').modal('hide');
                 window.location.reload();
             },
             error: function (err)

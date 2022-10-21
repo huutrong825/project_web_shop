@@ -114,7 +114,7 @@ class SupplierController extends Controller
     {
         $supp=Supplier::find($id);
 
-        if ($supp->is_state==1)\n
+        if ($supp->is_state==1)
         {
             $supp->update(
                 [
@@ -122,7 +122,7 @@ class SupplierController extends Controller
                 ]
             );
         }
-        else\n
+        else
         {
             $supp->update(
                 [

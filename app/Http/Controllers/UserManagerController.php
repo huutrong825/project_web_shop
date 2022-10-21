@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddUserRequest;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 /**
  * Description class
@@ -62,31 +63,65 @@ class UserManagerController extends Controller
      */ 
     public function postAddUser(Request $req)
     {
-        if($req->active)
-        {   
-            $act = 1 ;
+        $vali=Validator::make(
+            $req->all(),
+            [
+                'name'=>'required|min:5',
+                'email'=>'required|unique:users|',
+                'password'=>'required|min:6|',
+                'repass'=>'required|same:password',
+                'group_role'=>'required'
+            ],
+            [
+                'name.required'=>'Tên không được trống',
+                'name.min'=>'Tên không được nhỏ hơn :min ký tự',
+                'email.required'=>'Email không được trống',
+                'email.unique'=>'Email đã tồn tại',
+                'password.required'=>'Mật khẩu không được trống',
+                'password.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
+                'repass.required'=>'Mật khẩu xác nhận không được trống',
+                'repass.same'=>'Mật khẩu xác nhận chưa đúng',
+                'group_role.required'=>'Chưa chọn nhóm người dùng',
+            ]
+        );
+
+        if ($vali->fails())
+        {
+            return response()->json(
+                [
+                'status'=>400,
+                'errors'=>$vali->messages()
+                ]
+            );
         }
         else
         {
-            $act=0 ;
-        }
-        $user = User::create(
-            [
-                'name'=>$req->name,
-                'email'=>$req->email,
-                'password'=>Hash::make($req->repass),
-                'group_role'=>$req->group_role,
-                'is_active'=>$act
-            ]
-        );
-        $user->save();
-        return response()->json(
-            [
-            'status'=>200,
-            'message'=>"thành công"
-            ]
-        );
+            if($req->active)
+            {   
+                $act = 1 ;
+            }
+            else
+            {
+                $act=0 ;
+            }
+            $user = User::create(
+                [
+                    'name'=>$req->name,
+                    'email'=>$req->email,
+                    'password'=>Hash::make($req->repass),
+                    'group_role'=>$req->group_role,
+                    'is_active'=>$act
+                ]
+            );
+            $user->save();
+            return response()->json(
+                [
+                'status'=>200,
+                'message'=>"Thêm thành công"
+                ]
+            );
         
+        }
     }
     
 
@@ -148,25 +183,42 @@ class UserManagerController extends Controller
      */
     public function blockUser($id)
     {
-        $user = User::find($id);
-        if ($user->is_active == 1)
+        $userBlock = User::where('id', $id)->first();
+        if ($userBlock)
         {
-            $user ->update(
-                [
-                'is_active'=>0
-                ]
-            );
+            if ($userBlock->is_active == 1)
+            {
+                $userBlock ->update(
+                    [
+                    'is_active'=>0
+                    ]
+                );
+            }
+            else
+            {
+                $userBlock->update(
+                    [
+                    'is_active'=>1
+                    ]
+                );
+            }
+                return response()->json(
+                    [
+                    'status'=>200,
+                    'mess'=>'Thành công'
+                    ]
+                );
         }
         else
         {
-            $user->update(
+            return response()->json(
                 [
-                'is_active'=>1
+                'status'=>404,
+                'mess'=>'Not find'
                 ]
             );
         }
-
-        return redirect('/admin/user')->with('thongbao', 'Đã lưu thay đổi');
+        
     }
 
     
@@ -228,60 +280,79 @@ class UserManagerController extends Controller
      */  
     public function putUpdateUser(Request $req, $id)
     {
+        $vali=Validator::make(
+            $req->all(),
+            [                        
+                'password'=>'required|min:6|',
+                'newpass'=>'required|min:6|',
+                'renewpass'=>'required|same:newpass',
+            ],
+            [
+                'password.required'=>'Mật khẩu không được trống',
+                'password.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
+                'newpass.required'=>'Mật khẩu mới không được trống',
+                'newpass.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
+                'renewpass.required'=>'Mật khẩu xác nhận không được trống',
+                'renewpass.same'=>'Mật khẩu xác nhận lại chưa đúng',
+            ]
+        );
+
         $userUp = User::where('id', $id)->first();
+
         if ($userUp)
         {
-            if ($req->checks!=true)
+            if ($req->checks == false)
             {                
                 $userUp->update(
                     [
                     'name'=>$req->names,
                     'group_role'=>$req->group_roles,
                     ]
-                );                          
+                );
+                
+                return response()->json(
+                    [
+                    'status'=>200, 
+                    'mess'=>'Success Update'
+                    ]
+                );
             }
             else
             {
-                $this -> validate( 
-                    $req, 
-                    [
-                        
-                        'password'=>'required|min:6|',
-                        'newpass'=>'required|min:6|',
-                        'renewpass'=>'required|same:newpass',
-                    ],
-                    [
-                        'password.required'=>'Mật khẩu không được trống',
-                        'password.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
-                        'newpass.required'=>'Mật khẩu mới không được trống',
-                        'newpass.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
-                        'renewpass.required'=>'Mật khẩu xác nhận không được trống',
-                        'renewpass.same'=>'Mật khẩu xác nhận lại chưa đúng',
-                    ]
-                );
+                if ($vali->fails())
+                {
+                    return response()->json(
+                        [
+                        'status'=>412,
+                        'errors'=>$vali->messages()
+                        ]
+                    );
+                }
+                else
+                {                
+                    $userUp->update(
+                        [
+                        'name'=>$req->names,
+                        'group_role'=>$req->group_roles,
+                        'password'=>Hash::make($req->renewpass),
+                        ]
+                    );
 
-                $userUp->update(
-                    [
-                    'name'=>$req->names,
-                    'group_role'=>$req->group_roles,
-                    'password'=>Hash::make($req->renewpass),
-                    ]
-                );  
-            }
-            return response()->json(
-                [
-                'status'=>200, 
-                'mess'=>'Success Update'
-                ]
-            );  
-
+                    return response()->json(
+                        [
+                        'status'=>200, 
+                        'mess'=>'Success Update'
+                        ]
+                    );
+                }
+            } 
         }
         else
         {
             return response()->json(
                 [
                 'status'=>400,
-                'mess'=>'Not find'
+                'errors'=>'Not find'
                 ]
             );
         }

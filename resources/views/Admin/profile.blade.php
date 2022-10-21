@@ -5,7 +5,7 @@
         {{session('thongbao')}}
     </div>
 @endif
-<div class="frofile col-sm-9"> 
+<div class="frofile"> 
     @foreach($user as $u)
         <form class="form" action="/admin/profile" method="post" enctype="multipart/form-data">
             @csrf
@@ -25,7 +25,7 @@
                     <input type="text" class="form-control" name="mail" value="{{ $u-> email }}" disabled>
                 </div>
                 <div class="col-xs-6">
-                    <label for="phone">Giới tính:   </label><span> </span><br>
+                    <label for="phone">Giới tính:   </label> <span>{{ $u-> sex }} </span><br>
                     <div class="form-check-inline">
                         <label class="form-check-label">
                             <input type="radio" class="form-check-input" value="Nam" name="sex">Nam

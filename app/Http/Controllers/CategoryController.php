@@ -58,7 +58,7 @@ class CategoryController extends Controller
 
     public function search(Request $req)
     {       
-        if($req>get('search'))\n
+        if($req>get('search'))
         {
             $search = $req->get('search');
             $user = DB::table('users')->where('name', 'LIKE', "%{$search}%")->get();    

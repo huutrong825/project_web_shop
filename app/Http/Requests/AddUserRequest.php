@@ -32,7 +32,8 @@ class AddUserRequest extends FormRequest
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return[
             'txtname.required'=>'Tên không được trống',
             'txtname.min'=>'Tên không được nhỏ hơn :min ký tự',
