@@ -5,33 +5,70 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 class CategoryController extends Controller
 {
-    public function getList()
+    public function index()
+    {
+        return view('Admin.Category.list');
+    }
+
+    public function getCate()
     {
         $cate=Category::all();
 
-        return view('Admin.Category.list', compact('cate'));
+        return Datatables::of($cate)
+                ->addColumn('image', function( $cate ) {
+                    return '<img class="avatar" src="{{ asset(img)}}/{{' .$cate->image. '")}} alt="Avatar"
+                    style="width:50px;height:50px"/>';
+                })
+                ->addColumn('action', function($cate) {
+                    return '<a value="'.$cate->category_id.'" class="btn btn-success btn-circle btn-sm bt-Update">
+                    <i class="fas fa-pen"></i></a>            
+
+                    <a value="'.$cate->category_id.'" class="btn btn-danger btn-circle btn-sm bt-Delete">
+                    <i class="fas fa-trash"></i></a>';
+                })
+                ->rawColumns(['image','action'])
+                ->make(true);
     }
 
-    public function addCategory(Request $req)
+    public function getCateId($id)
     {
-        $cate=Category::create(
-            [
-            'category_name'=>$req->txtname,
-            'image'=>$req->email,
-            ]
-        );
-        $cate->save();
-        return redirect('/admin/category')->with('thongbao', 'Đã thêm thành công');
+        $cate=Category::where('category_id', $id)->get();
+
+        if ($cate)
+        {
+            return response()->json(
+                [
+                'status'=>200,
+                'cate'=>$cate
+                ]
+            );
+        }
+        else
+        {
+            return response()->json(
+                [
+                'status'=>404,
+                'mess'=>'Not find'
+                ]
+            );
+        }
         
     }
 
-    public function deleteUser($id)
+    public function deleteCate($id)
     {
-        Category::where('id', $id)->delete();
-        return back()->with('thongbao', 'Đã xóa');
+        Category:: where('category_id', $id)-> delete();
+
+        return response()->json(
+            [
+            'status'=>200,
+            'message'=>"Xóa thành công"
+            ]
+        );
     }
 
     

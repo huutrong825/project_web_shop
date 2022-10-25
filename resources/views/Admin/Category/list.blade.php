@@ -33,50 +33,16 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%">
+            <table class="table table-bordered" id="myTable" width="100%">
                 <thead>
                     <tr>
-                        <th  style="display:none">STT</th>
+                        <th  >STT</th>
                         <th>Mặt hàng kinh doanh</th>
                         <th>Hình ảnh</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($cate as $c)
-                    <tr>
-                        <td  style="display:none">{{ $c-> id }}</td>
-                        <td><a href='#'>{{ $c->category_name }}</a></td>
-                        <td><img src="{{asset('img')}}/{{$c->image}}" alt="Picture" width='50px' height='50px'></td>  
-                        <td>
-                            <a href='/admin/category/fix/{{$c->id}}' class="btn btn-success btn-circle btn-sm">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                            <a href='/admin/category/delete/{{$c->id}}' class="btn btn-danger btn-circle btn-sm" >
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                        <!-- Delete Modal-->
-                        <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Xác nhận xóa người dùng {{ $c->name }}!</div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-primary" href="/admin/user/delete/{{$c->id}}">Xác nhận</a>
-                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        
-                    </tr>                    
-                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -87,7 +53,7 @@
 
 
     <!-- Add Supplier Modal-->
-    <div class="modal fade" id="AddSupplierModal" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content add-user">
@@ -122,13 +88,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+                </div>
+                <form method='delete'>
+                    @csrf
+                    <div class="">
+                        <input type="hidden" class="form-control form-control-user" id='idDel' >
+                    </div>
+                    <div class="modal-body">Xác nhận hủy bán loại hàng <span id='nameDel'></span></div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary btSubmitDelete" >Xác nhận</a>
+                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
 @endsection
 
 @section('script')
 <!-- Page level plugins -->
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
+<script src="{{asset('js/ajax/ajax_category.js')}}"></script>
 @endsection

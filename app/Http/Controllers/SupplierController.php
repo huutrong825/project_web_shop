@@ -8,12 +8,14 @@
  * @author     "Mr <tronghuu.dang825@gmail.com>
  * @copyright  2022  tronghuu.dang825@gmail.com
  * 
- */ 
+*/ 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 /**
  * Description class
@@ -37,6 +39,10 @@ class SupplierController extends Controller
      */
     public function getSupplier()
     {
+        // $data = Supplier::all();
+        // return Datatables::of($data)
+        //         ->addIndexColumn()
+        //         ->make(true);
         $supp=Supplier::all();
         return response()->json(
             [
@@ -197,28 +203,6 @@ class SupplierController extends Controller
     }
 
     /**
-     * Cập nhật trạng thái cung ứng
-     * 
-     * @return     supp
-     * @author     Mr <dang.trong.rcvn2012@gmail.com>
-     * @lastupdate dang.trong
-     */
-
-    /** 
-     * Cập nhật trạng thái cung ứng
-     * 
-     * @param int $id 
-     * 
-     * @return supp
-     */
-    public function getFix($id)
-    {
-        $supp = Supplier::where('id', $id)->first();
-
-        return view('Admin.Supplier.fix_user', compact('supp'));
-    }
-
-    /**
      * Cập nhật nhà cung ứng
      * 
      * @return     supp
@@ -234,18 +218,23 @@ class SupplierController extends Controller
      * 
      * @return supp
      */
-    public function postFix(Request $req,$id)
+    public function UpdateSupp(Request $req,$id)
     {
         $supp=Supplier::where('id', $id)->first();
                 
         $supp->update(
             [
-            'supplier_name'=>$req->txtname,
-            'address'=>$req->address,
-            'phone'=>$req->phone,
+            'supplier_name'=>$req->nameUp,
+            'address'=>$req->addressUp,
+            'phone'=>$req->phoneUp,
             ]
         );
 
-        return back()->with('thongbao', 'Đã lưu');
+        return response()->json(
+            [
+                'status'=>200,
+                'mess'=>'Thành công'
+            ]
+        );
     }
 }

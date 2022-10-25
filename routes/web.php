@@ -60,21 +60,23 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
 
         Route::post('/add', ['uses'=>'SupplierController@postAddSupplier']);
 
-        Route::get('/getIdDelete/{id}', ['uses'=>'SupplierController@getIDSupplier']);
+        Route::get('/delete/{id}', ['uses'=>'SupplierController@getIDSupplier']);
         Route::delete('/delete/{id}', ['uses'=>'SupplierController@deleteSupplier']);
 
-        Route::get('/getIdBlock/{id}', ['uses'=>'SupplierController@getIDSupplier']);
+        Route::get('/block/{id}', ['uses'=>'SupplierController@getIDSupplier']);
         Route::put('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
+
+        Route::get('/update/{id}', ['uses'=>'SupplierController@getIDSupplier']);
+        Route::put('/update/{id}', ['uses'=>'SupplierController@UpdateSupp']);
     });
 
     Route::group(['prefix'=>'category'], function(){
 
-        Route::get('/', ['uses'=>'CategoryController@getList']);
+        Route::get('/', ['uses'=>'CategoryController@index']);
 
-        Route::post('/add', ['uses'=>'SupplierController@postAddSupplier']);
+        Route::get('/fetch', ['uses'=>'CategoryController@getCate']);
 
-        Route::get('/delete/{id}', ['uses'=>'SupplierController@deleteSupplier']);
-
-        Route::get('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
+        Route::get('/delete/{id}', ['uses'=>'CategoryController@getCateId']);
+        Route::delete('/delete/{id}', ['uses'=>'CategoryController@deleteCate']);
     });
 });

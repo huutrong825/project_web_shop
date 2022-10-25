@@ -246,7 +246,6 @@
         </div>
     </div>
 
-
     <!-- Delete Modal-->
     <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

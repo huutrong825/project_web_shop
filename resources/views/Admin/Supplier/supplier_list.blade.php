@@ -119,34 +119,35 @@
                     <h1 class="h4 text-gray-900 mb-4">Cập nhật nhà cung ứng mới</h1>
                 </div>
                 <div class="modal-body">
-                    <form action="/admin/supplier/add" class="user" id='formadd' method="post">
+                    <form class="user" id='form' method="put">
                     <fieldset>
-                        @csrf                      
+                        @csrf
                         <div class="form-group">
                             <div class="">
-                                <input type="text" class="form-control form-control-user" id='txtname' name="txtname"
-                                    placeholder="Nhập tên nhà cung ứng" required>
+                                <input type="hidden" class="form-control form-control-user" id='idUp' >
+                            </div>
+                        </div>                      
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user" id='nameUp' name="txtname"
+                                     required>
                             </div>
                             <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id='address' name="address"
-                                placeholder="Nhập địa chỉ" required>
+                            <input type="text" class="form-control form-control-user" id='addressUp' name="address"
+                               >
                                 <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
                             <div class="">
                                 <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Nhập SĐT liên hệ" required>
+                                    name="phone" id='phoneUp'  required>
                             </div>
                             <p style="color:red" class="help is-danger"></p>
                         </div>
-                        <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="state" name="state">  
-                            <label class="custom-control-label" for="state">Trạng thái cung ứng hàng</label>                      
-                        </div>
                         <div class="form-group">
-                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitAdd" value="Thêm mới"> 
+                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitUpdate" value="Lưu"> 
                         </div>
                     </fieldset>
                     </form>
@@ -218,4 +219,6 @@
 
 <script src="{{asset('js/ajax/ajax_supplier.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+ <!-- Page level custom scripts -->
+    <!-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script> -->
 @endsection

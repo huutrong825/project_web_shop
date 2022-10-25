@@ -1,28 +1,28 @@
 
 $(document).ready(function(){
-
+    // $('#dataTable').DataTable({
+    //     processing:true,
+    //     serverSide:true,
+    //     ajax:'/admin/supplier/fetch',
+    //     columns:[
+    //         { data: supp.id },
+    //         { data: supp.supplier_name },
+    //         { data: supp.address },
+    //         { data: supp.phone},
+    //         { data: supp.is_state },
+    //     ]
+    // });
     fetch_supplier();
     // Đổ data ra bảng
     function fetch_supplier()
     {
-        $('#dataTable').DataTable({
-            processing:true,
-            serveSide:true,
-            ajax:"{{asset('/admin/supplier/fetch')}}",
-            columns:[
-                { data: 'id', name: 'id' },
-                { data: 'supplier_name', name: 'supplier_name' },
-                { data: 'address', name: 'address' },
-                { data: 'phone', name: 'phone' },
-                { data: 'is_state', name: 'is_state' },
-            ]
-        });
+        
         $.ajax({
             type:'get',
             url:'/admin/supplier/fetch',
             dataType:'json',
             success:function(response){
-                $.each(response.supp, function(key, item){
+                $.each(response.supp, function(key, item){                    
                     var text='';
                     switch(item.is_state){
                         case 0:
@@ -116,7 +116,7 @@ $(document).ready(function(){
         var _id=$(this).attr('value');
         $('#BlockModal').modal('show');
         $.ajax({
-            url:'/admin/supplier/getIdBlock/'+_id,
+            url:'/admin/supplier/block/'+_id,
             type:"GET",
             success:function(response)
             {
@@ -163,7 +163,7 @@ $(document).ready(function(){
         var _id=$(this).attr('value');
         $('#DeleteModal').modal('show');
         $.ajax({
-            url:'/admin/supplier/getIdDelete/'+_id,
+            url:'/admin/supplier/delete/'+_id,
             type:"GET",
             success:function(response)
             {
@@ -178,7 +178,7 @@ $(document).ready(function(){
             }
         });
     });
-    // Xác nhận block/open
+    // Xác nhận xóa
     $(document).on('click', '.btSubmitDelete',function(e)
     {
         e.preventDefault();
@@ -203,6 +203,62 @@ $(document).ready(function(){
             }
         });
     });
+    // popup update
+    $(document).on('click', '.bt-Update',function(e)
+    {
+        e.preventDefault();
+        var _id=$(this).attr('value');
+        $('#UpdateModal').modal('show');
+        console.log(_id);
+        $.ajax({
+            type:'get',
+            url:'/admin/supplier/update/'+_id,
+            success: function(response){
+                $.each(response.supp, function(key, item){
+                    $('#idUp').val(item.id);
+                    $('#nameUp').val(item.supplier_name);
+                    $('#addressUp').val(item.address);
+                    $('#phoneUp').val(item.phone);
+                });
+            },
+            error: function (err)
+            {
+                alert('Lỗi');
+            }
+        });
+    });
 
+    $(document).on('click', '.btSubmitUpdate',function(e)
+    {
+        e.preventDefault();
+        var id=$('#idUp').val();
+        var data={
+            'nameUp':$('#nameUp').val(),
+            'addressUp':$('#addressUp').val(),
+            'phoneUp':$('#phoneUp').val()
+        }
+        console.log(id);
+        $.ajax({
+            url:'/admin/supplier/update/' +id,
+            type:"put",
+            data:data,
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response)
+            {      
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.mess);
+                $('#UpdateModal').modal('hide');
+                $('#dataTable').empty();
+                fetch_supplier();
+            },
+            error: function (err)
+            {
+                 alert('Lỗi');
+            }
+        });
+    });
 
 });
