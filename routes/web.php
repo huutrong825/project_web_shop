@@ -54,13 +54,17 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
 
     Route::group(['prefix'=>'supplier'], function(){
 
-        Route::get('/', ['uses'=>'SupplierController@getList']);
+        Route::get('/', ['uses'=>'SupplierController@index']);
+
+        Route::get('/fetch', ['uses'=>'SupplierController@getSupplier']);
 
         Route::post('/add', ['uses'=>'SupplierController@postAddSupplier']);
 
-        Route::get('/delete/{id}', ['uses'=>'SupplierController@deleteSupplier']);
+        Route::get('/getIdDelete/{id}', ['uses'=>'SupplierController@getIDSupplier']);
+        Route::delete('/delete/{id}', ['uses'=>'SupplierController@deleteSupplier']);
 
-        Route::get('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
+        Route::get('/getIdBlock/{id}', ['uses'=>'SupplierController@getIDSupplier']);
+        Route::put('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
     });
 
     Route::group(['prefix'=>'category'], function(){

@@ -6,7 +6,7 @@
 @section('content')
 <div class="input-group">
     <div class="input-group mb-3">
-        <a href='#' class="btn btn-primary btn-icon-user" data-toggle="modal" data-target="#AddSupplierModal">
+        <a class="btn btn-primary btn-icon-user bt-Add" >
             <span class="icon text-white-50">
                 <i class="fas fa-user-plus"></i>
             </span>
@@ -26,11 +26,8 @@
     </form>
     
 </div>
-@if(session('thongbao'))
-    <div class="alert alert-success">
-        {{session('thongbao')}}
-    </div>
-@endif
+<div class="alert alert-success" style="display:none">
+</div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Nhà cung ứng hàng hóa</h6>
@@ -48,55 +45,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach($supp as $s)
-                    <tr>
-                        <td  style="display:none">{{ $s-> id }}</td>
-                        <td><a href='#'>{{ $s->supplier_name }}</a></td>
-                        <td>{{ $s->address }}</td>  
-                        <td>{{ $s->phone }}</td>                       
-                        @switch($s->is_state)
-                            @case(0)
-                                <td style='color:red'>Ngừng cung ứng</td>
-                                @break
-                            @case(1)
-                                <td style='color:green'>Đang cung ứng</td>
-                                @break
-                            @default
-                             <td>Errol</td>
-                        @endswitch
-                        <td>
-                            <a href='/admin/supplier/fix/{{$s->id}}' class="btn btn-success btn-circle btn-sm">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                            <a href='/admin/supplier/delete/{{$s->id}}' class="btn btn-danger btn-circle btn-sm" >
-                                <i class="fas fa-trash"></i>
-                            </a>
-                            <a href='/admin/supplier/block/{{$s->id}}' class="btn btn-warning btn-circle btn-sm">
-                                <i class="fas fa-user-times"></i>
-                            </a>
-                        </td>
-                        <!-- Delete Modal-->
-                        <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Xác nhận xóa người dùng {{ $s->name }}!</div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-primary" href="/admin/user/delete/{{$s->id}}">Xác nhận</a>
-                                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        
-                    </tr>                    
-                    @endforeach
+                <tbody>           
                 </tbody>
             </table>
         </div>
@@ -106,8 +55,8 @@
     
 
 
-    <!-- Add Supplier Modal-->
-    <div class="modal fade" id="AddSupplierModal" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Add Supplier Modal -->
+    <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content add-user">
@@ -120,46 +69,153 @@
                     <h1 class="h4 text-gray-900 mb-4">Thêm nhà cung ứng mới</h1>
                 </div>
                 <div class="modal-body">
-                    <form action="/admin/supplier/add" class="user" method="post">  
+                    <form action="/admin/supplier/add" class="user" id='formadd' method="post">
+                    <fieldset>
                         @csrf                      
                         <div class="form-group">
                             <div class="">
                                 <input type="text" class="form-control form-control-user" id='txtname' name="txtname"
-                                    placeholder="Nhập tên nhà cung ứng">
+                                    placeholder="Nhập tên nhà cung ứng" required>
                             </div>
-                            <p style="color:red" class="help is-danger">{{ $errors->first('txtname') }}</p>
+                            <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" id='address' name="address"
-                                placeholder="Nhập địa chỉ">
-                                <p style="color:red" class="help is-danger">{{ $errors->first('address') }}</p>
+                                placeholder="Nhập địa chỉ" required>
+                                <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
                             <div class="">
                                 <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Nhập SĐT liên hệ">
+                                    name="phone" id='phone' placeholder="Nhập SĐT liên hệ" required>
                             </div>
-                            <p style="color:red" class="help is-danger">{{ $errors->first('phone') }}</p>
+                            <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="state" name="state">  
                             <label class="custom-control-label" for="state">Trạng thái cung ứng hàng</label>                      
                         </div>
                         <div class="form-group">
-                            <input type='submit' class="btn btn-success btn-user btn-block" value="Thêm mới"> 
+                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitAdd" value="Thêm mới"> 
                         </div>
+                    </fieldset>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Supplier Modal -->
+    <div class="modal fade" id="UpdateModal" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content add-user">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Cập nhật nhà cung ứng mới</h1>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/supplier/add" class="user" id='formadd' method="post">
+                    <fieldset>
+                        @csrf                      
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user" id='txtname' name="txtname"
+                                    placeholder="Nhập tên nhà cung ứng" required>
+                            </div>
+                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id='address' name="address"
+                                placeholder="Nhập địa chỉ" required>
+                                <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user"
+                                    name="phone" id='phone' placeholder="Nhập SĐT liên hệ" required>
+                            </div>
+                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="state" name="state">  
+                            <label class="custom-control-label" for="state">Trạng thái cung ứng hàng</label>                      
+                        </div>
+                        <div class="form-group">
+                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitAdd" value="Thêm mới"> 
+                        </div>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="">
+                    <input type="hidden" class="form-control form-control-user" id='idDelete' >
+                </div>
+                <form method='delete'>
+                    @csrf
+                <div class="modal-body">Xác nhận xóa người dùng <span id='nameDelete'></span></div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary btSubmitDelete" >Xác nhận</a>
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>  
+    
+    <!-- Block Modal-->
+    <div class="modal fade" id="BlockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="">
+                    <input type="hidden" class="form-control form-control-user" id='idBlock' >
+                </div>
+                <form method='put'>
+                    @csrf
+                <div class="modal-body">Xác nhận khóa/mở người dùng <span id='nameBlock'></span></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btSubmitBlock" >Xác nhận</button>
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
+                </div>
+                </form>
             </div>
         </div>
     </div>
 @endsection
 
 @section('script')
+
 <!-- Page level plugins -->
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
+<script src="{{asset('js/ajax/ajax_supplier.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 @endsection

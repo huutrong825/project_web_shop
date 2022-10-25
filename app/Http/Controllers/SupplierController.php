@@ -24,6 +24,10 @@ use Illuminate\Support\Facades\DB;
  */
 class SupplierController extends Controller
 {
+    public function index()
+    {
+        return view('Admin.Supplier.supplier_list');
+    }
     /**
      * Get data from table doing.
      * 
@@ -31,10 +35,38 @@ class SupplierController extends Controller
      * @author     Mr <dang.trong.rcvn2012@gmail.com>
      * @lastupdate trong.dang
      */
-    public function getList()
+    public function getSupplier()
     {
         $supp=Supplier::all();
-        return view('Admin.Supplier.supplier_list', compact('supp'));
+        return response()->json(
+            [
+                'supp'=>$supp
+            ]
+        );
+    }
+
+    public function getIDSupplier($id)
+    {        
+        $supp=DB::table('supplier')->where('id', $id)->get();
+
+        if ($supp)
+        {
+            return response()->json(
+                [
+                'status'=>200,
+                'supp'=>$supp
+                ]
+            );
+        }
+        else
+        {
+            return response()->json(
+                [
+                'status'=>404,
+                'mess'=>'Not find'
+                ]
+            );
+        }
     }
 
     /**
@@ -54,22 +86,31 @@ class SupplierController extends Controller
      */
     public function postAddSupplier(Request $req)
     {
-        if($req->state)
-            $sta=1;
+        
+        if($req->is_state)
+        {   
+            $sta = 1 ;
+        }
         else
-            $sta=0;
+        {
+            $sta = 0 ;
+        }
 
         $supp=Supplier::create(
             [
-            'supplier_name'=>$req->txtname,
+            'supplier_name'=>$req->name_sup,
             'address'=>$req->address,
             'phone'=>$req->phone,
             'is_state'=>$sta
             ]
         );
-
         $supp->save();
-        return redirect('/admin/supplier')->with('thongbao', 'Đã thêm thành công');
+        return response()->json(
+            [
+            'status'=>200,
+            'message'=>"Thêm thành công"
+            ]
+        );
         
     }
 
@@ -90,9 +131,14 @@ class SupplierController extends Controller
      */
     public function deleteSupplier($id)
     {
-        Supplier::where('id', $id)->delete();
+        Supplier::find($id)->delete();
 
-        return back()->with('thongbao', 'Đã xóa');
+        return response()->json(
+            [
+            'status'=>200,
+            'message'=>"Xóa thành công"
+            ]
+        );
     }
 
     /**
@@ -112,26 +158,42 @@ class SupplierController extends Controller
      */
     public function blockSupplier($id)
     {
-        $supp=Supplier::find($id);
-
-        if ($supp->is_state==1)
+        
+        $suppBlock = Supplier::where('id', $id)->first();
+        if ($suppBlock)
         {
-            $supp->update(
-                [
-                'is_state'=>0
-                ]
-            );
+            if ($suppBlock->is_state == 1)
+            {
+                $suppBlock ->update(
+                    [
+                        'is_state'=>0
+                    ]
+                );
+            }
+            else
+            {
+                $suppBlock->update(
+                    [
+                        'is_state'=>1
+                    ]
+                );
+            }
+                return response()->json(
+                    [
+                        'status'=>200,
+                        'mess'=>'Thành công'
+                    ]
+                );
         }
         else
         {
-            $supp->update(
+            return response()->json(
                 [
-                'is_state'=>1
+                    'status'=>404,
+                    'mess'=>'Not find'
                 ]
             );
         }
-
-        return redirect('/admin/supplier')->with('thongbao', 'Đã lưu thay đổi');
     }
 
     /**

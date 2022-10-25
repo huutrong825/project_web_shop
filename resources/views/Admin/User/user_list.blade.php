@@ -84,26 +84,7 @@
                                 <a value='{{$u->id}}' class="btn btn-warning btn-circle btn-sm btBlock">
                                     <i class="fas fa-user-times"></i>
                                 </a>
-                            </td>
-                            <!-- Delete Modal-->
-                            <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
-                                        </div>
-                                        <div class="">
-                                            <input type="hidden" class="form-control form-control-user" id='idDelete' >
-                                        </div>
-                                        <div class="modal-body">Xác nhận xóa người dùng <span id='nameDelete'></span></div>
-                                        <div class="modal-footer">
-                                            <a class="btn btn-primary btDSubmitDelete">Xác nhận</a>
-                                            <button class="btn btn-danger " type="button" data-dismiss="modal">Cancel</button>                    
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                        
+                            </td>                        
                         </tr>                    
                         @endforeach
                     </tbody>
@@ -248,7 +229,7 @@
     <!-- Block Modal-->
     <div class="modal fade" id="BlockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-    <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
@@ -266,7 +247,26 @@
     </div>
 
 
-{{$user->links()}}
+    <!-- Delete Modal-->
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+                </div>
+                <div class="">
+                    <input type="hidden" class="form-control form-control-user" id='idDelete' >
+                </div>
+                <div class="modal-body">Xác nhận xóa người dùng <span id='nameDelete'></span></div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary btDSubmitDelete">Xác nhận</a>
+                    <button class="btn btn-danger " type="button" data-dismiss="modal">Cancel</button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('script')
@@ -276,6 +276,9 @@
 
 <!-- Page level custom scripts -->
 <script src="{{asset('js/ajax/ajax_user.js')}}"></script>
+
+<script src="{{asset('js\demo\datatables-demo.js')}}"></script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 @endsection

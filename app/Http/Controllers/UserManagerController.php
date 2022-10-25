@@ -40,8 +40,8 @@ class UserManagerController extends Controller
      */
     public function listUser()
     {
-        $user = User::orderBy('id', 'desc')->search()->paginate(10);
-
+        // $user = User::orderBy('id', 'desc')->search()->paginate(10);
+        $user = User::all();
         return view('Admin.User.user_list', compact('user'));
     }
 

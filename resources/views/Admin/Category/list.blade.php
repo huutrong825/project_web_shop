@@ -47,7 +47,7 @@
                     <tr>
                         <td  style="display:none">{{ $c-> id }}</td>
                         <td><a href='#'>{{ $c->category_name }}</a></td>
-                        <td><img src="{{asset(' $c->image')}}" alt="Picture"></td>  
+                        <td><img src="{{asset('img')}}/{{$c->image}}" alt="Picture" width='50px' height='50px'></td>  
                         <td>
                             <a href='/admin/category/fix/{{$c->id}}' class="btn btn-success btn-circle btn-sm">
                                 <i class="fas fa-pen"></i>
