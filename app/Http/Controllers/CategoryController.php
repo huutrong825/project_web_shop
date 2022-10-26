@@ -20,7 +20,8 @@ class CategoryController extends Controller
 
         return Datatables::of($cate)
                 ->addColumn('image', function( $cate ) {
-                    return '<img class="avatar" src="{{ asset(img)}}/{{' .$cate->image. '")}} alt="Avatar"
+                    $url=asset('img/'.$cate->image);
+                    return '<img class="avatar" src="' .$url. '" alt="Avatar"
                     style="width:50px;height:50px"/>';
                 })
                 ->addColumn('action', function($cate) {
@@ -59,6 +60,10 @@ class CategoryController extends Controller
         
     }
 
+    public function addCate()
+    {
+
+    }
     public function deleteCate($id)
     {
         Category:: where('category_id', $id)-> delete();

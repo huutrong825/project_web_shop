@@ -77,13 +77,15 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Quản lý</span>
+                    <span>Quản lý sản phẩm</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/product">Danh sách sản phẩm</a>
                         <a class="collapse-item" href="/admin/supplier">Nhà cung ứng</a>
                         <a class="collapse-item" href="/admin/category">Danh mục loại hàng</a>
+                        <a class="collapse-item" href="#">Đơn vị tính</a>
                     </div>
                 </div>
             </li>
@@ -94,11 +96,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Sản phẩm</span>
+                    <span></span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Danh sách sản phẩm</a>
+                        
                         <a class="collapse-item" href="register.html"></a>
                         <a class="collapse-item" href="forgot-password.html"></a>
                         <div class="collapse-divider"></div>
@@ -161,11 +163,8 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">                              
-
-
+                    <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->
                         @auth
                         <li class="nav-item dropdown no-arrow">
@@ -206,8 +205,7 @@
                 <div class="container-fluid">
                     
                     <!-- Page Heading -->
-                    @yield('content')                    
-
+                    @yield('content')
                 </div>
                 <!-- /.container-fluid -->
 
@@ -246,7 +244,7 @@
                 <div class="modal-body">Bạn có chắc muốn thoát phiên làm việc</div>
                 <div class="modal-footer">
                     <a class="btn btn-primary" href="/admin/logout">Xác nhận</a>
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>                    
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
                 </div>
             </div>
         </div>

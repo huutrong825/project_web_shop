@@ -1,24 +1,27 @@
 
 $(document).ready(function(){
 
-    fetch_supplier();
+    fetch_product();
     // Đổ data ra bảng
-    function fetch_supplier()
-    {
+    function fetch_product()
+    {  
         $('#myTable').DataTable({
             'processing':true,
             'serverSide':true,
-            'ajax':'/admin/supplier/fetch',
+            'ajax':'/admin/product/fetch',
             'columns':[
-                { 'data': 'id', 'visible':false},
-                { 'data': 'supplier_name' },
-                { 'data': 'address' },
-                { 'data': 'phone' },
-                { 'data': 'is_state' },
-                { 'data': 'action', 'orderable':false,'searchable':false},
-            ],
-        });        
+                {'data':'product_id','visible':false},
+                {'data':'product_name'},
+                {'data':'unit_price'},
+                {'data':'image'},
+                {'data':'is_sale'},
+                {'data':'supplier_name'},
+                {'data':'action','orderable':false,'searchable':false}
+            ]
+            
+        });
     }
+
     // Mở popup thêm
     $(document).on('click', '.bt-Add',function(e)
     {
@@ -57,11 +60,10 @@ $(document).ready(function(){
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success:function(response)
-                {  
-                    console.log(response);
+                {   console.log(response);
                     $('#AddModal').modal('hide');
                     $('#AddModal').reset();
-                    $('#myTable').empty();
+                    $('#dataTable').empty();
                     fetch_supplier();
                 },
                 error: function (err)
@@ -223,5 +225,4 @@ $(document).ready(function(){
             }
         });
     });
-
 });

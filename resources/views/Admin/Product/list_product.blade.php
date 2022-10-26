@@ -4,32 +4,23 @@
     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection
 @section('content')
+
 <div class="input-group">
     <div class="input-group mb-3">
-        <a class="btn btn-primary btn-icon-user bt-Add" >
+        <a href="/admin/product/add" class="btn btn-primary btn-icon-user" >
             <span class="icon text-white-50">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-plus"></i>
             </span>
             <span class="text">Thêm mới</span>
         </a>
     </div>
-    <form active="/admin/user" method="get">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" id='key' name="key" placeholder="Search">
-        <div class="input-group-append">
-            <button class="btn btn-success" type="submit" id='btSearch'>Go</button>
-        </div>
-        <div class="input-group-append">
-            <a href='#' class='btn'><i class=''></i>Reset</a>
-        </div>
-    </div>
-    </form>
 </div>
+
 <div class="alert alert-success" style="display:none">
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Nhà cung ứng hàng hóa</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Sản phẩm</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -37,14 +28,15 @@
                 <thead>
                     <tr>
                         <th >STT</th>
-                        <th>Tên nhà cung ứng</th>
-                        <th>Địa chỉ</th>
-                        <th>Liên hệ</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Hình ảnh</th>
                         <th>Trạng thái</th>
+                        <th>Shop</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>           
+                <tbody>
                 </tbody>
             </table>
         </div>
@@ -54,7 +46,7 @@
     
 
 
-    <!-- Add Supplier Modal -->
+    <!-- Add  Modal -->
     <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -65,28 +57,63 @@
                     </button>
                 </div>
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Thêm nhà cung ứng mới</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Thêm sản phẩm mới</h1>
                 </div>
                 <div class="modal-body">
-                    <form action="/admin/supplier/add" class="user" id='formadd' method="post">
+                    <form class="user" id='formadd' method="post">
                     <fieldset>
                         @csrf                      
                         <div class="form-group">
                             <div class="">
                                 <input type="text" class="form-control form-control-user" id='txtname' name="txtname"
-                                    placeholder="Nhập tên nhà cung ứng" required>
+                                    placeholder="Nhập tên sản phẩm" required>
                             </div>
                             <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" id='address' name="address"
-                                placeholder="Nhập địa chỉ" required>
+                                placeholder="Loại" required>
                                 <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
                             <div class="">
                                 <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Nhập SĐT liên hệ" required>
+                                    name="phone" id='phone' placeholder="Nhập số lượng" required>
+                            </div>
+                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user"
+                                    name="phone" id='phone' placeholder="Nhập đơn giá (VNĐ)" required>
+                            </div>
+                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user"
+                                    name="phone" id='phone' placeholder="Chọn đơn vị tính" required>
+                            </div>
+                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user"
+                                    name="phone" id='phone' placeholder="Ảnh" required>
+                            </div>
+                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user"
+                                    name="phone" id='phone' placeholder="Giảm giá" required>
+                            </div>
+                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user"
+                                    name="phone" id='phone' placeholder="Shop" required>
                             </div>
                             <p style="color:red" class="help is-danger"></p>
                         </div>
@@ -216,8 +243,7 @@
 
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
-<script src="{{asset('js/ajax/ajax_supplier.js')}}"></script>
+<script src="{{asset('js/ajax/ajax_product.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
- <!-- Page level custom scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"></script>
+
 @endsection

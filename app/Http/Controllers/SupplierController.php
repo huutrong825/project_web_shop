@@ -39,16 +39,31 @@ class SupplierController extends Controller
      */
     public function getSupplier()
     {
-        // $data = Supplier::all();
-        // return Datatables::of($data)
-        //         ->addIndexColumn()
-        //         ->make(true);
-        $supp=Supplier::all();
-        return response()->json(
-            [
-                'supp'=>$supp
-            ]
-        );
+        $supp = Supplier::all();
+        return Datatables::of($supp)
+                ->addColumn('is_state', function ($supp) {
+                    $temp=$supp->is_state==0?'<td><span style="color:red">Ngừng cung ứng</span></td>':($supp->is_state==1?'<td><span style="color:green">Đang cung ứng</span></td>':'Errol');
+                    return $temp;
+                })
+                ->addColumn('action', function ($supp ) {
+                    return '<a value="'. $supp->id. '" class="btn btn-success btn-circle btn-sm bt-Update">
+                    <i class="fas fa-pen"></i>
+                </a>
+                <a value=" '. $supp->id .'" class="btn btn-danger btn-circle btn-sm bt-Delete" >
+                    <i class="fas fa-trash"></i>
+                </a>
+                <a value=" '. $supp->id .'" class="btn btn-warning btn-circle btn-sm bt-Block">
+                    <i class="fas fa-user-times"></i>
+                </a>';
+                })
+                ->rawColumns(['is_state','action'])
+                ->make(true);
+        // $supp=Supplier::all();
+        // return response()->json(
+        //     [
+        //         'supp'=>$supp
+        //     ]
+        // );
     }
 
     public function getIDSupplier($id)

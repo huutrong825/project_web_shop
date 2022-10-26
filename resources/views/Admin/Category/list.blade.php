@@ -6,7 +6,7 @@
 @section('content')
 <div class="input-group">
     <div class="input-group mb-3">
-        <a href='#' class="btn btn-primary btn-icon-user" data-toggle="modal" data-target="#AddSupplierModal">
+        <a href='#' class="btn btn-primary btn-icon-user btAdd">
             <span class="icon text-white-50">
                 <i class="fas fa-user-plus"></i>
             </span>
@@ -75,13 +75,12 @@
                             </div>
                             <p style="color:red" class="help is-danger">{{ $errors->first('txtname') }}</p>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id='address' name="address"
-                                placeholder="Nhập địa chỉ">
+                        
+                            <input type="file" class="form-control" id='file' name="file">
                                 <p style="color:red" class="help is-danger">{{ $errors->first('address') }}</p>
-                        </div>
+                        
                         <div class="form-group">
-                            <input type='submit' class="btn btn-success btn-user btn-block" value="Thêm mới"> 
+                            <input type='submit' class="btn btn-success btn-user btn-block tbSubmitAdd" value="Thêm mới"> 
                         </div>
                     </form>
                 </div>

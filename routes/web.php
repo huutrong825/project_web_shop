@@ -79,4 +79,12 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
         Route::get('/delete/{id}', ['uses'=>'CategoryController@getCateId']);
         Route::delete('/delete/{id}', ['uses'=>'CategoryController@deleteCate']);
     });
+
+    Route::group(['prefix'=>'product'], function(){
+
+        Route::get('/', ['uses'=>'ProductController@index']);
+        Route::get('/fetch', ['uses'=>'ProductController@listProduct']);
+
+        Route::get('/add', ['uses'=>'ProductController@addProduct']);
+    });
 });

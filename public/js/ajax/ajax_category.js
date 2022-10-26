@@ -9,13 +9,44 @@ $(document).ready(function(){
             'serverSide':true,
             'ajax':'/admin/category/fetch',
             'columns':[
-                { 'data': 'category_id' },
+                { 'data': 'category_id','visible':false},
                 { 'data': 'category_name' },
                 { 'data': 'image' },
-                { 'data': 'action','orderable': 'false', 'searchable': 'false'},
+                { 'data': 'action','orderable': false, 'searchable': false},
             ]
         });
     }
+
+    $(document).on('click','.btAdd', function(e){
+        e.preventDefault();
+        $('#AddModal').modal('show');
+    });
+
+    $(document).on('click','.btSubmitAdd', function(e){
+        e.preventDefault();
+        var data={
+            'cate_name':$('#txtname').val(),
+            'file':$('#file').val(),
+        }
+        
+        $.ajax({
+            url:'',
+            type:'post',
+            data:data,
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response)
+            {
+                console.log(response);
+                $('#AddModal').modal('hide');
+                $('#AddModal').reset();
+                $('#myTable').empty();
+                fetch_supplier();
+            }
+        });
+    });
 
 
     // thông báo xóa 
@@ -57,6 +88,7 @@ $(document).ready(function(){
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.mess);
                 $('#DeleteModal').modal('hide');
+                
             },
             error: function (err)
             {
