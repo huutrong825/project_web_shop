@@ -21,12 +21,9 @@ class AuthController extends Controller
 
     public function postLogin(LoginRequest $req)
     {
-        if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password]))
-        {
+        if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password])) {
             return redirect('/admin');
-        }
-        else
-        {
+        } else {
             return redirect('/login')->with('thongbao', 'Email hoặc mật khẩu không đúng');
         }
     }
@@ -40,17 +37,17 @@ class AuthController extends Controller
 
         $u=User::create(
             [
-            'name'=>$req->txtname,
-            'email'=>$req->email,
-            'password'=>Hash::make($req->repass),            
-            'remember_token' => Str::random(10),
-            'is_active'=>1,
-            'is_delete'=>0,
-            'group_role'=>1,
-            'last_login_at'=>date('Y-m-d H:i:s'),
-            'last_login_ip'=>fake()->numerify($string = '###.##.###'),
-            'created_at'=>date("Y-m-d"),
-            'updated_at'=>date("Y-m-d")
+                'name' => $req->txtname,
+                'email' => $req->email,
+                'password' => Hash::make($req->repass),            
+                'remember_token' => Str::random(10),
+                'is_active'=> 1,
+                'is_delete'=> 0,
+                'group_role'=> 1,
+                'last_login_at' => date('Y-m-d H:i:s'),
+                'last_login_ip' => fake()->numerify($string = '###.##.###'),
+                'created_at' => date("Y-m-d"),
+                'updated_at' => date("Y-m-d")
             ]
         );
 
@@ -68,8 +65,7 @@ class AuthController extends Controller
 
     public function getProfile()
     {
-        if(Auth::check())
-        {
+        if (Auth::check()) {
             $id=Auth::id();
             $user=DB::table('users')->where('id', $id)->get();
         }
@@ -84,20 +80,17 @@ class AuthController extends Controller
         $user=User::find($id);
         $img_name='';
         
-        if($req->file('avatar'))
-        {
-            if ($req->file('avatar')->isValid())
-            {
+        if ($req->file('avatar')) {
+            if ($req->file('avatar')->isValid()) {
                 $img=$req->avatar;
                  $img_name=$img->getClientOriginalName();
                  $img->move(public_path('img'), $img_name);              
                 
             }
         }
-        if($req->checkPass!='on')
-        {
-            if($img_name!=null)
-            {
+        if ($req->checkPass!='on') {
+
+            if ($img_name!=null) {
                 $user->update(
                     [
                     'name'=>$req->name,
@@ -108,9 +101,7 @@ class AuthController extends Controller
                     'avatar'=>$img_name
                     ]
                 );
-            }
-            else
-            {
+            } else {
                 $user->update(
                     [
                     'name'=>$req->name,
@@ -121,33 +112,28 @@ class AuthController extends Controller
                     ]
                 );
             }
-        }
-        else
-        {
-            if ($img_name!=null)
-            {
+        } else {
+            if ($img_name != null) {
                 $user->update(
                     [
-                    'name'=>$req->name,
-                    'sex'=>$req->sex,
-                    'phone'=>$req->phone,
-                    'birth'=>$req->birth,
-                    'address'=>$req->address,
-                    'avatar'=>$img_name,
-                    'password'=>Hash::make($req->repass)
+                        'name' => $req->name,
+                        'sex' => $req->sex,
+                        'phone' => $req->phone,
+                        'birth' => $req->birth,
+                        'address' => $req->address,
+                        'avatar' => $img_name,
+                        'password' => Hash::make($req->repass)
                     ]
                 );
-            }
-            else
-            {
+            } else {
                 $user->update(
                     [
-                    'name'=>$req->name,
-                    'sex'=>$req->sex,
-                    'phone'=>$req->phone,
-                    'birth'=>$req->birth,
-                    'address'=>$req->address,
-                        'password'=>Hash::make($req->repass)
+                        'name' => $req->name,
+                        'sex' => $req->sex,
+                        'phone' => $req->phone,
+                        'birth' => $req->birth,
+                        'address' => $req->address,
+                        'password' => Hash::make($req->repass)
                     ]
                 );
             }

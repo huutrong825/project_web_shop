@@ -36,7 +36,9 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
 
     Route::group(['prefix'=>'user'], function(){
 
-        Route::get('/', ['uses'=>'UserManagerController@listUser']);
+        Route::get('/', ['uses'=>'UserManagerController@index']);
+
+        Route::get('/fetch', ['uses'=>'UserManagerController@listUser']);
 
         Route::post('/add', ['uses'=>'UserManagerController@postAddUser']);
 
@@ -75,6 +77,8 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
         Route::get('/', ['uses'=>'CategoryController@index']);
 
         Route::get('/fetch', ['uses'=>'CategoryController@getCate']);
+
+        Route::post('/add', ['uses'=>'CategoryController@addCate']);
 
         Route::get('/delete/{id}', ['uses'=>'CategoryController@getCateId']);
         Route::delete('/delete/{id}', ['uses'=>'CategoryController@deleteCate']);

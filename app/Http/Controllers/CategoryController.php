@@ -16,19 +16,20 @@ class CategoryController extends Controller
 
     public function getCate()
     {
-        $cate=Category::all();
+        $cate = Category::all();
 
         return Datatables::of($cate)
-                ->addColumn('image', function( $cate ) {
-                    $url=asset('img/'.$cate->image);
+                -> addColumn('image', function ($cate) {
+                    $url=asset('img/' . $cate->image);
                     return '<img class="avatar" src="' .$url. '" alt="Avatar"
-                    style="width:50px;height:50px"/>';
-                })
-                ->addColumn('action', function($cate) {
-                    return '<a value="'.$cate->category_id.'" class="btn btn-success btn-circle btn-sm bt-Update">
+                    style="width:50px;height:50px"/>'; 
+                } )
+                -> 
+                addColumn('action', function ($cate) {
+                    return '<a value="' . $cate->category_id . '" class="btn btn-success btn-circle btn-sm bt-Update">
                     <i class="fas fa-pen"></i></a>            
 
-                    <a value="'.$cate->category_id.'" class="btn btn-danger btn-circle btn-sm bt-Delete">
+                    <a value="' . $cate->category_id . '" class="btn btn-danger btn-circle btn-sm bt-Delete">
                     <i class="fas fa-trash"></i></a>';
                 })
                 ->rawColumns(['image','action'])
@@ -60,9 +61,34 @@ class CategoryController extends Controller
         
     }
 
-    public function addCate()
+    public function addCate(Request $req)
     {
-
+        dd($req->image->getClientOriginalName());
+        if ($req->image) {
+            $img = $req->file;
+            $img_name = $img->getClientOriginalName();
+            $req->file->move(public_path('img'), $img_name);
+            return response()->json(
+                [
+                    's'=>$img_name
+                ]
+            );
+        }
+        
+       
+        // $cate=Category::create(
+        //     [
+        //         'category_name' => $req->cate_name,
+        //         'image' => $img_name,
+        //     ]
+        // );
+        // $cate->save();
+        // return response()->json(
+        //     [
+        //         'state'=>200,
+        //         'messages'=>'Thành công'
+        //     ]
+        // );
     }
     public function deleteCate($id)
     {

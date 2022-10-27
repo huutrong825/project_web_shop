@@ -22,17 +22,15 @@ $(document).ready(function(){
         $('#AddModal').modal('show');
     });
 
-    $(document).on('click','.btSubmitAdd', function(e){
+    $(document).on('click', '.btSubmitAdd', function(e){
+
         e.preventDefault();
-        var data={
-            'cate_name':$('#txtname').val(),
-            'file':$('#file').val(),
-        }
-        
         $.ajax({
-            url:'',
+            url:'/admin/category/add',
             type:'post',
-            data:data,
+            data: new FormData($('#categoryForm')[0]),
+            contentType: false,
+            processData: false,
             dataType:'json',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -40,10 +38,10 @@ $(document).ready(function(){
             success: function(response)
             {
                 console.log(response);
-                $('#AddModal').modal('hide');
-                $('#AddModal').reset();
-                $('#myTable').empty();
-                fetch_supplier();
+            },
+            error: function (err)
+            {
+                console.log(err);
             }
         });
     });
@@ -88,7 +86,8 @@ $(document).ready(function(){
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.mess);
                 $('#DeleteModal').modal('hide');
-                
+                $('#myTable').DataTable().ajax.reload();
+                $('.alert-success').hide(8000);
             },
             error: function (err)
             {

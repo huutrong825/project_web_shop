@@ -37,7 +37,6 @@ $(document).ready(function(){
         }
     });
     // Thêm Supplier
-    $('#formadd').submit(function(){
 
         $(document).on('click', '.btSubmitAdd',function(e)
         {
@@ -58,11 +57,10 @@ $(document).ready(function(){
                 },
                 success:function(response)
                 {  
-                    console.log(response);
                     $('#AddModal').modal('hide');
                     $('#AddModal').reset();
-                    $('#myTable').empty();
-                    fetch_supplier();
+                    $('#myTable').DataTable().ajax.reload();
+                    $('.alert-success').hide(8000);
                 },
                 error: function (err)
                 {
@@ -70,8 +68,6 @@ $(document).ready(function(){
                 }
             });
         });
-
-    });
     // thông báo khóa
     $(document).on('click', '.bt-Block',function(e)
     {
@@ -110,13 +106,13 @@ $(document).ready(function(){
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.mess);
                 $('#BlockModal').modal('hide');
-                $('#dataTable').empty();
-                fetch_supplier();
+                $('#myTable').DataTable().ajax.reload();
+                $('.alert-success').hide(8000);
             },
             error: function (err)
             {
                 // alert('Lỗi');
-            }
+            },
         });
     });
     // thông báo xóa 
@@ -157,8 +153,8 @@ $(document).ready(function(){
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.mess);
                 $('#DeleteModal').modal('hide');
-                $('#dataTable').empty();
-                fetch_supplier();
+                $('#myTable').DataTable().ajax.reload();
+                $('.alert-success').hide(8000);
             },
             error: function (err)
             {
@@ -211,16 +207,16 @@ $(document).ready(function(){
             },
             success:function(response)
             {      
+                $('#UpdateModal').modal('hide');
+                $('#myTable').DataTable().ajax.reload();
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.mess);
-                $('#UpdateModal').modal('hide');
-                $('#dataTable').empty();
-                fetch_supplier();
+                $('.alert-success').hide(8000);
             },
             error: function (err)
             {
                  alert('Lỗi');
-            }
+            },
         });
     });
 

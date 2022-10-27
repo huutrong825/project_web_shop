@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+use Yajra\Datatables\Datatables;
 
 /**
  * Description class
@@ -27,6 +28,11 @@ use Validator;
  */
 class UserManagerController extends Controller
 {
+
+    public function index()
+    {
+        return view('Admin.User.user_list');
+    }
     /** 
      * Lấy danh sách user từ sever
      */  
@@ -40,9 +46,28 @@ class UserManagerController extends Controller
      */
     public function listUser()
     {
-        // $user = User::orderBy('id', 'desc')->search()->paginate(10);
         $user = User::all();
-        return view('Admin.User.user_list', compact('user'));
+        return Datatables::of($user)
+        ->addColumn('group_role', function( $user ) {
+            $temp = $user->group_role == 1? "Admin" : ($user->group_role == 2? "Employee" : "Errol");
+            return $temp;
+        })
+        ->addColumn('is_active', function( $user ) {
+            $temp = $user->is_active == 1? '<span style="color:green">Đang hoạt động</span>' : '<span style="color:red">Ngưng hoạt động</span>';
+            return $temp;
+        })
+        ->addColumn('action', function($user) {
+            return '<a value="'.$user->id.'" class="btn btn-success btn-circle btn-sm bt-Update">
+            <i class="fas fa-pen"></i></a>
+            
+            <a value="'.$user->id.'" class="btn btn-danger btn-circle btn-sm bt-Delete">
+            <i class="fas fa-trash"></i></a> 
+
+            <a value="'.$user->id.'" class="btn btn-warning btn-circle btn-sm bt-Block">
+            <i class="fas fa-user-times"></i></a>';
+        })
+        ->rawColumns(['group_role','is_active','action'])
+        ->make();
     }
 
     

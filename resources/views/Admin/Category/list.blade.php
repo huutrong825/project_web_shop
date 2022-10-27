@@ -8,19 +8,11 @@
     <div class="input-group mb-3">
         <a href='#' class="btn btn-primary btn-icon-user btAdd">
             <span class="icon text-white-50">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-plus"></i>
             </span>
             <span class="text">Thêm mới</span>
         </a>
     </div>
-    <form active="/admin/user" method="get">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" id='txtSearch' name="txtSearch" placeholder="Search">
-        <div class="input-group-append">
-            <button class="btn btn-success" type="submit" id='btSearch'>Go</button>
-        </div>
-    </div>
-    </form>
 </div>
 @if(session('thongbao'))
     <div class="alert alert-success">
@@ -66,21 +58,19 @@
                     <h1 class="h4 text-gray-900 mb-4">Thêm loại hàng</h1>
                 </div>
                 <div class="modal-body">
-                    <form action="/admin/category/add" class="user" method="post">  
+                    <form id="categoryForm" method="post" enctype="multipart/form-data">  
                         @csrf                      
                         <div class="form-group">
                             <div class="">
-                                <input type="text" class="form-control form-control-user" id='txtname' name="txtname"
+                                <input type="text" class="form-control form-control-user" id='cate_name' name="cate_name"
                                     placeholder="Nhập tên loại hàng">
                             </div>
-                            <p style="color:red" class="help is-danger">{{ $errors->first('txtname') }}</p>
                         </div>
-                        
-                            <input type="file" class="form-control" id='file' name="file">
-                                <p style="color:red" class="help is-danger">{{ $errors->first('address') }}</p>
-                        
                         <div class="form-group">
-                            <input type='submit' class="btn btn-success btn-user btn-block tbSubmitAdd" value="Thêm mới"> 
+                            <input type="file" class="form-control" id='image' name="image">
+                        </div>
+                        <div class="form-group">
+                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitAdd" value="Thêm mới"> 
                         </div>
                     </form>
                 </div>

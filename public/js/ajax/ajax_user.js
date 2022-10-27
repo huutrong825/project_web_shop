@@ -1,6 +1,27 @@
 // hiện popup Update
-$(document).ready(function(){    
-    $(".btUpdate").click(function(e)
+$(document).ready(function(){
+
+    fetch_user();
+
+    function fetch_user()
+    {
+        $('#myTable').DataTable({
+            'processing':true,
+            'serverSide':true,
+            'ajax':'/admin/user/fetch',
+            'columns':[
+                { 'data': 'id','visible':false},
+                { 'data': 'name' },
+                { 'data': 'email' },
+                { 'data': 'group_role' },
+                { 'data': 'is_active' },
+                { 'data': 'action','orderable': false, 'searchable': false},
+            ]
+        });
+
+    }
+
+    $(document).on('click', '.bt-Update',function(e)
     {
         e.preventDefault();
         var _id=$(this).attr('value');
@@ -32,20 +53,15 @@ $(document).ready(function(){
             }
         });
     });
-});
 
-$(document).ready(function (){
-    $("#customCheck").click(function(){
+    $(document).on('click','#customCheck', function(){
         $("#pass1").toggle();
         $("#pass2").toggle();
         $("#pass3").toggle();
     });
-});
 
-// đưa data userupdate đến xử lý
-
-$(document).ready(function(){    
-    $("#submitUpdate").click(function(e){
+    // đưa data userupdate đến xử lý
+    $(document).on('click','#submitUpdate',  function(e){
         e.preventDefault();
         var id_update=$('#ID').val();
         if ($('#customCheck').is(':checked'))
@@ -90,7 +106,7 @@ $(document).ready(function(){
                 else
                 {
                     $('#UpdateUserModal').modal('hide');
-                    window.location.reload();
+                    $('#myTable').DataTable().ajax.reload();
                 }                
             },
             error: function (err) {
@@ -98,67 +114,65 @@ $(document).ready(function(){
             }
         });
     });
-});
 
-$(document).ready(function(){    
-    $(".btAddUser").click(function(e){
+
+    $(document).on('click','.btAddUser', function(e){
         e.preventDefault();
         $('#AddUserModal').modal('show');
-    });    
-});
-$(document).ready(function(){
-    $(".close").click(function(e){
-        $('#AddUserModal').modal('hide');
-        window.location.reload();
     });
-});
-// thêm use bằng ajax
-$(document).ready(function(){
-    $("#btSubmitAdd").click(function(e){
-        e.preventDefault();
-        var data={
-            'name':$('#addtxtname').val(),
-            'email':$('#addemail').val(),
-            'password':$('#addpassword').val(),
-            'repass':$('#addrepass').val(),
-            'group_role':$('#addgroup_role').val(),
-            'active':$('#addactive').prop('checked'),            
-        }   
-        $.ajax({
-            url:'/admin/user/add',
-            type:"post",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data:data,
-            dataType:'json',
-            success:function(response){    
-                if(response.status==400)
-                {
-                    $(".print-error-msg").css('display','block');
-                    $('#error_mes').html('');
-                    $('#error_mes').addClass('alert alert_danger');
-                    $.each(response.errors, function(keys, err_values){
-                        $('#error_mes').append('<li>'+err_values+'</i>');
-                    });
-                }
-                else
-                {
-                    $('#AddUserModal').modal('hide');
-                    window.location.reload();
-                }
-            },
-            error: function (err) {
-                alert('Lỗi');
-            }
-        });        
+ 
+    $('#formadd').validate({
+        rules:{
+            'txtname':'required',
+        },
+        messages:{
+            'txtname.required':'không dc trống'
+        }
     });
-    
-});
-
-//Alert Delete
-$(document).ready(function(){    
-    $(".btDelete").click(function(e)
+ 
+    // thêm use bằng ajax
+        $(document).on('click','#btSubmitAdd',function(e){
+            e.preventDefault();
+            var data={
+                'name':$('#addtxtname').val(),
+                'email':$('#addemail').val(),
+                'password':$('#addpassword').val(),
+                'repass':$('#addrepass').val(),
+                'group_role':$('#addgroup_role').val(),
+                'active':$('#addactive').prop('checked'),            
+            }   
+                $.ajax({
+                    url:'/admin/user/add',
+                    type:"post",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:data,
+                    dataType:'json',
+                    success:function(response){    
+                        if(response.status==400)
+                        {
+                            $(".print-error-msg").css('display','block');
+                            $('#error_mes').html('');
+                            $('#error_mes').addClass('alert alert_danger');
+                            $.each(response.errors, function(keys, err_values){
+                                
+                            });
+                        }
+                        else
+                        {
+                            $('#AddUserModal').modal('hide');
+                            $('#myTable').DataTable().ajax.reload();
+                        }
+                    },
+                    error: function (err) {
+                        $('#formadd').validate().messages;
+                    }
+                });        
+        });
+    //Alert Delete
+   
+    $(document).on('click','.bt-Delete',function(e)
     {
         e.preventDefault();
         var _id=$(this).attr('value');
@@ -177,10 +191,10 @@ $(document).ready(function(){
             }
         });
     });
-});
-// Xác nhận xóa
-$(document).ready(function(){    
-    $(".btDSubmitDelete").click(function(e)
+
+    // Xác nhận xóa
+  
+    $(document).on('click','.btDSubmitDelete', function(e)
     {
         e.preventDefault();
         var _id=$('#idDelete').val();
@@ -191,7 +205,7 @@ $(document).ready(function(){
             success:function(response)
             {
                 $('#DeleteModal').modal('hide');
-                window.location.reload();
+                $('#myTable').DataTable().ajax.reload();
             },
             error: function (err)
             {
@@ -199,12 +213,11 @@ $(document).ready(function(){
             }
         });
     });
-});
 
 
-//Alert Block
-$(document).ready(function(){    
-    $(".btBlock").click(function(e)
+    //Alert Block
+  
+    $(document).on('click','.bt-Block', function(e)
     {
         e.preventDefault();
         var _id=$(this).attr('value');
@@ -223,10 +236,10 @@ $(document).ready(function(){
             }
         });
     });
-});
-// Xác nhận block/open
-$(document).ready(function(){    
-    $(".btDSubmitBlock").click(function(e)
+
+    // Xác nhận block/open
+ 
+    $(document).on('click','.btDSubmitBlock',function(e)
     {
         e.preventDefault();
         var _id=$('#idBlock').val();
@@ -239,12 +252,35 @@ $(document).ready(function(){
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.mess);
                 $('#BlockModal').modal('hide');
-                window.location.reload();
+                $('#myTable').DataTable().ajax.reload();
             },
             error: function (err)
             {
                 alert('Lỗi');
             }
+        });
+    });
+
+    // Search
+    function filterColumn(i)
+    {
+        $('#myTable').DataTable().column(i).search(
+            $('#filter'+i).val()
+        ).draw();
+    }
+    function search()
+    {
+        $('#myTable').DataTable().search($('#key').val(),$('#group').val(),$('#state').val()).draw();
+    }
+    $(document).ready(function(){
+        $('#myTable').DataTable();
+
+        $('#key').on('keyup', function(){
+            search();
+        });
+
+        $('.filter').on('click change', function(){
+            filterColumn($(this).parents('tr').attr('data-column'));
         });
     });
 });
