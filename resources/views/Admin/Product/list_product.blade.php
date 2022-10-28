@@ -5,14 +5,41 @@
 @endsection
 @section('content')
 
-<div class="input-group">
-    <div class="input-group mb-3">
+<div class="input-group row">
+    <div class="input-group mb-3 col-sm-3">
         <a href="/admin/product/add" class="btn btn-primary btn-icon-user" >
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
             <span class="text">Thêm mới</span>
         </a>
+    </div>
+    <form class="row" id="formSearch">
+    <div class="col-sm">
+        <div class="input-group ">
+            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
+        </div>                       
+    </div>
+    <div class="col-sm">
+        <select class="form-control filter" id="group"  >
+            <option disabled selected hidden>Chọn nhóm</option>
+            <option value="1">Admin</option>
+            <option value="2">Employee</option>
+        </select>
+    </div>
+    <div class="col-sm">
+        <select class="form-control filter" id="active"  >
+            <option disabled selected hidden>Chọn trạng thái</option>
+            <option value="1">Đang hoạt động</option>
+            <option value="o">Ngưng hoạt động</option>
+        </select>
+    </div>
+    <div class="col-sm-3">
+        <a class="btn btn-success" type="submit" id='btSearch'>Tìm</a>
+    </div>
+    </form>
+    <div class=" col-sm-3">
+        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
     </div>
 </div>
 

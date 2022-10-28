@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Description function
- *
- * @package    App
- * @subpackage Controllers
- * @author     "Mr <tronghuu.dang825@gmail.com>
- * @copyright  2022  tronghuu.dang825@gmail.com
- * 
-*/ 
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -40,47 +30,44 @@ class SupplierController extends Controller
     public function getSupplier()
     {
         $supp = Supplier::all();
-        return Datatables::of($supp)
-                ->addColumn('is_state', function ($supp) {
-                    $temp=$supp->is_state==0?'<td><span style="color:red">Ngừng cung ứng</span></td>':($supp->is_state==1?'<td><span style="color:green">Đang cung ứng</span></td>':'Errol');
+        return Datatables::of($supp)->
+            addColumn(
+                'is_state', function ($supp) {
+                    $temp = $supp->is_state == 0 ? '<td><span style="color:red">Ngừng cung ứng</span></td>'
+                            :($supp->is_state == 1 ? '<td><span style="color:green">Đang cung ứng</span></td>'
+                            :'Errol');
                     return $temp;
-                })
-                ->addColumn('action', function ($supp ) {
+                }
+            )
+            ->addColumn(
+                'action', function ($supp ) {
                     return '<a value="'. $supp->id. '" class="btn btn-success btn-circle btn-sm bt-Update">
                     <i class="fas fa-pen"></i>
-                </a>
-                <a value=" '. $supp->id .'" class="btn btn-danger btn-circle btn-sm bt-Delete" >
-                    <i class="fas fa-trash"></i>
-                </a>
-                <a value=" '. $supp->id .'" class="btn btn-warning btn-circle btn-sm bt-Block">
-                    <i class="fas fa-user-times"></i>
-                </a>';
-                })
-                ->rawColumns(['is_state','action'])
-                ->make(true);
-        // $supp=Supplier::all();
-        // return response()->json(
-        //     [
-        //         'supp'=>$supp
-        //     ]
-        // );
+                    </a>
+                    <a value=" '. $supp->id .'" class="btn btn-danger btn-circle btn-sm bt-Delete" >
+                        <i class="fas fa-trash"></i>
+                    </a>
+                    <a value=" '. $supp->id .'" class="btn btn-warning btn-circle btn-sm bt-Block">
+                        <i class="fas fa-user-times"></i>
+                    </a>';
+                }
+            )
+            ->rawColumns(['is_state','action'])
+            ->make(true);
     }
 
     public function getIDSupplier($id)
     {        
         $supp=DB::table('supplier')->where('id', $id)->get();
 
-        if ($supp)
-        {
+        if ($supp) {
             return response()->json(
                 [
                 'status'=>200,
                 'supp'=>$supp
                 ]
             );
-        }
-        else
-        {
+        } else {
             return response()->json(
                 [
                 'status'=>404,
@@ -108,28 +95,25 @@ class SupplierController extends Controller
     public function postAddSupplier(Request $req)
     {
         
-        if($req->is_state)
-        {   
+        if ($req->is_state) {   
             $sta = 1 ;
-        }
-        else
-        {
+        } else {
             $sta = 0 ;
         }
 
-        $supp=Supplier::create(
+        $supp = Supplier::create(
             [
-            'supplier_name'=>$req->name_sup,
-            'address'=>$req->address,
-            'phone'=>$req->phone,
-            'is_state'=>$sta
+                'supplier_name' => $req->name_sup,
+                'address' => $req->address,
+                'phone' => $req->phone,
+                'is_state' => $sta
             ]
         );
         $supp->save();
         return response()->json(
             [
-            'status'=>200,
-            'message'=>"Thêm thành công"
+                'status' => 200,
+                'message' => "Thêm thành công"
             ]
         );
         
@@ -181,18 +165,14 @@ class SupplierController extends Controller
     {
         
         $suppBlock = Supplier::where('id', $id)->first();
-        if ($suppBlock)
-        {
-            if ($suppBlock->is_state == 1)
-            {
+        if ($suppBlock) {
+            if ($suppBlock->is_state == 1) {
                 $suppBlock ->update(
                     [
                         'is_state'=>0
                     ]
                 );
-            }
-            else
-            {
+            } else {
                 $suppBlock->update(
                     [
                         'is_state'=>1
@@ -205,9 +185,7 @@ class SupplierController extends Controller
                         'mess'=>'Thành công'
                     ]
                 );
-        }
-        else
-        {
+        } else {
             return response()->json(
                 [
                     'status'=>404,

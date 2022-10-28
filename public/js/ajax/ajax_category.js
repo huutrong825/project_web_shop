@@ -37,11 +37,13 @@ $(document).ready(function(){
             },
             success: function(response)
             {
-                console.log(response);
+                $('#AddModal').modal('hide');
+                $('#myTable').DataTable().ajax.reload();
+                $('.alert-success').hide(8000);
             },
             error: function (err)
             {
-                console.log(err);
+                alert('Lỗi');
             }
         });
     });
@@ -95,62 +97,59 @@ $(document).ready(function(){
             }
         });
     });
-    // // popup update
-    // $(document).on('click', '.bt-Update',function(e)
-    // {
-    //     e.preventDefault();
-    //     var _id=$(this).attr('value');
-    //     $('#UpdateModal').modal('show');
-    //     console.log(_id);
-    //     $.ajax({
-    //         type:'get',
-    //         url:'/admin/supplier/update/'+_id,
-    //         success: function(response){
-    //             $.each(response.supp, function(key, item){
-    //                 $('#idUp').val(item.id);
-    //                 $('#nameUp').val(item.supplier_name);
-    //                 $('#addressUp').val(item.address);
-    //                 $('#phoneUp').val(item.phone);
-    //             });
-    //         },
-    //         error: function (err)
-    //         {
-    //             alert('Lỗi');
-    //         }
-    //     });
-    // });
 
-    // $(document).on('click', '.btSubmitUpdate',function(e)
-    // {
-    //     e.preventDefault();
-    //     var id=$('#idUp').val();
-    //     var data={
-    //         'nameUp':$('#nameUp').val(),
-    //         'addressUp':$('#addressUp').val(),
-    //         'phoneUp':$('#phoneUp').val()
-    //     }
-    //     console.log(id);
-    //     $.ajax({
-    //         url:'/admin/supplier/update/' +id,
-    //         type:"put",
-    //         data:data,
-    //         dataType:'json',
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         success:function(response)
-    //         {      
-    //             $(".alert-success").css('display','block');
-    //             $('.alert-success').html(response.mess);
-    //             $('#UpdateModal').modal('hide');
-    //             $('#dataTable').empty();
-    //             fetch_supplier();
-    //         },
-    //         error: function (err)
-    //         {
-    //              alert('Lỗi');
-    //         }
-    //     });
-    // });
+    // popup update
+    $(document).on('click', '.bt-Update',function(e)
+    {
+        e.preventDefault();
+        var _id = $(this).attr('value');
+        $('#UpdateModal').modal('show');
+        $.ajax({
+            type : 'get',
+            url : '/admin/category/update/'+_id,
+            success: function(response){
+                $.each(response.cate, function(key, item){
+                    $url = "asset('img /" + item.image + "')";
+                    $image = '<img class="avatar" src="{{' + $url + '}}" alt="Avatar"\
+                    style="width:50px;height:50px"/>';
+                    $('#idUp').val(item.category_id);
+                    $('#cate_nameUp').val(item.category_name);
+                });
+            },
+            error: function (err)
+            {
+                alert('Lỗi');
+            }
+        });
+    });
+
+    $(document).on('click', '.btSubmitUpdate',function(e)
+    {
+        e.preventDefault();
+        var id = $('#idUp').val();
+        console.log(id);
+        $.ajax({
+            url:'/admin/category/update/' + id,
+            type:"put",
+            data:new FormData($('#formUpdate')[0]),
+            contentType: false,
+            processData: false,
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response)
+            {   
+                console.log(response.req);
+                // $(".alert-success").css('display','block');
+                // $('.alert-success').html(response.mess);
+                // $('#myTable').ajax.load();
+            },
+            error: function (err)
+            {
+                 alert('Lỗi');
+            }
+        });
+    });
 
 });

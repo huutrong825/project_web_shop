@@ -63,8 +63,6 @@ $(document).ready(function(){
                 {   console.log(response);
                     $('#AddModal').modal('hide');
                     $('#AddModal').reset();
-                    $('#dataTable').empty();
-                    fetch_supplier();
                 },
                 error: function (err)
                 {

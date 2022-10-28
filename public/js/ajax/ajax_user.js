@@ -1,4 +1,4 @@
-// hiện popup Update
+
 $(document).ready(function(){
 
     fetch_user();
@@ -8,7 +8,16 @@ $(document).ready(function(){
         $('#myTable').DataTable({
             'processing':true,
             'serverSide':true,
-            'ajax':'/admin/user/fetch',
+            'ajax':
+            {
+                url : '/admin/user/fetch',
+                data : function (d){
+                    d.key = $('#keySearch').val();
+                    d.group = $('#group').val();
+                    d.active = $('#active').val();
+                }
+            },
+            
             'columns':[
                 { 'data': 'id','visible':false},
                 { 'data': 'name' },
@@ -18,9 +27,20 @@ $(document).ready(function(){
                 { 'data': 'action','orderable': false, 'searchable': false},
             ]
         });
-
+        $('#formSearch').on('keyup submit' ,function(e) {
+            $('#myTable').DataTable().search($('#keySearch').val(),$('#group').val(),$('#state').val()).draw();
+            e.preventDefault();
+        });
     }
+    //Reset tìm kiếm
+    $(document).on('click','#btReset' ,function() {
+        $("#group").val($("#group option:first").val());
+        $("#active").val($("#active option:first").val());
+        $('#myTable').DataTable().destroy();
+        fetch_user();
+    });
 
+    // hiện popup Update
     $(document).on('click', '.bt-Update',function(e)
     {
         e.preventDefault();
@@ -63,39 +83,38 @@ $(document).ready(function(){
     // đưa data userupdate đến xử lý
     $(document).on('click','#submitUpdate',  function(e){
         e.preventDefault();
-        var id_update=$('#ID').val();
+        var id_update = $('#ID').val();
         if ($('#customCheck').is(':checked'))
         {
             var data={
-                'names':$('#nameUpdate').val(),
-                'emails':$('#emailUpdate').val(),
-                'group_roles':$('#role').val(),
-                'checks':$('#customCheck').prop('checked'),
-                'password':$('#oldpass').val(),
-                'newpass':$('#newpass').val(),
-                'renewpass':$('#renewpass').val(),            
+                'names' : $('#nameUpdate').val(),
+                'emails' : $('#emailUpdate').val(),
+                'group_roles' : $('#role').val(),
+                'checks' : $('#customCheck').prop('checked'),
+                'password' : $('#oldpass').val(),
+                'newpass' : $('#newpass').val(),
+                'renewpass' : $('#renewpass').val(),            
             }
         }
         else
         {
             var data={
-                'names':$('#nameUpdate').val(),
-                'emails':$('#emailUpdate').val(),
-                'group_roles':$('#role').val(),
-                'checks':$('#customCheck').prop('checked'),           
+                'names' : $('#nameUpdate').val(),
+                'emails' : $('#emailUpdate').val(),
+                'group_roles' : $('#role').val(),
+                'checks' : $('#customCheck').prop('checked'),           
             }
-        }       
-        console.log(data);
+        }
         $.ajax({
-            url:'/admin/user/update/' + id_update,
-            type:"put",
-            headers: {
+            url : '/admin/user/update/' + id_update,
+            type : "put",
+            headers : {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            data:data,
-            dataType:'json',
-            success:function(response){
-                if(response.status==412)
+            data : data,
+            dataType : 'json',
+            success : function(response){
+                if(response.status == 412)
                 {
                     $(".print-error-up").css('display','block');
                     $('#error_up').html('');
@@ -120,56 +139,69 @@ $(document).ready(function(){
         e.preventDefault();
         $('#AddUserModal').modal('show');
     });
- 
-    $('#formadd').validate({
-        rules:{
-            'txtname':'required',
-        },
-        messages:{
-            'txtname.required':'không dc trống'
-        }
+
+    $(document).ready(function(){
+        $('#formadduser').validate({
+            'rules' :{
+                'txtname':'required',
+                'email' : 'required',
+                'password' : {
+                    'required' : true,
+                    'minlength' : 6,
+                },
+                'repass' : {
+                    'required' : true,
+                    'equalTo' : '#password',
+                },
+                'group_role':'required'
+            },
+            'messages' :{
+                'txtname':'Tên không được trống',
+                'email': 'Email khong được trống',
+                'password' : {
+                    'required' : 'Mật khẩu không được trống',
+                    'minlength' : 'Không nhỏ hơn 6 ký tự'
+                },
+                'repass': {
+                    'required' : 'Mật khẩu không được trống',
+                   'equalTo' : 'Mật khẩu nhập lại không đúng'
+                },
+                'group_role' : 'Chưa chọn nhóm người dùng'
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
     });
  
     // thêm use bằng ajax
-        $(document).on('click','#btSubmitAdd',function(e){
-            e.preventDefault();
-            var data={
-                'name':$('#addtxtname').val(),
-                'email':$('#addemail').val(),
-                'password':$('#addpassword').val(),
-                'repass':$('#addrepass').val(),
-                'group_role':$('#addgroup_role').val(),
-                'active':$('#addactive').prop('checked'),            
-            }   
-                $.ajax({
-                    url:'/admin/user/add',
-                    type:"post",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data:data,
-                    dataType:'json',
-                    success:function(response){    
-                        if(response.status==400)
-                        {
-                            $(".print-error-msg").css('display','block');
-                            $('#error_mes').html('');
-                            $('#error_mes').addClass('alert alert_danger');
-                            $.each(response.errors, function(keys, err_values){
-                                
-                            });
-                        }
-                        else
-                        {
-                            $('#AddUserModal').modal('hide');
-                            $('#myTable').DataTable().ajax.reload();
-                        }
-                    },
-                    error: function (err) {
-                        $('#formadd').validate().messages;
-                    }
-                });        
-        });
+    $(document).on('click','#btSubmitAdd',function(e){
+        e.preventDefault();
+        var data={
+            'name' : $('#addtxtname').val(),
+            'email' : $('#addemail').val(),
+            'password' : $('#addpassword').val(),
+            'repass' : $('#addrepass').val(),
+            'group_role' : $('#addgroup_role').val(),
+            'active' : $('#addactive').prop('checked'),            
+        }   
+            $('#formadduser').submit();
+            $.ajax({
+                url : '/admin/user/add',
+                type : "post",
+                headers : {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data : data,
+                dataType : 'json',
+                success:function(response){   
+                    
+                    $('#AddUserModal').modal('hide');
+                    $('#myTable').DataTable().ajax.reload();
+                    
+                }
+            }); 
+    });
     //Alert Delete
    
     $(document).on('click','.bt-Delete',function(e)
@@ -261,27 +293,5 @@ $(document).ready(function(){
         });
     });
 
-    // Search
-    function filterColumn(i)
-    {
-        $('#myTable').DataTable().column(i).search(
-            $('#filter'+i).val()
-        ).draw();
-    }
-    function search()
-    {
-        $('#myTable').DataTable().search($('#key').val(),$('#group').val(),$('#state').val()).draw();
-    }
-    $(document).ready(function(){
-        $('#myTable').DataTable();
-
-        $('#key').on('keyup', function(){
-            search();
-        });
-
-        $('.filter').on('click change', function(){
-            filterColumn($(this).parents('tr').attr('data-column'));
-        });
-    });
 });
 

@@ -35,7 +35,7 @@ class AuthController extends Controller
     public function postRegister(Request $req)
     {
 
-        $u=User::create(
+        $u = User::create(
             [
                 'name' => $req->txtname,
                 'email' => $req->email,
@@ -66,49 +66,47 @@ class AuthController extends Controller
     public function getProfile()
     {
         if (Auth::check()) {
-            $id=Auth::id();
-            $user=DB::table('users')->where('id', $id)->get();
+            $id = Auth::id();
+            $user = DB::table('users')->where('id', $id)->get();
         }
-
         return view('Admin.profile', compact('user'));
     }
 
     public function updateProfile(Request $req)
     {
         
-        $id=Auth::id();
-        $user=User::find($id);
-        $img_name='';
+        $id = Auth::id();
+        $user = User::find($id);
+        $img_name = '';
         
         if ($req->file('avatar')) {
             if ($req->file('avatar')->isValid()) {
-                $img=$req->avatar;
-                 $img_name=$img->getClientOriginalName();
-                 $img->move(public_path('img'), $img_name);              
-                
+                $img = $req->avatar;
+                $img_name = $img->getClientOriginalName();
+                $img->move(public_path('img'), $img_name);  
             }
         }
-        if ($req->checkPass!='on') {
+        if ($req->checkPass != 'on') {
 
-            if ($img_name!=null) {
+            if ($img_name != null) {
                 $user->update(
                     [
-                    'name'=>$req->name,
-                    'sex'=>$req->sex,
-                    'phone'=>$req->phone,
-                    'birth'=>$req->birth,
-                    'address'=>$req->address,
-                    'avatar'=>$img_name
+                        'name' => $req->name,
+                        'sex' => $req->sex,
+                        'phone' => $req->phone,
+                        'birth' => $req->birth,
+                        'address' => $req->address,
+                        'avatar' => $img_name
                     ]
                 );
             } else {
                 $user->update(
                     [
-                    'name'=>$req->name,
-                    'sex'=>$req->sex,
-                    'phone'=>$req->phone,
-                    'birth'=>$req->birth,
-                    'address'=>$req->address,
+                        'name' => $req->name,
+                        'sex' => $req->sex,
+                        'phone' => $req->phone,
+                        'birth' => $req->birth,
+                        'address' => $req->address,
                     ]
                 );
             }

@@ -19,21 +19,24 @@ class CategoryController extends Controller
         $cate = Category::all();
 
         return Datatables::of($cate)
-                -> addColumn('image', function ($cate) {
-                    $url=asset('img/' . $cate->image);
+            ->addColumn(
+                'image', function ($cate) {
+                    $url = asset('img/' . $cate->image);
                     return '<img class="avatar" src="' .$url. '" alt="Avatar"
                     style="width:50px;height:50px"/>'; 
-                } )
-                -> 
-                addColumn('action', function ($cate) {
+                }
+            )
+            ->addColumn(
+                'action', function ($cate) {
                     return '<a value="' . $cate->category_id . '" class="btn btn-success btn-circle btn-sm bt-Update">
                     <i class="fas fa-pen"></i></a>            
 
                     <a value="' . $cate->category_id . '" class="btn btn-danger btn-circle btn-sm bt-Delete">
                     <i class="fas fa-trash"></i></a>';
-                })
-                ->rawColumns(['image','action'])
-                ->make(true);
+                }
+            )
+            ->rawColumns(['image','action'])
+            ->make(true);
     }
 
     public function getCateId($id)
@@ -63,65 +66,61 @@ class CategoryController extends Controller
 
     public function addCate(Request $req)
     {
-        dd($req->image->getClientOriginalName());
         if ($req->image) {
-            $img = $req->file;
-            $img_name = $img->getClientOriginalName();
-            $req->file->move(public_path('img'), $img_name);
-            return response()->json(
-                [
-                    's'=>$img_name
-                ]
-            );
+            $img_name = $req->image->getClientOriginalName();
+            $req->image->move(public_path('img'), $img_name);
         }
-        
-       
-        // $cate=Category::create(
-        //     [
-        //         'category_name' => $req->cate_name,
-        //         'image' => $img_name,
-        //     ]
-        // );
-        // $cate->save();
-        // return response()->json(
-        //     [
-        //         'state'=>200,
-        //         'messages'=>'Thành công'
-        //     ]
-        // );
+        $cate = Category::create(
+            [
+                'category_name' => $req->cate_name,
+                'image' => $img_name,
+            ]
+        );
+        $cate->save();
+        return response()->json(
+            [
+                'state' => 200,
+                'messages' => 'Thành công'
+            ]
+        );
     }
     public function deleteCate($id)
     {
-        Category:: where('category_id', $id)-> delete();
+        Category :: where('category_id', $id)-> delete();
 
         return response()->json(
             [
-            'status'=>200,
-            'message'=>"Xóa thành công"
+                'status' => 200,
+                'message' => "Xóa thành công"
             ]
         );
     }
 
-    
-    public function getFixCategory($id)
+    public function updateCate(Request $req,$id)
     {
-        $cate=Category::where('id', $id)->first();
-
-        return view('Admin.Category.fix_user', compact('cate'));
-    }
-
-    public function postFixCategory(Request $req,$id)
-    {
-        $cate=Category::where('id', $id)->first();
-        
-        $cate->update(
-            [
-            'name'=>$req->txtname,
-            'image'=>$req->image,
-            ]
-        );
-
-        return back()->with('thongbao', 'Đã lưu');
+        // $cate = Category::where('category_id', $id)->first();
+        // if ($req->image) {
+        //     $cate->update(
+        //         [
+        //             'category_name'=>$req->cate_nameUp,
+        //             'image'=>$req->imageUp,
+        //         ]
+        //     );
+        // } else {
+        //     $cate->update(
+        //         [
+        //             'category_name'=>$req->cate_nameUp,
+        //         ]
+        //     );
+        // }
+        // $cate->save();
+        dd($req->imageUp->getClientOriginalName());
+        // return response()->json(
+        //     [
+        //         'status' => 200,
+        //         'req' => $req->all()
+        //     ]
+        // );
     }
 
     public function search(Request $req)

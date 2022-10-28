@@ -4,32 +4,48 @@
     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="input-group">
-    <div class="input-group mb-3">
+<div class="input-group row">
+    <div class="input-group mb-3 col-sm-3">
         <a class="btn btn-primary btn-icon-user bt-Add" >
             <span class="icon text-white-50">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-plus"></i>
             </span>
             <span class="text">Thêm mới</span>
         </a>
     </div>
-    <form active="/admin/user" method="get">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" id='key' name="key" placeholder="Search">
-        <div class="input-group-append">
-            <button class="btn btn-success" type="submit" id='btSearch'>Go</button>
-        </div>
-        <div class="input-group-append">
-            <a href='#' class='btn'><i class=''></i>Reset</a>
-        </div>
+    <form class="row" id="formSearch">
+    <div class="col-sm">
+        <div class="input-group ">
+            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
+        </div>                       
+    </div>
+    <!-- <div class="col-sm">
+        <select class="form-control filter" id="group"  >
+            <option disabled selected hidden>Chọn nhóm</option>
+            <option value="1">Admin</option>
+            <option value="2">Employee</option>
+        </select>
+    </div>
+    <div class="col-sm">
+        <select class="form-control filter" id="active"  >
+            <option disabled selected hidden>Chọn trạng thái</option>
+            <option value="1">Đang hoạt động</option>
+            <option value="o">Ngưng hoạt động</option>
+        </select>
+    </div> -->
+    <div class="col-sm-3">
+        <a class="btn btn-success" type="submit" id='btSearch'>Tìm</a>
     </div>
     </form>
+    <div class=" col-sm-3">
+        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+    </div>
 </div>
 <div class="alert alert-success" style="display:none">
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Nhà cung ứng hàng hóa</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Home >> Nhà cung ứng hàng hóa</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -44,7 +60,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>           
+                <tbody>
                 </tbody>
             </table>
         </div>
@@ -106,7 +122,7 @@
 
     <!-- Update Supplier Modal -->
     <div class="modal fade" id="UpdateModal" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content add-user">
                 <div class="modal-header">
@@ -116,6 +132,8 @@
                 </div>
                 <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Cập nhật nhà cung ứng mới</h1>
+                </div>
+                <div class="alert alert-success" style="display:none">
                 </div>
                 <div class="modal-body">
                     <form class="user" id='form' method="put">
@@ -134,9 +152,8 @@
                             <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id='addressUp' name="address"
-                               >
-                                <p style="color:red" class="help is-danger"></p>
+                            <input type="text" class="form-control form-control-user" id='addressUp' name="address">
+                            <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
                             <div class="">
@@ -146,7 +163,7 @@
                             <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
-                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitUpdate" value="Lưu"> 
+                            <a type='submit' class="btn btn-success btn-user btn-block btSubmitUpdate" >Lưu</a> 
                         </div>
                     </fieldset>
                     </form>

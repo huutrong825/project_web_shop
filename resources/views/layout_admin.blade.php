@@ -66,8 +66,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/admin/user">Quản lý user</a>
-                        <a class="collapse-item" href="cards.html"></a>
+                        <a class="collapse-item" href="/admin/user">Quản lý người dùng</a>
                     </div>
                 </div>
             </li>
@@ -96,14 +95,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span></span>
+                    <span>Khuyến mãi</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        
-                        <a class="collapse-item" href="register.html"></a>
-                        <a class="collapse-item" href="forgot-password.html"></a>
-                        <div class="collapse-divider"></div>
+                        <a class="collapse-item" href="register.html">Danh sách khuyến mãi</a>
                     </div>
                 </div>
             </li>

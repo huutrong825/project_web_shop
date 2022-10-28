@@ -44,28 +44,49 @@ class UserManagerController extends Controller
      * @author     Mr <dang.trong.rcvn2012@gmail.com>
      * @lastupdate dang.trong
      */
-    public function listUser()
+    public function listUser(Request $req)
     {
-        $user = User::all();
-        return Datatables::of($user)
-        ->addColumn('group_role', function( $user ) {
-            $temp = $user->group_role == 1? "Admin" : ($user->group_role == 2? "Employee" : "Errol");
-            return $temp;
-        })
-        ->addColumn('is_active', function( $user ) {
-            $temp = $user->is_active == 1? '<span style="color:green">Đang hoạt động</span>' : '<span style="color:red">Ngưng hoạt động</span>';
-            return $temp;
-        })
-        ->addColumn('action', function($user) {
-            return '<a value="'.$user->id.'" class="btn btn-success btn-circle btn-sm bt-Update">
-            <i class="fas fa-pen"></i></a>
-            
-            <a value="'.$user->id.'" class="btn btn-danger btn-circle btn-sm bt-Delete">
-            <i class="fas fa-trash"></i></a> 
+        
+        if (request()->ajax()) {
+            if (!empty($req->group) && empty($req->active)) {
+                $user = User::where('group_role', $req->group)         
+                            ->get();
+            } else if (empty($req->group) && !empty($req->active)) {
+                $user = User::where('is_active', $req->active)      
+                            ->get();
+            } else if (!empty($req->group) && !empty($req->active)) {
+                $user = User::where('group_role', $req->group) 
+                            ->where('is_active', $req->active)   
+                            ->get();
+            } else {
+                $user = User::all();
+            }
+        }
+        return Datatables::of($user)->
+        addColumn(
+            'group_role', function ($user) {
+                $temp = $user->group_role == 1? "Admin" : ($user->group_role == 2? "Employee" : "Errol");
+                return $temp;
+            }
+        )
+        ->addColumn(
+            'is_active', function ($user) {
+                $temp = $user->is_active == 1? '<span style="color:green">Đang hoạt động</span>' : '<span style="color:red">Ngưng hoạt động</span>';
+                return $temp;
+            }
+        )
+        ->addColumn(
+            'action', function ($user) {
+                return '<a value="'. $user->id .'" class="btn btn-success btn-circle btn-sm bt-Update">
+                <i class="fas fa-pen"></i></a>
+                
+                <a value="'. $user->id .'" class="btn btn-danger btn-circle btn-sm bt-Delete">
+                <i class="fas fa-trash"></i></a> 
 
-            <a value="'.$user->id.'" class="btn btn-warning btn-circle btn-sm bt-Block">
-            <i class="fas fa-user-times"></i></a>';
-        })
+                <a value="'. $user->id .'" class="btn btn-warning btn-circle btn-sm bt-Block">
+                <i class="fas fa-user-times"></i></a>';
+            }
+        )
         ->rawColumns(['group_role','is_active','action'])
         ->make();
     }
@@ -88,65 +109,27 @@ class UserManagerController extends Controller
      */ 
     public function postAddUser(Request $req)
     {
-        $vali=Validator::make(
-            $req->all(),
+        if ($req->active) {   
+            $act = 1 ;
+        } else {
+            $act=0 ;
+        }
+        $user = User::create(
             [
-                'name'=>'required|min:5',
-                'email'=>'required|unique:users|',
-                'password'=>'required|min:6|',
-                'repass'=>'required|same:password',
-                'group_role'=>'required'
-            ],
-            [
-                'name.required'=>'Tên không được trống',
-                'name.min'=>'Tên không được nhỏ hơn :min ký tự',
-                'email.required'=>'Email không được trống',
-                'email.unique'=>'Email đã tồn tại',
-                'password.required'=>'Mật khẩu không được trống',
-                'password.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
-                'repass.required'=>'Mật khẩu xác nhận không được trống',
-                'repass.same'=>'Mật khẩu xác nhận chưa đúng',
-                'group_role.required'=>'Chưa chọn nhóm người dùng',
+                'name' => $req->name,
+                'email' => $req->email,
+                'password' => Hash::make($req->repass),
+                'group_role' => $req->group_role,
+                'is_active' =>$act
             ]
         );
-
-        if ($vali->fails())
-        {
-            return response()->json(
-                [
-                'status'=>400,
-                'errors'=>$vali->messages()
-                ]
-            );
-        }
-        else
-        {
-            if($req->active)
-            {   
-                $act = 1 ;
-            }
-            else
-            {
-                $act=0 ;
-            }
-            $user = User::create(
-                [
-                    'name'=>$req->name,
-                    'email'=>$req->email,
-                    'password'=>Hash::make($req->repass),
-                    'group_role'=>$req->group_role,
-                    'is_active'=>$act
-                ]
-            );
-            $user->save();
-            return response()->json(
-                [
-                'status'=>200,
-                'message'=>"Thêm thành công"
-                ]
-            );
-        
-        }
+        $user->save();
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => "Thêm thành công"
+            ]
+        );
     }
     
 
@@ -168,22 +151,19 @@ class UserManagerController extends Controller
     public function deleteUser($id)
     {
         $userDel = User::where('id', $id)->first();
-        if ($userDel)
-        {
+        if ($userDel) {
             $userDel->delete();
             return response()->json(
                 [
-                'status'=>200,
-                'mess'=>'Thành công'
+                    'status' => 200,
+                    'mess' => 'Thành công'
                 ]
             );
-        }
-        else
-        {
+        } else {
             return response()->json(
                 [
-                'status'=>404,
-                'mess'=>'Not find'
+                    'status' => 404,
+                    'mess' => 'Not find'
                 ]
             );
         }
@@ -209,18 +189,14 @@ class UserManagerController extends Controller
     public function blockUser($id)
     {
         $userBlock = User::where('id', $id)->first();
-        if ($userBlock)
-        {
-            if ($userBlock->is_active == 1)
-            {
+        if ($userBlock) {
+            if ($userBlock->is_active == 1) {
                 $userBlock ->update(
                     [
                     'is_active'=>0
                     ]
                 );
-            }
-            else
-            {
+            } else {
                 $userBlock->update(
                     [
                     'is_active'=>1
@@ -233,9 +209,7 @@ class UserManagerController extends Controller
                     'mess'=>'Thành công'
                     ]
                 );
-        }
-        else
-        {
+        } else {
             return response()->json(
                 [
                 'status'=>404,
@@ -266,17 +240,14 @@ class UserManagerController extends Controller
     public function getUser($id)
     {        
         $userUp = User::where('id', $id)->first();
-        if ($userUp)
-        {
+        if ($userUp) {
             return response()->json(
                 [
                 'status'=>200,
                 'user'=>$userUp
                 ]
             );
-        }
-        else
-        {
+        } else {
             return response()->json(
                 [
                 'status'=>404,
@@ -305,29 +276,9 @@ class UserManagerController extends Controller
      */  
     public function putUpdateUser(Request $req, $id)
     {
-        $vali=Validator::make(
-            $req->all(),
-            [                        
-                'password'=>'required|min:6|',
-                'newpass'=>'required|min:6|',
-                'renewpass'=>'required|same:newpass',
-            ],
-            [
-                'password.required'=>'Mật khẩu không được trống',
-                'password.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
-                'newpass.required'=>'Mật khẩu mới không được trống',
-                'newpass.min'=>'Mật khẩu không được nhỏ hơn :min ký tự',
-                'renewpass.required'=>'Mật khẩu xác nhận không được trống',
-                'renewpass.same'=>'Mật khẩu xác nhận lại chưa đúng',
-            ]
-        );
-
         $userUp = User::where('id', $id)->first();
-
-        if ($userUp)
-        {
-            if ($req->checks == false)
-            {                
+        if ($userUp) {
+            if ($req->checks == false) {                
                 $userUp->update(
                     [
                     'name'=>$req->names,
@@ -341,20 +292,15 @@ class UserManagerController extends Controller
                     'mess'=>'Success Update'
                     ]
                 );
-            }
-            else
-            {
-                if ($vali->fails())
-                {
+            } else {
+                if ($vali->fails()) {
                     return response()->json(
                         [
                         'status'=>412,
                         'errors'=>$vali->messages()
                         ]
                     );
-                }
-                else
-                {                
+                } else {                
                     $userUp->update(
                         [
                         'name'=>$req->names,
@@ -371,9 +317,7 @@ class UserManagerController extends Controller
                     );
                 }
             } 
-        }
-        else
-        {
+        } else {
             return response()->json(
                 [
                 'status'=>400,
@@ -382,4 +326,5 @@ class UserManagerController extends Controller
             );
         }
     }
+
 }

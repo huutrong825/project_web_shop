@@ -8,35 +8,44 @@
 @section('content')
     <div class="input-group row">
         <div class="input-group mb-3 col-sm-3">
-            <a class="btn btn-primary btn-icon-user btAddUser" >
+            <a class="btn btn-primary btAddUser" >
                 <span class="icon text-white-50">
                     <i class="fas fa-user-plus"></i>
                 </span>
                 <span class="text">Thêm mới</span>
             </a>
         </div>
-        <div class="col-sm-3">
+        <form class="row" id="formSearch">
+        <div class="col-sm">
             <div class="input-group ">
-                <input type="text" class="form-control" id='key' name="key" placeholder="Search">
-            </div>            
+                <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
+            </div>                       
         </div>
-        <div class="col-sm-3">
-            <select class="form-control filter" id="filter1" data-column='3' >
+        <div class="col-sm">
+            <select class="form-control filter" id="group"  >
                 <option disabled selected hidden>Chọn nhóm</option>
                 <option value="1">Admin</option>
                 <option value="2">Employee</option>
             </select>
         </div>
-        <div class="col-sm-3">
-            <select class="form-control filter" id="filter2" data-column='4' >
+        <div class="col-sm">
+            <select class="form-control filter" id="active"  >
                 <option disabled selected hidden>Chọn trạng thái</option>
                 <option value="1">Đang hoạt động</option>
-                <option value="0">Ngưng hoạt động</option>
+                <option value="o">Ngưng hoạt động</option>
             </select>
+        </div>
+        <div class="col-sm-3">
+            <a class="btn btn-success" type="submit" id='btSearch'>Tìm</a>
+        </div>
+        </form>
+        <div class=" col-sm-3">
+            <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
         </div>
     </div>
     <div class="alert alert-success" style="display:none">
     </div>
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Home >> User</h6>
@@ -79,7 +88,7 @@
                     <ul id='error_mes'></ul>
                 </div>
                 <div class="modal-body form-add">  
-                    <form class="form-group" id='formadd'>
+                    <form class="form-group" id='formadduser'>
                         <fieldset>                
                             <div class="form-group">
                                 <div class="">
@@ -247,5 +256,6 @@
 <script src="{{asset('js\demo\datatables-demo.js')}}"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 @endsection

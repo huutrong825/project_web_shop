@@ -99,7 +99,51 @@
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
+
+    <!-- Update Supplier Modal -->
+    <div class="modal fade" id="UpdateModal" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content add-user">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Cập nhật loại hàng</h1>
+                </div>
+                <div class="alert alert-success" style="display:none">
+                </div>
+                <div class="modal-body">
+                    <form class="user" id='formUpdate' method="put" enctype="multipart/form-data">
+                    <fieldset>
+                        @csrf
+                        <div class="form-group">
+                            <div class="">
+                                <input type="hidden" class="form-control form-control-user" id='idUp' >
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <div id='img'></div>
+                            <img id='imageShow'  width="50px" height="50px" alt="Picure">
+                            <input type="file" id='imageUp' name="imageUp">
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <input type="text" class="form-control form-control-user" id='cate_nameUp' name="cate_nameUp">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a type='submit' class="btn btn-success btn-user btn-block btSubmitUpdate">Cập nhật</a> 
+                        </div>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')

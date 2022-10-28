@@ -80,6 +80,9 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
 
         Route::post('/add', ['uses'=>'CategoryController@addCate']);
 
+        Route::get('/update/{id}', ['uses'=>'CategoryController@getCateId']);
+        Route::put('/update/{id}', ['uses'=>'CategoryController@updateCate']);
+
         Route::get('/delete/{id}', ['uses'=>'CategoryController@getCateId']);
         Route::delete('/delete/{id}', ['uses'=>'CategoryController@deleteCate']);
     });
