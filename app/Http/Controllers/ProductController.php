@@ -14,26 +14,51 @@ class ProductController extends Controller
     {
         return view('Admin.Product.list_product');
     }
-    public function listProduct()
+    public function listProduct(Request $req)
     {
-        $p=DB::table('product')
+        // $product=DB::table('product')
+        //     ->join('supplier', 'product.supplier_id', '=', 'supplier.id')
+        //     ->select('product_id', 'product_name', 'unit_price', 'image', 'is_sale', 'supplier.supplier_name')
+        //     ->get();
+        $p = DB::table('product')
             ->join('supplier', 'product.supplier_id', '=', 'supplier.id')
-            ->select('product_id', 'product_name', 'unit_price', 'image', 'is_sale', 'supplier.supplier_name')
-            ->get();
+            ->select(
+                'product_id', 
+                'product_name',
+                'unit_price',
+                'image',
+                'is_sale',
+                'supplier.supplier_name'
+            );
 
-        return Datatables::of($p)->
-            addColumn(
+        
+        if (!empty($req->pricefrom) && !empty($req->pricefrom)) {
+            $p = $p->whereBetween('unit_price', [$req->pricefrom, $req->priceto]);
+        }
+
+        if (!empty($req->state)) {
+            $p = $p->where('is_sale', $req->state);
+        }
+
+        if (!empty($req->key)) {
+            $p = $p->where('product_name', 'like', '%'. $req->key .'%')
+                ->orWhere('product_name', 'like', '%'. $req->key .'%');
+        }
+        $p->get();
+
+        return Datatables::of($p)
+            ->addColumn(
                 'product_name', function ($p) {
-                    return '<a href="#" >' . $p->product_name .'</a>';
+                    return '<a value=" '. $p->product_id .'" class="btDetail">' . $p->product_name .'</a>';
                 }
             )
             ->addColumn(
                 'image', function ($p) {
                     $url = asset('img/' . $p->image);
-                    return '<img url="'. $url .'" alt="Picture" style="width:50px;height:50px">';
+                    return '<img src="'. $url .'" alt="Picture" style="width:50px;height:50px">';
                 }
             )
-            -> addColumn(
+            ->addColumn(
                 'is_sale', function ($p) {
                     $temp = $p->is_sale == 0 ? '<td><span style="color:red">Ngừng bán</span></td>'
                                     : '<td><span style="color:green">Đang bán</span></td>';
@@ -62,9 +87,15 @@ class ProductController extends Controller
         return view('Admin.Product.add_product');
     }
 
-    public function getfixProdudct()
+    public function getIdProduct($id)
     {
-
+        $pro=Product::where('product_id',$id)->get();
+        return response()->json(
+            [ 
+                'state'=>200,
+                'pro'=>$pro
+            ]
+        );
     }
 
     public function postFixProduct()

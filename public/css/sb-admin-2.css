@@ -863,7 +863,7 @@ pre code {
   }
   .col-sm-3 {
     flex: 0 0 25%;
-    max-width: 25%;
+    max-width: 15%;
   }
   .col-sm-4 {
     flex: 0 0 33.33333%;
@@ -11288,4 +11288,34 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+.detail{
+	display:flex;
+}
+.left{
+	width:50%;
+	float:left;
+}
+.left img{
+	width:100%;
+}
+.minileft div{
+	width:20%;
+	float:left;
+}
+
+h2{
+	text-indent:40px;
+	font-size:30px;
+}
+.red{
+	color:red;
+}
+.button div{
+	float:left;
+	padding:10px;
+}
+img{
+	cursor:pointer;
 }

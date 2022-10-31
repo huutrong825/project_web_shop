@@ -14,34 +14,41 @@
             <span class="text">Thêm mới</span>
         </a>
     </div>
-    <form class="row" id="formSearch">
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <select class="form-control filter" id="group"  >
-            <option disabled selected hidden>Chọn nhóm</option>
-            <option value="1">Admin</option>
-            <option value="2">Employee</option>
-        </select>
-    </div>
-    <div class="col-sm">
-        <select class="form-control filter" id="active"  >
-            <option disabled selected hidden>Chọn trạng thái</option>
-            <option value="1">Đang hoạt động</option>
-            <option value="o">Ngưng hoạt động</option>
-        </select>
-    </div>
-    <div class="col-sm-3">
-        <a class="btn btn-success" type="submit" id='btSearch'>Tìm</a>
-    </div>
+    <form class="row" id="formSearch" method='post'>
+        @csrf
+        <div class="col-sm">
+            <div class="input-group ">
+                <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
+            </div>                       
+        </div>
+        <div class="col-sm">
+            <div class="input-group ">
+                
+                <input type="text" class="form-control" id='price_from' name="price_from" placeholder="Giá bán từ">                
+            </div> 
+        </div>
+        <div class="col-sm">
+            <div class="input-group ">
+                <input type="text" class="form-control" id='price_to' name="price_to" placeholder="Giá bán đến">                
+            </div> 
+        </div>
+        <div class="col-sm">
+            <select class="form-control filter" id="state"  >
+                <option disabled selected hidden>Chọn trạng thái</option>
+                <option value="1">Đang bán</option>
+                <option value="o">Ngừng bán</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <a class="btn btn-success" type="submit" id='btSearch'>Tìm</a>
+        </div>
     </form>
     <div class=" col-sm-3">
         <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
     </div>
 </div>
+
+   
 
 <div class="alert alert-success" style="display:none">
 </div>
@@ -73,10 +80,10 @@
     
 
 
-    <!-- Add  Modal -->
-    <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Detail  Modal -->
+    <div class="modal fade" id="DetailModal" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content add-user">
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -84,75 +91,26 @@
                     </button>
                 </div>
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Thêm sản phẩm mới</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Chi tiết sản phẩm</h1>
                 </div>
-                <div class="modal-body">
-                    <form class="user" id='formadd' method="post">
-                    <fieldset>
-                        @csrf                      
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user" id='txtname' name="txtname"
-                                    placeholder="Nhập tên sản phẩm" required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
+                <div class="modal-body detail">
+                    <div class="left">
+                        <img src="http://127.0.0.1:8000/img/ICVVE6033.JPG" id="imgId" />
+                        <div class="minileft">
+                            <div><img src="../images/galaxys8/Black_1.jpg" onClick="doianh(this)" /></div>
+                            <div><img src="../images/galaxys8/Black_2.jpg" onClick="doianh(this)" /></div>
+                            <div><img src="../images/galaxys8/Black_3.jpg" onClick="doianh(this)" /></div>
+                            <div><img src="../images/galaxys8/Black_4.jpg" onClick="doianh(this)" /></div>
+                            <div><img src="../images/galaxys8/Black_5.jpg" onClick="doianh(this)" /></div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id='address' name="address"
-                                placeholder="Loại" required>
-                                <p style="color:red" class="help is-danger"></p>
+                    </div>
+                    <div class="right">
+                        <h2 id='name'>Samsung Galaxy S8+</h2>
+                        <h2 id='price' class="red">20.050.000 VNĐ</h2>
+                        <h3>Màu sắc</h3>
+                        <div class="button">
                         </div>
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Nhập số lượng" required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Nhập đơn giá (VNĐ)" required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Chọn đơn vị tính" required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Ảnh" required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Giảm giá" required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phone' placeholder="Shop" required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="state" name="state">  
-                            <label class="custom-control-label" for="state">Trạng thái cung ứng hàng</label>                      
-                        </div>
-                        <div class="form-group">
-                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitAdd" value="Thêm mới"> 
-                        </div>
-                    </fieldset>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

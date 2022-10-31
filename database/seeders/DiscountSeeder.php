@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Discount;
 
-class UnitSeeder extends Seeder
+class DiscountSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,6 @@ class UnitSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('unit')->insert([
-            'unit'=>'Đôi'
-         ],[ 
-            'unit'=>'Cái']
-        );
+        Discount::factory()->count(5)->create();
     }
 }

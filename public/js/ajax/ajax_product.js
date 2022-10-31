@@ -5,73 +5,36 @@ $(document).ready(function(){
     // Đổ data ra bảng
     function fetch_product()
     {  
+
         $('#myTable').DataTable({
             'processing':true,
             'serverSide':true,
-            'ajax':'/admin/product/fetch',
+            'ajax':
+            {
+                url : '/admin/product/fetch',
+                data : function (d){
+                    d.key = $('#keySearch').val();
+                    d.pricefrom = $('#price_from').val();
+                    d.priceto = $('#price_to').val();
+                    d.state = $('#state').val();
+                }
+            },
             'columns':[
-                {'data':'product_id','visible':false},
-                {'data':'product_name'},
-                {'data':'unit_price'},
-                {'data':'image'},
-                {'data':'is_sale'},
-                {'data':'supplier_name'},
-                {'data':'action','orderable':false,'searchable':false}
+                {'data' : 'product_id','visible':false},
+                {'data' : 'product_name'},
+                {'data' : 'unit_price'},
+                {'data' : 'image'},
+                {'data' : 'is_sale'},
+                {'data' : 'supplier_name'},
+                {'data' : 'action', 'orderable' : false, 'searchable' : false}
             ]
-            
+        });
+        $('#formSearch').on('keyup click' ,function(e) {
+            $('#myTable').DataTable().draw();
+            e.preventDefault();
         });
     }
 
-    // Mở popup thêm
-    $(document).on('click', '.bt-Add',function(e)
-    {
-        e.preventDefault();
-        $('#AddModal').modal('show');
-    });
-
-    $('#formadd').validate({
-        rules:{
-            'txtname':'required',
-            'address':'required',
-            'phone':'required'
-        },
-        messages:{
-            'txtname.required':'không dc trống'
-        }
-    });
-    // Thêm Supplier
-    $('#formadd').submit(function(){
-
-        $(document).on('click', '.btSubmitAdd',function(e)
-        {
-            e.preventDefault();
-            var data={
-                'name_sup':$('#txtname').val(),
-                'address':$('#address').val(),
-                'phone':$('#phone').val(),
-                'is_state':$('#state').prop('checked'),
-            };
-            $.ajax({
-                url:'/admin/supplier/add/',
-                type:"post",
-                data:data,
-                dataType:'json',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success:function(response)
-                {   console.log(response);
-                    $('#AddModal').modal('hide');
-                    $('#AddModal').reset();
-                },
-                error: function (err)
-                {
-                    $('#formadd').validate().messages;
-                }
-            });
-        });
-
-    });
     // thông báo khóa
     $(document).on('click', '.bt-Block',function(e)
     {
@@ -172,7 +135,6 @@ $(document).ready(function(){
         e.preventDefault();
         var _id=$(this).attr('value');
         $('#UpdateModal').modal('show');
-        console.log(_id);
         $.ajax({
             type:'get',
             url:'/admin/supplier/update/'+_id,
@@ -222,5 +184,29 @@ $(document).ready(function(){
                  alert('Lỗi');
             }
         });
+    });
+    //Detail
+    $(document).on('click', '.btDetail',function(e)
+    {
+        e.preventDefault();
+        var _id=$(this).attr('value');
+        $('#DetailModal').modal('show');
+        console.log(_id);
+        $.ajax({
+            type : 'get',
+            url : '/admin/product/detail/' + _id,
+            success : function(response){
+                console.log(response);
+                $.each(response.pro, function(key, item){
+                    $('#name').html(item.product_name);
+                    $('#price').html(item.unit_price);
+                });
+            },
+            error: function(err)
+            {
+                alert('Lỗi');
+            }
+        });
+        
     });
 });

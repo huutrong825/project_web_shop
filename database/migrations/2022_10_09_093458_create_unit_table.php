@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_state', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('order_state');
+        Schema::create('unit', function (Blueprint $table) {
+            // $table->increments('unit_id', 20);
+            // $table->string('unit', 50);
+            // $table->timestamps();
+            $table->id();
+            $table->string('unit');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_state');
+        Schema::dropIfExists('unit');
     }
 };

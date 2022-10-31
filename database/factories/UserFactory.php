@@ -25,10 +25,11 @@ class UserFactory extends Factory
             'email'=>fake()->safeEmail(),
             'password'=>Hash::make('Admin'),
             'is_active'=>fake()->numberBetween($min = 0, $max = 1),
-            'group_role'=>fake()->numberBetween($min = 1, $max = 3),
+            'group_role'=>fake()->numberBetween($min = 1, $max = 2),
             'last_login_at'=>date('Y-m-d H:i:s'),
             'created_at'=>date("Y-m-d"),
-            'updated_at'=>date("Y-m-d")
+            'updated_at'=>date("Y-m-d"),
+            
         ];
     }
 

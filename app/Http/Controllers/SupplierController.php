@@ -63,15 +63,15 @@ class SupplierController extends Controller
         if ($supp) {
             return response()->json(
                 [
-                'status'=>200,
-                'supp'=>$supp
+                    'status' => 200,
+                    'supp' => $supp
                 ]
             );
         } else {
             return response()->json(
                 [
-                'status'=>404,
-                'mess'=>'Not find'
+                    'status' => 404,
+                    'mess' => 'Not find'
                 ]
             );
         }
@@ -140,8 +140,8 @@ class SupplierController extends Controller
 
         return response()->json(
             [
-            'status'=>200,
-            'message'=>"Xóa thành công"
+                'status'=>200,
+                'message'=>"Xóa thành công"
             ]
         );
     }

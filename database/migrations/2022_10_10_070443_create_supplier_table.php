@@ -20,6 +20,12 @@ return new class extends Migration
             $table->string('address');
             $table->tinyInteger('is_state')->default(1);
             $table->timestamps();
+            // $table->increments('sup_id', 20);
+            // $table->string('sup_name', 255);
+            // $table->string('phone', 25);
+            // $table->string('address', 255);
+            // $table->tinyInteger('is_state')->default(1);
+            // $table->timestamps();
         });
     }
 

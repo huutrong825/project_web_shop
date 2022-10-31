@@ -1,30 +1,26 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\Unit;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Unit>
  */
-class CategoryFactory extends Factory
+class UnitFactory extends Factory
 {
-
-    protected $model = Category::class;
-
+    protected $model = Unit::class;
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     * 
      */
-    
     public function definition()
     {
         return [
-            //
-            'category_name'=>fake()->name(),
+            
         ];
     }
 }

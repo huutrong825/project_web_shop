@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddUserRequest;
 use Illuminate\Support\Facades\Hash;
-use Validator;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -33,9 +32,6 @@ class UserManagerController extends Controller
     {
         return view('Admin.User.user_list');
     }
-    /** 
-     * Lấy danh sách user từ sever
-     */  
 
     /**
      * Get data from table doing.
@@ -47,31 +43,40 @@ class UserManagerController extends Controller
     public function listUser(Request $req)
     {
         
-        if (request()->ajax()) {
-            if (!empty($req->group) && empty($req->active)) {
-                $user = User::where('group_role', $req->group)         
-                            ->get();
-            } else if (empty($req->group) && !empty($req->active)) {
-                $user = User::where('is_active', $req->active)      
-                            ->get();
-            } else if (!empty($req->group) && !empty($req->active)) {
-                $user = User::where('group_role', $req->group) 
-                            ->where('is_active', $req->active)   
-                            ->get();
-            } else {
-                $user = User::all();
-            }
+        // if (request()->ajax()) {
+        //     if (!empty($req->group) && empty($req->active)) {
+        //         $user = User::where('group_role', $req->group)         
+        //                     ->get();
+        //     } else if (empty($req->group) && !empty($req->active)) {
+        //         $user = User::where('is_active', $req->active)      
+        //                     ->get();
+        //     } else if (!empty($req->group) && !empty($req->active)) {
+        //         $user = User::where('group_role', $req->group) 
+        //                     ->where('is_active', $req->active)   
+        //                     ->get();
+        //     } else {
+        //         $user = User::all();
+        //     }
+        // }
+        $user = User::all();
+
+        if (!empty($req->group)) {
+            $user = $user->where('group_role', $req->group);
         }
+        if (!empty($req->active)) {
+            $user = $user->where('is_active', $req->active);
+        }
+
         return Datatables::of($user)->
         addColumn(
             'group_role', function ($user) {
-                $temp = $user->group_role == 1? "Admin" : ($user->group_role == 2? "Employee" : "Errol");
+                $temp = $user->group_role == 1? "Admin" : ($user->group_role == 2 ? "Employee" : "Errol" );
                 return $temp;
             }
         )
         ->addColumn(
             'is_active', function ($user) {
-                $temp = $user->is_active == 1? '<span style="color:green">Đang hoạt động</span>' : '<span style="color:red">Ngưng hoạt động</span>';
+                $temp = $user->is_active != 0? '<span style="color:green">Đang hoạt động</span>' : '<span style="color:red">Ngưng hoạt động</span>';
                 return $temp;
             }
         )

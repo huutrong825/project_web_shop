@@ -30,7 +30,6 @@
                     <tr>
                         <th  >STT</th>
                         <th>Mặt hàng kinh doanh</th>
-                        <th>Hình ảnh</th>
                         <th></th>
                     </tr>
                 </thead>

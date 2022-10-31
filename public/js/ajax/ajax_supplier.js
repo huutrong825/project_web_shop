@@ -174,7 +174,6 @@ $(document).ready(function(){
         e.preventDefault();
         var _id = $(this).attr('value');
         $('#UpdateModal').modal('show');
-        console.log(_id);
         $.ajax({
             type :'get',
             url : '/admin/supplier/update/'+_id,

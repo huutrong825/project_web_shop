@@ -32,7 +32,7 @@
             <select class="form-control filter" id="active"  >
                 <option disabled selected hidden>Chọn trạng thái</option>
                 <option value="1">Đang hoạt động</option>
-                <option value="o">Ngưng hoạt động</option>
+                <option value="0">Ngưng hoạt động</option>
             </select>
         </div>
         <div class="col-sm-3">
@@ -72,9 +72,9 @@
 
 
     <!-- Add User Modal-->
-    <div class="modal fade" id="AddUserModal" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal  fade" id="AddUserModal" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog " role="document">
             <div class="modal-content add-user">
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">

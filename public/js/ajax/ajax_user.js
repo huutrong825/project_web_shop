@@ -27,7 +27,7 @@ $(document).ready(function(){
                 { 'data': 'action','orderable': false, 'searchable': false},
             ]
         });
-        $('#formSearch').on('keyup submit' ,function(e) {
+        $('#formSearch').on('keyup click' ,function(e) {
             $('#myTable').DataTable().search($('#keySearch').val(),$('#group').val(),$('#state').val()).draw();
             e.preventDefault();
         });

@@ -93,5 +93,7 @@ Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
         Route::get('/fetch', ['uses'=>'ProductController@listProduct']);
 
         Route::get('/add', ['uses'=>'ProductController@addProduct']);
+
+        Route::get('/detail/{id}', ['uses'=>'ProductController@getIdProduct']);
     });
 });

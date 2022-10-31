@@ -9,9 +9,8 @@ $(document).ready(function(){
             'serverSide':true,
             'ajax':'/admin/category/fetch',
             'columns':[
-                { 'data': 'category_id','visible':false},
+                { 'data': 'category_id'},
                 { 'data': 'category_name' },
-                { 'data': 'image' },
                 { 'data': 'action','orderable': false, 'searchable': false},
             ]
         });
@@ -109,9 +108,6 @@ $(document).ready(function(){
             url : '/admin/category/update/'+_id,
             success: function(response){
                 $.each(response.cate, function(key, item){
-                    $url = "asset('img /" + item.image + "')";
-                    $image = '<img class="avatar" src="{{' + $url + '}}" alt="Avatar"\
-                    style="width:50px;height:50px"/>';
                     $('#idUp').val(item.category_id);
                     $('#cate_nameUp').val(item.category_name);
                 });

@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('unit', function (Blueprint $table) {
-            $table->id();
-            $table->string('unit');
+        Schema::create('discount', function (Blueprint $table) {
+            $table->increments('dis_id', 20);
+            $table->string('dis_name', 50);
+            $table->decimal('value', 20);
+            $table->date('start_day', 20);
+            $table->date('end_day', 20);
+            $table->tinyInteger('is_state')->default(1);
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unit');
+        Schema::dropIfExists('discount');
     }
 };
