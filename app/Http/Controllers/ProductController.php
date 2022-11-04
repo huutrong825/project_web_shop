@@ -16,12 +16,10 @@ class ProductController extends Controller
     }
     public function listProduct(Request $req)
     {
-        // $product=DB::table('product')
-        //     ->join('supplier', 'product.supplier_id', '=', 'supplier.id')
-        //     ->select('product_id', 'product_name', 'unit_price', 'image', 'is_sale', 'supplier.supplier_name')
-        //     ->get();
+        
         $p = DB::table('product')
             ->join('supplier', 'product.supplier_id', '=', 'supplier.id')
+            ->where('product.is_delete', 0)
             ->select(
                 'product_id', 
                 'product_name',
@@ -67,13 +65,10 @@ class ProductController extends Controller
             )
             ->addColumn(
                 'action', function ($p ) {
-                    return '<a value="'. $p->product_id. '" class="btn btn-success btn-circle btn-sm bt-Update">
-                        <i class="fas fa-pen"></i>
-                    </a>
-                    <a value=" '. $p->product_id .'" class="btn btn-danger btn-circle btn-sm bt-Delete" >
+                    return '<a value=" '. $p->product_id .'" class="btn btn-danger btn-circle btn-sm btDelete" >
                         <i class="fas fa-trash"></i>
                     </a>
-                    <a value=" '. $p->product_id .'" class="btn btn-warning btn-circle btn-sm bt-Block">
+                    <a value=" '. $p->product_id .'" class="btn btn-warning btn-circle btn-sm btBlock">
                         <i class="fas fa-lock"></i>
                     </a>';
                 }
@@ -89,32 +84,93 @@ class ProductController extends Controller
 
     public function getIdProduct($id)
     {
-        $pro=Product::where('product_id',$id)->get();
+        $pro = Product::where('product_id', $id)->get();
         return response()->json(
             [ 
                 'state'=>200,
-                'pro'=>$pro
+                'pro'=>$pro,
             ]
         );
     }
 
-    public function postFixProduct()
+    public function blockProduct($id)
     {
-
+        $pro = Product::where('product_id', $id)->first();
+        
+        if ($pro->is_sale == 1) {
+            $pro->update(
+                [
+                    'is_sale' => 0
+                ]
+            );
+        } else {
+            $pro->update(
+                [
+                    'is_sale' => 1
+                ]
+            );
+        }
+        return response()->json(
+            [ 
+                'state' => 200,
+                'messages' =>  'Cập nhật thành công'
+            ]
+        );
     }
 
-    public function deleteProduct()
+    public function deleteProduct($id)
     {
-
+        $pro = Product::where('product_id', $id)->first();
+        
+        $pro->update(
+            [
+                'is_delete' => 1
+            ]
+        );
+        return response()->json(
+            [ 
+                'state'=>200,
+                'messages'=> 'Xóa thành công'
+            ]
+        );
     }
 
-    public function getDetailProduct()
+    public function updatePro(Request $req, $id)
     {
-
+        $pro = Product::where('product_id', $id)->first();
+        $pro->update(
+            [
+                'product_name' => $req->nameUp,
+                'unit_price' => $req->priceUp,
+                'description' => $req->descrip,
+                'supplier_id' => $req->supp,
+            ]
+        );
+        return response()->json(
+            [ 
+                'state'=>200,
+                'messages'=> 'Cập nhật thành công'
+            ]
+        );
     }
-
-    public function postDetailProduct()
+    
+    public function uploadImg(Request $req, $id)
     {
-
+        if ($req->imgUp) {
+            $img_name = $req->imgUp->getClientOriginalName();
+            $req->imgUp->move(public_path('img'), $img_name);
+        }
+        $pro = Product::where('product_id', $id)->first();
+        $pro->update(
+            [
+                'image' => $img_name,
+            ]
+        );
+        return response()->json(
+            [ 
+                'state'=>200,
+                'messages'=> 'Cập nhật thành công'
+            ]
+        );
     }
 }

@@ -23,37 +23,55 @@ class SupplierController extends Controller
     /**
      * Get data from table doing.
      * 
-     * @return     supp
+     * @return     $supp
      * @author     Mr <dang.trong.rcvn2012@gmail.com>
      * @lastupdate trong.dang
      */
-    public function getSupplier()
+    public function getSupplier(Request $req)
     {
-        $supp = Supplier::all();
+        $supp = DB::table('supplier');
+
+        if ($req->phone !='') {
+            $supp = $supp->where('phone', 'like', '%'. $req->phone .'%');
+        }
+
+        if ($req->address !='') {
+            $supp = $supp->where('address', 'like', '%'. $req->address .'%');
+        }
+
+        if ($req->state ) {
+            $supp = $supp->where('is_state', $req->state);
+        }
+
+        if ($req->key !='') {
+            $supp = $supp->where('supplier_name', 'like', '%'. $req->key .'%');
+        }
+        $supp->where('is_delete', 0)->get();
+        
         return Datatables::of($supp)->
-            addColumn(
-                'is_state', function ($supp) {
-                    $temp = $supp->is_state == 0 ? '<td><span style="color:red">Ngừng cung ứng</span></td>'
-                            :($supp->is_state == 1 ? '<td><span style="color:green">Đang cung ứng</span></td>'
-                            :'Errol');
-                    return $temp;
-                }
-            )
-            ->addColumn(
-                'action', function ($supp ) {
-                    return '<a value="'. $supp->id. '" class="btn btn-success btn-circle btn-sm bt-Update">
-                    <i class="fas fa-pen"></i>
-                    </a>
-                    <a value=" '. $supp->id .'" class="btn btn-danger btn-circle btn-sm bt-Delete" >
-                        <i class="fas fa-trash"></i>
-                    </a>
-                    <a value=" '. $supp->id .'" class="btn btn-warning btn-circle btn-sm bt-Block">
-                        <i class="fas fa-user-times"></i>
-                    </a>';
-                }
-            )
-            ->rawColumns(['is_state','action'])
-            ->make(true);
+        addColumn(
+            'is_state', function ($supp) {
+                $temp = $supp->is_state == 0 ? '<td><span style="color:red">Ngừng cung ứng</span></td>'
+                        :($supp->is_state == 1 ? '<td><span style="color:green">Đang cung ứng</span></td>'
+                        :'Errol');
+                return $temp;
+            }
+        )
+        ->addColumn(
+            'action', function ($supp ) {
+                return '<a value="'. $supp->id. '" class="btn btn-success btn-circle btn-sm bt-Update">
+                <i class="fas fa-pen"></i>
+                </a>
+                <a value=" '. $supp->id .'" class="btn btn-danger btn-circle btn-sm bt-Delete" >
+                    <i class="fas fa-trash"></i>
+                </a>
+                <a value=" '. $supp->id .'" class="btn btn-warning btn-circle btn-sm bt-Block">
+                    <i class="fas fa-user-times"></i>
+                </a>';
+            }
+        )
+        ->rawColumns(['is_state','action'])
+        ->make(true);
     }
 
     public function getIDSupplier($id)
@@ -92,21 +110,13 @@ class SupplierController extends Controller
      * 
      * @return supp
      */
-    public function postAddSupplier(Request $req)
+    public function postAdd(Request $req)
     {
-        
-        if ($req->is_state) {   
-            $sta = 1 ;
-        } else {
-            $sta = 0 ;
-        }
-
         $supp = Supplier::create(
             [
-                'supplier_name' => $req->name_sup,
-                'address' => $req->address,
-                'phone' => $req->phone,
-                'is_state' => $sta
+                'supplier_name' => $req->namesupp,
+                'address' => $req->addressnew,
+                'phone' => $req->phonenew,
             ]
         );
         $supp->save();
@@ -136,14 +146,27 @@ class SupplierController extends Controller
      */
     public function deleteSupplier($id)
     {
-        Supplier::find($id)->delete();
-
-        return response()->json(
-            [
-                'status'=>200,
-                'message'=>"Xóa thành công"
-            ]
-        );
+        $supp = Supplier::where('id', $id)->first();
+        if ($supp) {
+            $supp->update(
+                [
+                    'is_delete' => 1
+                ]
+            );;
+            return response()->json(
+                [
+                    'status' => 200,
+                    'mess' => 'Thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 404,
+                    'mess' => 'Not find'
+                ]
+            );
+        }
     }
 
     /**
@@ -181,15 +204,15 @@ class SupplierController extends Controller
             }
                 return response()->json(
                     [
-                        'status'=>200,
-                        'mess'=>'Thành công'
+                        'status' => 200,
+                        'mess' => 'Thành công'
                     ]
                 );
         } else {
             return response()->json(
                 [
-                    'status'=>404,
-                    'mess'=>'Not find'
+                    'status' => 404,
+                    'mess' => 'Not find'
                 ]
             );
         }
@@ -217,16 +240,16 @@ class SupplierController extends Controller
                 
         $supp->update(
             [
-            'supplier_name'=>$req->nameUp,
-            'address'=>$req->addressUp,
-            'phone'=>$req->phoneUp,
+                'supplier_name' => $req->nameUp,
+                'address' => $req->addressUp,
+                'phone' => $req->phoneUp,
             ]
         );
 
         return response()->json(
             [
-                'status'=>200,
-                'mess'=>'Thành công'
+                'status' => 200,
+                'mess' => 'Thành công'
             ]
         );
     }

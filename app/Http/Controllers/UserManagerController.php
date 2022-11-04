@@ -43,29 +43,16 @@ class UserManagerController extends Controller
     public function listUser(Request $req)
     {
         
-        // if (request()->ajax()) {
-        //     if (!empty($req->group) && empty($req->active)) {
-        //         $user = User::where('group_role', $req->group)         
-        //                     ->get();
-        //     } else if (empty($req->group) && !empty($req->active)) {
-        //         $user = User::where('is_active', $req->active)      
-        //                     ->get();
-        //     } else if (!empty($req->group) && !empty($req->active)) {
-        //         $user = User::where('group_role', $req->group) 
-        //                     ->where('is_active', $req->active)   
-        //                     ->get();
-        //     } else {
-        //         $user = User::all();
-        //     }
-        // }
-        $user = User::all();
+        $user = DB::table('users');
 
-        if (!empty($req->group)) {
+        if ($req->group != '') {
             $user = $user->where('group_role', $req->group);
         }
-        if (!empty($req->active)) {
+        if ($req->active != '') {
             $user = $user->where('is_active', $req->active);
         }
+        
+        $user->where('is_delete', 0)->get();
 
         return Datatables::of($user)->
         addColumn(
@@ -76,7 +63,8 @@ class UserManagerController extends Controller
         )
         ->addColumn(
             'is_active', function ($user) {
-                $temp = $user->is_active != 0? '<span style="color:green">Đang hoạt động</span>' : '<span style="color:red">Ngưng hoạt động</span>';
+                $temp = $user->is_active != 0? '<span style="color:green">Đang hoạt động</span>' :
+                '<span style="color:red">Ngưng hoạt động</span>';
                 return $temp;
             }
         )
@@ -93,7 +81,7 @@ class UserManagerController extends Controller
             }
         )
         ->rawColumns(['group_role','is_active','action'])
-        ->make();
+        ->make(true);
     }
 
     
@@ -114,18 +102,13 @@ class UserManagerController extends Controller
      */ 
     public function postAddUser(Request $req)
     {
-        if ($req->active) {   
-            $act = 1 ;
-        } else {
-            $act=0 ;
-        }
+        
         $user = User::create(
             [
                 'name' => $req->name,
                 'email' => $req->email,
                 'password' => Hash::make($req->repass),
-                'group_role' => $req->group_role,
-                'is_active' =>$act
+                'group_role' => $req->group_role
             ]
         );
         $user->save();
@@ -157,7 +140,11 @@ class UserManagerController extends Controller
     {
         $userDel = User::where('id', $id)->first();
         if ($userDel) {
-            $userDel->delete();
+            $userDel->update(
+                [
+                    'is_delete' => 1
+                ]
+            );
             return response()->json(
                 [
                     'status' => 200,
@@ -173,9 +160,6 @@ class UserManagerController extends Controller
             );
         }
     }
-
-     
-
     /**
      * Get data from table doing.
      * 
@@ -198,31 +182,30 @@ class UserManagerController extends Controller
             if ($userBlock->is_active == 1) {
                 $userBlock ->update(
                     [
-                    'is_active'=>0
+                        'is_active' => 0
                     ]
                 );
             } else {
                 $userBlock->update(
                     [
-                    'is_active'=>1
+                        'is_active' => 1
                     ]
                 );
             }
                 return response()->json(
                     [
-                    'status'=>200,
-                    'mess'=>'Thành công'
+                        'status' => 200,
+                        'mess' => 'Thành công'
                     ]
                 );
         } else {
             return response()->json(
                 [
-                'status'=>404,
-                'mess'=>'Not find'
+                    'status' => 404,
+                    'mess' => 'Not find'
                 ]
             );
         }
-        
     }
 
     
@@ -281,55 +264,19 @@ class UserManagerController extends Controller
      */  
     public function putUpdateUser(Request $req, $id)
     {
-        $userUp = User::where('id', $id)->first();
-        if ($userUp) {
-            if ($req->checks == false) {                
-                $userUp->update(
-                    [
-                    'name'=>$req->names,
-                    'group_role'=>$req->group_roles,
-                    ]
-                );
-                
-                return response()->json(
-                    [
-                    'status'=>200, 
-                    'mess'=>'Success Update'
-                    ]
-                );
-            } else {
-                if ($vali->fails()) {
-                    return response()->json(
-                        [
-                        'status'=>412,
-                        'errors'=>$vali->messages()
-                        ]
-                    );
-                } else {                
-                    $userUp->update(
-                        [
-                        'name'=>$req->names,
-                        'group_role'=>$req->group_roles,
-                        'password'=>Hash::make($req->renewpass),
-                        ]
-                    );
-
-                    return response()->json(
-                        [
-                        'status'=>200, 
-                        'mess'=>'Success Update'
-                        ]
-                    );
-                }
-            } 
-        } else {
-            return response()->json(
-                [
-                'status'=>400,
-                'errors'=>'Not find'
-                ]
-            );
-        }
+        $userUp = User::where('id', $id)->first();        
+        $userUp->update(
+            [
+                'name'=>$req->names,
+                'group_role'=>$req->group_roles,
+            ]
+        );
+        return response()->json(
+            [
+                'state'=>200, 
+                'mess'=>'Success Update'
+            ]
+        );
     }
 
 }

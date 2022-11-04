@@ -21,8 +21,13 @@ class Product extends Model
         'image',
         'discount',
         'supplier_id',
-        'is_sale'
+        'is_sale',
+        'is_delete'
     ];
+
+    protected $primaryKey = 'product_id';
+
+    
 
     public function image()
     {

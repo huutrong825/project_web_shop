@@ -1,16 +1,16 @@
 $(document).ready(function(){   
 
-    fetch_category();
+    fetch_unit();
 
-    function fetch_category()
+    function fetch_unit()
     {
         $('#myTable').DataTable({
             'processing':true,
             'serverSide':true,
-            'ajax':'/admin/category/fetch',
+            'ajax':'/admin/unit/fetch',
             'columns':[
-                { 'data': 'category_id'},
-                { 'data': 'category_name' },
+                { 'data': 'unit_id'},
+                { 'data': 'unit_name' },
                 { 'data': 'action','orderable': false, 'searchable': false},
             ],
             'order' : [[0, 'desc']]
@@ -22,27 +22,12 @@ $(document).ready(function(){
         $('#AddModal').modal('show');
     });
 
-    $(document).ready(function(){
-        $('#categoryForm').validate({
-            'rules' :{
-                'cate_name':'required',
-            },
-            'messages' :{
-                'cate_name':'Tên loại hàng không được trống',
-            },
-            submitHandler: function(form) {
-                form.submit();
-            }
-        });
-    });
-
     $(document).on('click', '.btSubmitAdd', function(e){
         e.preventDefault();
-        $('#categoryForm').submit();
         $.ajax({
-            url:'/admin/category/add',
+            url:'/admin/unit/add',
             type:'post',
-            data: new FormData($('#categoryForm')[0]),
+            data: new FormData($('#formadd')[0]),
             contentType: false,
             processData: false,
             dataType:'json',
@@ -57,7 +42,7 @@ $(document).ready(function(){
             },
             error: function (err)
             {
-            //     alert('Lỗi');
+                alert('Lỗi');
             }
         });
     });
@@ -67,17 +52,17 @@ $(document).ready(function(){
     $(document).on('click', '.bt-Delete',function(e)
     {
         e.preventDefault();
-        var id=$(this).attr('value');
-        $('#DeleteModal').modal('show');
+        var _id = $(this).attr('value');
+        $('#DeleteUnit').modal('show');
         $.ajax({
-            url : '/admin/category/getId/'+id,
+            url : '/admin/unit/getId/' + _id,
             type : 'get',
             success:function(response)
             {
                 console.log(response);
-                $.each(response.cate, function(key, item){
-                    $('#idDel').val(item.category_id);
-                    $('#nameDel').html(item.category_name);
+                $.each(response.uni, function(key, item){
+                    $('#idDelete').val(item.unit_id);
+                    $('#unitDelete').html(item.unit_name);
                 });
             },
             error: function (err)
@@ -90,10 +75,10 @@ $(document).ready(function(){
     $(document).on('click', '.btSubmitDelete',function(e)
     {
         e.preventDefault();
-        var _id=$('#idDel').val();
+        var _id = $('#idDelete').val();
         $.ajax({
-            url:'/admin/category/delete/' +_id,
-            type:"delete",
+            url:'/admin/unit/delete/' +_id,
+            type:"get",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -101,7 +86,7 @@ $(document).ready(function(){
             {      
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.mess);
-                $('#DeleteModal').modal('hide');
+                $('#DeleteUnit').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
                 $('.alert-success').hide(8000);
             },
@@ -120,11 +105,11 @@ $(document).ready(function(){
         $('#UpdateModal').modal('show');
         $.ajax({
             type : 'get',
-            url : '/admin/category/getId/'+_id,
+            url : '/admin/unit/getId/'+ _id,
             success: function(response){
-                $.each(response.cate, function(key, item){
-                    $('#idUp').val(item.category_id);
-                    $('#cate_nameUp').val(item.category_name);
+                $.each(response.uni, function(key, item){
+                    $('#idUp').val(item.unit_id);
+                    $('#unitUp').val(item.unit_name);
                 });
             },
             error: function (err)
@@ -140,10 +125,10 @@ $(document).ready(function(){
         var id = $('#idUp').val();
         var data = 
         {
-            'cate_nameUp': $('#cate_nameUp').val()
+            'unitUp': $('#unitUp').val()
         }
         $.ajax({
-            url:'/admin/category/update/' + id,
+            url:'/admin/unit/update/' + id,
             type:"put",
             data: data,
             dataType:'json',
@@ -153,10 +138,10 @@ $(document).ready(function(){
             success:function(response)
             {   
                 $(".alert-success").css('display','block');
-                $('.alert-success').html(response.message);
+                $('.alert-success').html(response.messages);
                 $('#DeleteModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(8000);
+                $('.alert-success').hide(5000);
             },
             error: function (err)
             {

@@ -42,11 +42,6 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome !</h1>
                                     </div>
-                                    @if(session('thongbao'))
-                                        <div class="alert alert-success">
-                                            {{session('thongbao')}}
-                                        </div>
-                                    @endif
                                     <form action="/login" class="user" method='post'>
                                         @csrf
                                         <div class="form-group">
@@ -60,8 +55,13 @@
                                                 name='password' placeholder="Nhập mật khẩu">
                                             <p style="color:red" class="help is-danger">{{ $errors->first('password') }}</p>
                                         </div>
-                                        <button style="text-align: center" type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
-                                        
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck" name="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Ghi nhớ đăng nhập</label>
+                                            </div>
+                                        </div>
+                                        <button style="text-align: center" type="submit" class="btn btn-success btn-user btn-block">Đăng nhập</button>
                                     </form>
                                     <hr>
                                 </div>

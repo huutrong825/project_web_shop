@@ -23,77 +23,143 @@ Route::post('/login', ['uses'=>'AuthController@postLogin']);
 Route::get('/register', ['uses'=>'AuthController@getRegister']);
 Route::post('/register', ['uses'=>'AuthController@postRegister']);
 
-Route::group(['middleware'=>'AdminLogin', 'prefix'=>'admin'], function(){
+Route::group(
+    ['middleware'=>'AdminLogin', 'prefix'=>'admin'], function () {
 
-    Route::get('/', function(){
-        return view('Admin/admin_index');
-    });
+        Route::get(
+            '/', function () {
+                return view('Admin/admin_index');
+            }
+        );
 
-    Route::get('/profile', ['uses'=>'AuthController@getProfile']);
-    Route::post('/profile', ['uses'=>'AuthController@updateProfile']);
+        Route::get('/profile', ['uses'=>'AuthController@getProfile']);
+        Route::post('/profile', ['uses'=>'AuthController@updateProfile']);
 
-    Route::get('/logout', ['uses'=>'AuthController@getLogout']);
+        Route::get('/logout', ['uses'=>'AuthController@getLogout']);
 
-    Route::group(['prefix'=>'user'], function(){
+        Route::group(
+            ['prefix'=>'user'], function () {
 
-        Route::get('/', ['uses'=>'UserManagerController@index']);
+                Route::get('/', ['uses'=>'UserManagerController@index']);
 
-        Route::get('/fetch', ['uses'=>'UserManagerController@listUser']);
+                Route::get('/fetch', ['uses'=>'UserManagerController@listUser']);
 
-        Route::post('/add', ['uses'=>'UserManagerController@postAddUser']);
+                Route::post('/add', ['uses'=>'UserManagerController@postAddUser']);
 
-        Route::get('/getUserDelete/{id}', ['uses'=>'UserManagerController@getUser']);
-        Route::get('/delete/{id}', ['uses'=>'UserManagerController@deleteUser']);
+                Route::get('/getId/{id}', ['uses'=>'UserManagerController@getUser']);
 
-        Route::get('/getUserBlock/{id}', ['uses'=>'UserManagerController@getUser']);
-        Route::get('/block/{id}', ['uses'=>'UserManagerController@blockUser']);
+                Route::get('/delete/{id}', ['uses'=>'UserManagerController@deleteUser']);
 
-        Route::get('/update/{id}', ['uses'=>'UserManagerController@getUser']);
-        Route::put('/update/{id}', ['uses'=>'UserManagerController@putUpdateUser']);
+                Route::get('/block/{id}', ['uses'=>'UserManagerController@blockUser']);
 
-        Route::get('/search', ['uses'=>'UserManagerController@search']);
-    });
+                Route::put('/update/{id}', ['uses'=>'UserManagerController@putUpdateUser']);
+            }
+        );
 
-    Route::group(['prefix'=>'supplier'], function(){
+        Route::group(
+            ['prefix'=>'supplier'], function () {
 
-        Route::get('/', ['uses'=>'SupplierController@index']);
+                Route::get('/', ['uses'=>'SupplierController@index']);
 
-        Route::get('/fetch', ['uses'=>'SupplierController@getSupplier']);
+                Route::get('/fetch', ['uses'=>'SupplierController@getSupplier']);
 
-        Route::post('/add', ['uses'=>'SupplierController@postAddSupplier']);
+                Route::post('/add', ['uses'=>'SupplierController@postAdd']);
 
-        Route::get('/delete/{id}', ['uses'=>'SupplierController@getIDSupplier']);
-        Route::delete('/delete/{id}', ['uses'=>'SupplierController@deleteSupplier']);
+                Route::get('/getId/{id}', ['uses'=>'SupplierController@getIDSupplier']);
 
-        Route::get('/block/{id}', ['uses'=>'SupplierController@getIDSupplier']);
-        Route::put('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
+                Route::get('/delete/{id}', ['uses' => 'SupplierController@deleteSupplier']);
 
-        Route::get('/update/{id}', ['uses'=>'SupplierController@getIDSupplier']);
-        Route::put('/update/{id}', ['uses'=>'SupplierController@UpdateSupp']);
-    });
+                Route::put('/block/{id}', ['uses'=>'SupplierController@blockSupplier']);
 
-    Route::group(['prefix'=>'category'], function(){
+                Route::put('/update/{id}', ['uses'=>'SupplierController@UpdateSupp']);
+            }
+        );
+        // Category
+        Route::group(
+            ['prefix'=>'category'], function () {
+                Route::get('/', ['uses'=>'CategoryController@index']);
 
-        Route::get('/', ['uses'=>'CategoryController@index']);
+                Route::get('/fetch', ['uses'=>'CategoryController@getCate']);
 
-        Route::get('/fetch', ['uses'=>'CategoryController@getCate']);
+                Route::post('/add', ['uses'=>'CategoryController@addCate']);
 
-        Route::post('/add', ['uses'=>'CategoryController@addCate']);
+                Route::get('/getId/{id}', ['uses'=>'CategoryController@getCateId']);
 
-        Route::get('/update/{id}', ['uses'=>'CategoryController@getCateId']);
-        Route::put('/update/{id}', ['uses'=>'CategoryController@updateCate']);
+                Route::put('/update/{id}', ['uses'=>'CategoryController@updateCate']);
 
-        Route::get('/delete/{id}', ['uses'=>'CategoryController@getCateId']);
-        Route::delete('/delete/{id}', ['uses'=>'CategoryController@deleteCate']);
-    });
+                Route::delete('/delete/{id}', ['uses'=>'CategoryController@deleteCate']);
+            }
+        );
+        // Product
+        Route::group( 
+            ['prefix'=>'product'], function () {
 
-    Route::group(['prefix'=>'product'], function(){
+                Route::get('/', ['uses'=>'ProductController@index']);
 
-        Route::get('/', ['uses'=>'ProductController@index']);
-        Route::get('/fetch', ['uses'=>'ProductController@listProduct']);
+                Route::get('/fetch', ['uses'=>'ProductController@listProduct']);
 
-        Route::get('/add', ['uses'=>'ProductController@addProduct']);
+                Route::get('/add', ['uses'=>'ProductController@addProduct']);
 
-        Route::get('/detail/{id}', ['uses'=>'ProductController@getIdProduct']);
-    });
+                Route::get('/getId/{id}', ['uses'=>'ProductController@getIdProduct']);
+
+                Route::get('/block/{id}', ['uses'=>'ProductController@blockProduct']);
+
+                Route::get('/delete/{id}', ['uses'=>'ProductController@deleteProduct']);
+
+                Route::put('/update/{id}', ['uses'=>'ProductController@updatePro']);
+
+                Route::put('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
+            }
+        );
+
+        Route::group( 
+            ['prefix'=>'unit'], function () {
+
+                Route::get('/', ['uses'=>'UnitController@index']);
+
+                Route::get('/fetch', ['uses'=>'UnitController@listUnit']);
+
+                Route::post('/add', ['uses'=>'UnitController@addUnit']);
+
+                Route::get('/getId/{id}', ['uses'=>'UnitController@getId']);
+
+                Route::get('/delete/{id}', ['uses'=>'UnitController@deleteUnit']);
+
+                Route::put('/update/{id}', ['uses'=>'UnitController@updateUnit']);
+            }
+        );
+
+        Route::group( 
+            ['prefix'=>'discount'], function () {
+
+                Route::get('/', ['uses'=>'DiscountController@index']);
+
+                Route::get('/fetch', ['uses'=>'DiscountController@listDis']);
+
+                Route::post('/add', ['uses'=>'DiscountController@addDis']);
+
+                Route::get('/getId/{id}', ['uses'=>'DiscountController@getDis']);
+
+                Route::get('/delete/{id}', ['uses'=>'DiscountController@deleteDis']);
+
+                Route::get('/block/{id}', ['uses'=>'DiscountController@blockDis']);
+
+                Route::put('/update/{id}', ['uses'=>'DiscountController@updateDis']);
+            }
+        );
+
+        Route::group(
+            ['prefix'=>'customer'], function () {
+
+                Route::get('/', ['uses'=>'CustomerController@index']);
+
+                Route::get('/fetch', ['uses'=>'CustomerController@listCus']);
+
+                Route::post('/add', ['uses'=>'CustomerController@addCus']);
+
+                Route::get('/getId/{id}', ['uses'=>'CustomerController@getId']);
+
+                Route::put('/update/{id}', ['uses'=>'CustomerController@updateCus']);
+            }
+        );
 });

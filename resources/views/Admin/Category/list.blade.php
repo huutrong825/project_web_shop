@@ -57,8 +57,8 @@
                     <h1 class="h4 text-gray-900 mb-4">Thêm loại hàng</h1>
                 </div>
                 <div class="modal-body">
-                    <form id="categoryForm" method="post" enctype="multipart/form-data">  
-                        @csrf                      
+                    <form id="categoryForm" class='user'>
+                    <fieldset>     
                         <div class="form-group">
                             <div class="">
                                 <input type="text" class="form-control form-control-user" id='cate_name' name="cate_name"
@@ -66,11 +66,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control" id='image' name="image">
-                        </div>
-                        <div class="form-group">
                             <input type='submit' class="btn btn-success btn-user btn-block btSubmitAdd" value="Thêm mới"> 
                         </div>
+                    </fieldset>
                     </form>
                 </div>
             </div>
@@ -116,18 +114,13 @@
                 <div class="alert alert-success" style="display:none">
                 </div>
                 <div class="modal-body">
-                    <form class="user" id='formUpdate' method="put" enctype="multipart/form-data">
+                    <form class="user" id='formUpdate' method="put">
                     <fieldset>
                         @csrf
                         <div class="form-group">
                             <div class="">
                                 <input type="hidden" class="form-control form-control-user" id='idUp' >
                             </div>
-                        </div> 
-                        <div class="form-group">
-                            <div id='img'></div>
-                            <img id='imageShow'  width="50px" height="50px" alt="Picure">
-                            <input type="file" id='imageUp' name="imageUp">
                         </div>
                         <div class="form-group">
                             <div class="">
@@ -152,4 +145,5 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
 <script src="{{asset('js/ajax/ajax_category.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 @endsection

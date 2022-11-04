@@ -19,9 +19,9 @@
             </div>
             <p style="color:red" class="help is-danger"></p>
         </div>
-        <div class="form-group row">
+        <div class="form-group select row">
             <div class="col-sm-6">
-                <select class="form-control " id="role" name="category" >
+                <select class="form-control .select" id="role" name="category" >
                 <option disabled selected hidden>Chọn loại sản phẩm</option>
                     @foreach($category as $c)
                     <option value="{{ $c-> category_id }}">{{ $c-> category_id }} {{ $c->category_name }}</option>
@@ -29,7 +29,7 @@
                 </select>
             </div>
             <div class="col-sm-6">
-                <select class="form-control " id="role" name="category" >
+                <select class="form-control .select" id="role" name="category" >
                 <option disabled selected hidden>Chọn shop</option>
                     @foreach($supplier as $s)
                     <option value="{{ $s->id }}">{{ $s->id }} {{ $s->supplier_name }}</option>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 .select">
                 <input type="text" class="form-control form-control-user"
                     name="quanity" id='phone' placeholder="Nhập số lượng" required>
             </div>
@@ -51,17 +51,17 @@
             <p style="color:red" class="help is-danger"></p>
         </div>
         <div class="form-group row">
-            <div class="col-sm-6">
-                <select class="form-control" id="role" name="category" >
+            <div class="col-sm-6 .select">
+                <select class="form-control .select" id="role" name="category" >
                 <option disabled selected hidden>Chọn đơn vị tính</option>
                     @foreach($unit as $u)
-                    <option value="{{ $u->id }}">{{ $u->unit }}</option>
+                    <option value="{{ $u->id }}">{{ $u->unit_name }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="col-sm-6">
-                <input type="file" class="form-control" name="image">
+                <input type="file" class="form-control .select" name="image">
                 <p style="color:red" class="help is-danger"></p>
             </div>
         </div>

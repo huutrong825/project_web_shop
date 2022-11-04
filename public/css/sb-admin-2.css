@@ -10867,13 +10867,13 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://img.lovepik.com/free_png/32/20/01/04c58PICaf8c4idZM9WN7_PIC2018.png_860.png");
+  background: url("https://robinpeek.nl/wp-content/uploads/2017/09/Meer-verkopen-met-je-webshop.jpg");
   background-position: center;
   background-size: cover;
 }
 
 .bg-login{
-  background-image: url("https://i.pinimg.com/736x/51/d2/72/51d27296fc54199cf0a8a86fb123e44b.jpg");
+  background-color:#4f81a6 ;
 }
 
 .bg-register-image {
@@ -10893,7 +10893,6 @@ form.user .custom-checkbox.small label {
 }
 
 form.user .form-control-user {
-  font-size: 0.8rem;
   border-radius: 10rem;
   padding: 1.5rem 1rem;
 }
@@ -10979,11 +10978,9 @@ form.user .btn-user {
 }
 
 .error {
-  color: #5a5c69;
-  font-size: 7rem;
+  color: red;
   position: relative;
   line-height: 1;
-  width: 12.5rem;
 }
 
 @-webkit-keyframes noise-anim {
@@ -11290,32 +11287,3 @@ body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
 
-.detail{
-	display:flex;
-}
-.left{
-	width:50%;
-	float:left;
-}
-.left img{
-	width:100%;
-}
-.minileft div{
-	width:20%;
-	float:left;
-}
-
-h2{
-	text-indent:40px;
-	font-size:30px;
-}
-.red{
-	color:red;
-}
-.button div{
-	float:left;
-	padding:10px;
-}
-img{
-	cursor:pointer;
-}

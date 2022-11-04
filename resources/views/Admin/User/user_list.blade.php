@@ -35,9 +35,6 @@
                 <option value="0">Ngưng hoạt động</option>
             </select>
         </div>
-        <div class="col-sm-3">
-            <a class="btn btn-success" type="submit" id='btSearch'>Tìm</a>
-        </div>
         </form>
         <div class=" col-sm-3">
             <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
@@ -88,7 +85,7 @@
                     <ul id='error_mes'></ul>
                 </div>
                 <div class="modal-body form-add">  
-                    <form class="form-group" id='formadduser'>
+                    <form class="form-group user" id='formadduser'>
                         <fieldset>                
                             <div class="form-group">
                                 <div class="">
@@ -113,15 +110,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <select class="form-control " id="addgroup_role" name="group_role" required>
+                                <select class="form-control select" id="addgroup_role" name="group_role" required>
                                     <option disabled selected hidden>Chọn nhóm</option>
                                     <option value="1">Admin</option>
                                     <option value="2">Employee</option>
                                 </select>
-                            </div>
-                            <div class="form-group custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="addactive" name="addactive">  
-                                <label class="custom-control-label" for="addactive">Trạng thái hoạt động</label>                      
                             </div>
                             <div class="form-group">
                                 <a id='btSubmitAdd' class="btn btn-success btn-user btn-block ">Thêm mới</a>
@@ -150,7 +143,7 @@
                     <ul id='error_up'></ul>
                 </div> 
                 <div class="modal-body">
-                    <form id='formUpdate'>
+                    <form id='formUpdate' class='user'>
                         <div class="form-group">
                             <div class="">
                                 <input type="hidden" class="form-control form-control-user" id='ID' >
@@ -166,36 +159,14 @@
                                 value="" disabled>
                         </div>
                         <div class="form-group">
-                            <select class="form-control " id="role" name="group_role" >
+                            <select class="form-control select" id="role" name="group_role" >
                                 <option  selected id='txtrole'></option>
                                 <option value="1">Admin</option>
                                 <option value="2">Employee</option>
                             </select>
                         </div>
-                        <div class=" form-group custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck" name="checkPass">
-                            <label class="custom-control-label" for="customCheck">Thay đổi mật khẩu</label>
-                        </div>        
-                        <div class="form-group" id='pass1' style="display:none" >
-                            <div class="">
-                                <input type="password" class="form-control form-control-user"
-                                    name="password" id='oldpass' placeholder="Nhập mật khẩu cũ">
-                            </div>
-                        </div>
-                        <div class="form-group" id='pass2' style="display:none">
-                            <div class="">
-                                <input type="password" class="form-control form-control-user"
-                                    name="newpass" id='newpass' placeholder="Nhập mật khẩu mới">
-                            </div>
-                        </div>
-                        <div class="form-group" id='pass3' style="display:none">
-                            <div class="">
-                                <input type="password" class="form-control form-control-user"
-                                    name="renewpass" id='renewpass' placeholder="Xác nhận lại mật khẩu mới">
-                            </div>
-                        </div>        
                         <div class="form-group">
-                            <input type='submit' id='submitUpdate' class="btn btn-success btn-user btn-block" value="Lưu"> 
+                            <button class="btn btn-success btn-user btn-block btsubmitUpdate">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -254,8 +225,6 @@
 <script src="{{asset('js/ajax/ajax_user.js')}}"></script>
 
 <script src="{{asset('js\demo\datatables-demo.js')}}"></script>
-
-
 
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 @endsection

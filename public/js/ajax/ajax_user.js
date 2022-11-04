@@ -2,22 +2,21 @@
 $(document).ready(function(){
 
     fetch_user();
-
+// Đổ data
     function fetch_user()
     {
         $('#myTable').DataTable({
-            'processing':true,
-            'serverSide':true,
+            'processing': true,
+            'serverSide': true,
             'ajax':
             {
-                url : '/admin/user/fetch',
+                url :'/admin/user/fetch',
                 data : function (d){
                     d.key = $('#keySearch').val();
                     d.group = $('#group').val();
                     d.active = $('#active').val();
                 }
             },
-            
             'columns':[
                 { 'data': 'id','visible':false},
                 { 'data': 'name' },
@@ -25,15 +24,18 @@ $(document).ready(function(){
                 { 'data': 'group_role' },
                 { 'data': 'is_active' },
                 { 'data': 'action','orderable': false, 'searchable': false},
-            ]
+            ],
+            'order' : [[0, 'desc']]
         });
+
         $('#formSearch').on('keyup click' ,function(e) {
-            $('#myTable').DataTable().search($('#keySearch').val(),$('#group').val(),$('#state').val()).draw();
+            $('#myTable').DataTable().search($('#keySearch').val()).draw();
             e.preventDefault();
         });
     }
     //Reset tìm kiếm
     $(document).on('click','#btReset' ,function() {
+        $('#keySearch').val('');
         $("#group").val($("#group option:first").val());
         $("#active").val($("#active option:first").val());
         $('#myTable').DataTable().destroy();
@@ -48,7 +50,7 @@ $(document).ready(function(){
         $('#UpdateUserModal').modal('show');
         var typeRole='';        
         $.ajax({
-            url:'/admin/user/update/' +_id,
+            url:'/admin/user/getId/' +_id,
             type:"GET",
             success:function(response)
             {
@@ -57,12 +59,12 @@ $(document).ready(function(){
                 $('#emailUpdate').val(response.user.email);
                 $('#txtrole').val(response.user.group_role);
                 
-                if(response.user.group_role==1)
+                if(response.user.group_role == 1)
                 {
-                    typeRole='Admin';
+                    typeRole = 'Admin';
                 }
                 else{
-                    typeRole='Employee';
+                    typeRole = 'Employee';
                 }
                 $('#txtrole').html(typeRole);
 
@@ -74,37 +76,44 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on('click','#customCheck', function(){
-        $("#pass1").toggle();
-        $("#pass2").toggle();
-        $("#pass3").toggle();
-    });
 
+    $(document).ready(function(){
+        $('#formUpdate').validate({
+            'rules' :{
+                'oldpass':'required',
+                'newpass' : {
+                    'required' : true,
+                    'minlength' : 6,
+                },
+                'renewpass' : {
+                    'required' : true,
+                    'equalTo' : 'newpass',
+                },
+            },
+            'messages' :{
+                'oldpass':'Nhập lại mật khẩu cũ',
+                'newpass' : {
+                    'required' : 'Nhập mật khẩu mới',
+                    'minlength' : 'Không nhỏ hơn 6 ký tự'
+                },
+                'renewpass': {
+                    'required' : 'Xác nhận lại mật khẩu',
+                   'equalTo' : 'Mật khẩu nhập lại không đúng'
+                }
+            }
+        });
+    });
     // đưa data userupdate đến xử lý
-    $(document).on('click','#submitUpdate',  function(e){
+    $(document).on('click','.btsubmitUpdate', function(e){
         e.preventDefault();
         var id_update = $('#ID').val();
-        if ($('#customCheck').is(':checked'))
-        {
-            var data={
-                'names' : $('#nameUpdate').val(),
-                'emails' : $('#emailUpdate').val(),
-                'group_roles' : $('#role').val(),
-                'checks' : $('#customCheck').prop('checked'),
-                'password' : $('#oldpass').val(),
-                'newpass' : $('#newpass').val(),
-                'renewpass' : $('#renewpass').val(),            
-            }
+        var data = {
+            'names' : $('#nameUpdate').val(),
+            'emails' : $('#emailUpdate').val(),
+            'group_roles' : $('#role').val(),           
         }
-        else
-        {
-            var data={
-                'names' : $('#nameUpdate').val(),
-                'emails' : $('#emailUpdate').val(),
-                'group_roles' : $('#role').val(),
-                'checks' : $('#customCheck').prop('checked'),           
-            }
-        }
+        console.log(data);
+        $('#formUpdate').submit();
         $.ajax({
             url : '/admin/user/update/' + id_update,
             type : "put",
@@ -114,19 +123,8 @@ $(document).ready(function(){
             data : data,
             dataType : 'json',
             success : function(response){
-                if(response.status == 412)
-                {
-                    $(".print-error-up").css('display','block');
-                    $('#error_up').html('');
-                    $.each(response.errors, function(keys, err_values){
-                        $('#error_up').append('<li>'+err_values+'</i>');
-                    });
-                }
-                else
-                {
-                    $('#UpdateUserModal').modal('hide');
-                    $('#myTable').DataTable().ajax.reload();
-                }                
+                $('#UpdateUserModal').modal('hide');
+                $('#myTable').DataTable().ajax.reload();
             },
             error: function (err) {
                 alert('Lỗi');
@@ -177,15 +175,14 @@ $(document).ready(function(){
     // thêm use bằng ajax
     $(document).on('click','#btSubmitAdd',function(e){
         e.preventDefault();
-        var data={
+        var data = {
             'name' : $('#addtxtname').val(),
             'email' : $('#addemail').val(),
             'password' : $('#addpassword').val(),
             'repass' : $('#addrepass').val(),
             'group_role' : $('#addgroup_role').val(),
-            'active' : $('#addactive').prop('checked'),            
         }   
-            $('#formadduser').submit();
+        $('#formadduser').submit();
             $.ajax({
                 url : '/admin/user/add',
                 type : "post",
@@ -207,11 +204,11 @@ $(document).ready(function(){
     $(document).on('click','.bt-Delete',function(e)
     {
         e.preventDefault();
-        var _id=$(this).attr('value');
+        var _id = $(this).attr('value');
         $('#DeleteModal').modal('show');
         $.ajax({
-            url:'/admin/user/getUserDelete/' +_id,
-            type:"GET",
+            url:'/admin/user/getId/' +_id,
+            type: 'get',
             success:function(response)
             {
                 $('#idDelete').val(response.user.id);
@@ -229,11 +226,10 @@ $(document).ready(function(){
     $(document).on('click','.btDSubmitDelete', function(e)
     {
         e.preventDefault();
-        var _id=$('#idDelete').val();
-        console.log(_id);
+        var id = $('#idDelete').val();
         $.ajax({
-            url:'/admin/user/delete/' +_id,
-            type:"GET",
+            url:'/admin/user/delete/' + id,
+            type: "GET",
             success:function(response)
             {
                 $('#DeleteModal').modal('hide');
@@ -255,7 +251,7 @@ $(document).ready(function(){
         var _id=$(this).attr('value');
         $('#BlockModal').modal('show');
         $.ajax({
-            url:'/admin/user/getUserBlock/' +_id,
+            url:'/admin/user/getId/' +_id,
             type:"GET",
             success:function(response)
             {

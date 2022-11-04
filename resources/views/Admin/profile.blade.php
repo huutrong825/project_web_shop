@@ -9,19 +9,20 @@
     @foreach($user as $u)
         <form class="form" action="/admin/profile" method="post" enctype="multipart/form-data">
             @csrf
-            <div id='avatar'class="left text-center">
+            <div id='avatar'class=" text-center">
                 <img src="{{asset('img')}}/{{Auth::User()->avatar}}" class="avatar img-circle img-thumbnail" style='width:240px;height:320px'alt="avatar">
                 <h6>Upload a different photo...</h6>
-                <input type="file" name="avatar" class="text-center center-block file-upload">
+                <input type="file" name="avatar" id="avatar" class="text-center center-block file-upload">
+                <!-- <div id="show"></div> -->
             </div>
             <br>
-            <div class="right">
-                <div>
+            <div class="">
+                <div class="col-xs-6">
                     <label for="name">Tên người dùng</label>
                     <input type="text" class="form-control" name="name"  value="{{ $u->name }}"  >
                 </div>
-                <div>
-                <label for="email">Email</label>
+                <div class="col-xs-6">
+                    <label for="email">Email</label>
                     <input type="text" class="form-control" name="mail" value="{{ $u-> email }}" disabled>
                 </div>
                 <div class="col-xs-6">
@@ -71,6 +72,25 @@
     @endforeach
     <hr>
 </div>
+
+<!-- Modal upload image -->
+<!-- <div class="modal fade" id="UploadImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="img_demo"></div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary btCrop">Crop</a>
+                    <button class="btn btn-danger " type="button" data-dismiss="modal">Cancel</button>                    
+                </div>
+            </div>
+        </div>
+    </div> -->
 @endsection
 
 @section('script')
@@ -82,4 +102,8 @@
         });
     });
 </script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script> -->
+<script src="{{asset('js\ajax\upload_avatar.js')}}"></script>
 @endsection

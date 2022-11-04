@@ -16,7 +16,7 @@ class CategoryController extends Controller
 
     public function getCate()
     {
-        $cate = Category::all();
+        $cate = Category::where('is_delete', 0)->get();
 
         return Datatables::of($cate)
             ->addColumn(
@@ -34,19 +34,15 @@ class CategoryController extends Controller
 
     public function getCateId($id)
     {
-        $cate=Category::where('cate_id', $id)->get();
-
-        if ($cate)
-        {
+        $cate=Category::where('category_id', $id)->get();
+        if ($cate) {
             return response()->json(
                 [
                 'status'=>200,
                 'cate'=>$cate
                 ]
             );
-        }
-        else
-        {
+        } else {
             return response()->json(
                 [
                 'status'=>404,
@@ -59,13 +55,9 @@ class CategoryController extends Controller
 
     public function addCate(Request $req)
     {
-        if ($req->image) {
-            $img_name = $req->image->getClientOriginalName();
-            $req->image->move(public_path('img'), $img_name);
-        }
         $cate = Category::create(
             [
-                'cate_name' => $req->cate_name,
+                'category_name' => $req->cate_name,
             ]
         );
         $cate->save();
@@ -78,8 +70,12 @@ class CategoryController extends Controller
     }
     public function deleteCate($id)
     {
-        Category :: where('category_id', $id)-> delete();
-
+        $cate = Category::where('category_id', $id)-> first();
+        $cate->update(
+            [
+                'is_delete' => 1
+            ]
+        );
         return response()->json(
             [
                 'status' => 200,
@@ -88,19 +84,19 @@ class CategoryController extends Controller
         );
     }
 
-    public function updateCate(Request $req,$id)
+    public function updateCate(Request $req, $id)
     {
-        
-        
-    }
-
-    public function search(Request $req)
-    {       
-        if($req>get('search'))
-        {
-            $search = $req->get('search');
-            $user = DB::table('users')->where('name', 'LIKE', "%{$search}%")->get();    
-        }      
-        return view('Admin.User.user_list', compact('user'));
+        $cate = Category::where('category_id', $id);
+        $cate->update(
+            [
+                'category_name' => $req -> cate_nameUp
+            ]
+        );
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => "Cập nhật thành công"
+            ]
+        );
     }
 }

@@ -39,13 +39,11 @@
                 <option value="o">Ngừng bán</option>
             </select>
         </div>
-        <div class="col-sm-3">
-            <a class="btn btn-success" type="submit" id='btSearch'>Tìm</a>
-        </div>
-    </form>
-    <div class=" col-sm-3">
-        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+        <div class=" col-sm-3">
+        <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
     </div>
+    </form>
+    
 </div>
 
    
@@ -86,82 +84,65 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content add-user">
                 <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
                 </div>
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Chi tiết sản phẩm</h1>
+                    <h1 class="h2 text-green mb-4">Chi tiết sản phẩm</h1>
+                </div>
+                <div class="alert alert-success " style="display:none">
                 </div>
                 <div class="modal-body detail">
                     <div class="left">
-                        <img src="http://127.0.0.1:8000/img/ICVVE6033.JPG" id="imgId" />
-                        <div class="minileft">
-                            <div><img src="../images/galaxys8/Black_1.jpg" onClick="doianh(this)" /></div>
-                            <div><img src="../images/galaxys8/Black_2.jpg" onClick="doianh(this)" /></div>
-                            <div><img src="../images/galaxys8/Black_3.jpg" onClick="doianh(this)" /></div>
-                            <div><img src="../images/galaxys8/Black_4.jpg" onClick="doianh(this)" /></div>
-                            <div><img src="../images/galaxys8/Black_5.jpg" onClick="doianh(this)" /></div>
+                        <img  id="imgId" alt='picture'/>
+                        <div >
+                            <form id='uploadImg' method="put" enctype="multipart/form-data">
+                                @csrf
+                                <button type='submit'class='Upload'>Upload</button>
+                                <input id='imgUp' name='imgUp' type="file" >
+                            </form>
                         </div>
                     </div>
                     <div class="right">
-                        <h2 id='name'>Samsung Galaxy S8+</h2>
-                        <h2 id='price' class="red">20.050.000 VNĐ</h2>
-                        <h3>Màu sắc</h3>
-                        <div class="button">
+                        <div class="form-group ">
+                                <div class="">
+                                    <input type="hidden" class="form-control form-control-user" id='idUp' name="idUp"
+                                        required>
+                                </div>
+                            <div class="form-group col-sm-12">
+                                <label>Tên sản phẩm</label>
+                                <div class="">
+                                    <input type="text" class="form-control form-control-user" id='nameUp' name="nameUp"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Giá bán</label>
+                                <div class="">
+                                    <input type="text" class="form-control form-control-user" id='priceUp' name="priceUp"
+                                    required>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Mô tả</label>
+                                <div class="">
+                                    <textarea type="text" rows='5' style="resize: none;" class="form-control form-control-user" id='descrip' name="descrip">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label>Shop cung cấp</label>
+                                <select class="form-control " id="suppid" name="suppid" >
+                                <option selected id='supp'></option>
+                                    @foreach($supplier as $s)
+                                    <option value="{{ $s->id }}">{{ $s->id }} {{ $s->supplier_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-primary btSubmitUpload" >Lưu</a>
+                                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Update Supplier Modal -->
-    <div class="modal fade" id="UpdateModal" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content add-user">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Cập nhật nhà cung ứng mới</h1>
-                </div>
-                <div class="modal-body">
-                    <form class="user" id='form' method="put">
-                    <fieldset>
-                        @csrf
-                        <div class="form-group">
-                            <div class="">
-                                <input type="hidden" class="form-control form-control-user" id='idUp' >
-                            </div>
-                        </div>                      
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user" id='nameUp' name="txtname"
-                                     required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id='addressUp' name="address"
-                               >
-                                <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phoneUp'  required>
-                            </div>
-                            <p style="color:red" class="help is-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <input type='submit' class="btn btn-success btn-user btn-block btSubmitUpdate" value="Lưu"> 
-                        </div>
-                    </fieldset>
-                    </form>
                 </div>
             </div>
         </div>
@@ -194,7 +175,7 @@
     </div>  
     
     <!-- Block Modal-->
-    <div class="modal fade" id="BlockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="BlockPro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -207,14 +188,11 @@
                 <div class="">
                     <input type="hidden" class="form-control form-control-user" id='idBlock' >
                 </div>
-                <form method='put'>
-                    @csrf
                 <div class="modal-body">Xác nhận khóa/mở người dùng <span id='nameBlock'></span></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btSubmitBlock" >Xác nhận</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -230,5 +208,6 @@
 
 <script src="{{asset('js/ajax/ajax_product.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css"></script>
 
 @endsection

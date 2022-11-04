@@ -17,8 +17,9 @@ return new class extends Migration
             // $table->increments('unit_id', 20);
             // $table->string('unit', 50);
             // $table->timestamps();
-            $table->id();
-            $table->string('unit');
+            $table->increments('unit_id', 20);
+            $table->string('unit_name', 50);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

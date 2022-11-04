@@ -14,13 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('category', function (Blueprint $table) {
-            // $table->increments('cate_id', 20);
-            // $table->string('cate_name', 255);
-            // $table->tinyInteger('is_delete')->default(0);
-            // $table->timestamps();
-            $table->increments('category_id');
-            $table->string('category_name');
+            $table->increments('cate_id', 20);
+            $table->string('cate_name', 255);
+            $table->tinyInteger('is_delete')->default(0);
             $table->timestamps();
+            $table->softDeletes();
+            // $table->increments('category_id');
+            // $table->string('category_name');
+            // $table->softDeletes();
+            // $table->timestamps();
         });
     }
 

@@ -18,11 +18,13 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('css/sb-admin-2.css')}}" rel="stylesheet">
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <script href="{{asset('css/detail-product.css')}}" rel="stylesheet"></script>
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    
     @yield('css')
 
 </head>
@@ -46,13 +48,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <!-- <li class="nav-item active">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li> -->
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -67,6 +62,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/admin/user">Quản lý người dùng</a>
+                        <a class="collapse-item" href="">Thay đổi mật khẩu</a>
                     </div>
                 </div>
             </li>
@@ -84,7 +80,8 @@
                         <a class="collapse-item" href="/admin/product">Danh sách sản phẩm</a>
                         <a class="collapse-item" href="/admin/supplier">Nhà cung ứng</a>
                         <a class="collapse-item" href="/admin/category">Danh mục loại hàng</a>
-                        <a class="collapse-item" href="#">Đơn vị tính</a>
+                        <a class="collapse-item" href="/admin/unit">Đơn vị tính</a>
+                        <a class="collapse-item" href="">Cập nhật ảnh</a>
                     </div>
                 </div>
             </li>
@@ -99,7 +96,8 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="register.html">Danh sách khuyến mãi</a>
+                        <a class="collapse-item" href="/admin/discount">Danh sách khuyến mãi</a>
+                        <a class="collapse-item" href="">Thêm sản phẩm khuyến mãi</a>
                     </div>
                 </div>
             </li>
@@ -113,9 +111,7 @@
                 </a>
                 <div id="customerPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Danh sách khách hàng</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <a class="collapse-item" href="/admin/customer">Danh sách khách hàng</a>
                         <div class="collapse-divider"></div>
                     </div>
                 </div>
@@ -255,6 +251,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script src="{{asset('js/ajax/ajax_public.js')}}"></script>
 
     @yield('script')
     

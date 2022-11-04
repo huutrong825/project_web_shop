@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -27,9 +28,12 @@ class User extends Authenticatable
         'birth',
         'address',
         'is_active',
+        'is_delete',
         'group_role',
         'last_login_at',
     ];
+
+    protected $dates =['is_delete'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,12 +54,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Thêm localScope
-    public function scopeSearch($query)
-    {
-        if($key=request()->key)
-            $query->where('name', 'like', '%'.$key.'%')
-                ->orWhere('email', 'like', '%'.$key.'%');
-        return $query;
-    }
 }

@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_state', function (Blueprint $table) {
-            // $table->increments('sta_id');
-            // $table->string('order_state');
-            // $table->timestamps();
-            $table->increments('id');
+            $table->increments('sta_id');
             $table->string('order_state');
             $table->timestamps();
+            $table->softDeletes();
+            // $table->increments('id');
+            // $table->string('order_state');
+            // $table->timestamps();
         });
     }
 

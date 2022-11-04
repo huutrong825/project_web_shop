@@ -1,11 +1,9 @@
-
 $(document).ready(function(){
 
     fetch_product();
     // Đổ data ra bảng
     function fetch_product()
     {  
-
         $('#myTable').DataTable({
             'processing':true,
             'serverSide':true,
@@ -27,28 +25,38 @@ $(document).ready(function(){
                 {'data' : 'is_sale'},
                 {'data' : 'supplier_name'},
                 {'data' : 'action', 'orderable' : false, 'searchable' : false}
-            ]
+            ],
+            'order' : [[0, 'desc']]
         });
         $('#formSearch').on('keyup click' ,function(e) {
             $('#myTable').DataTable().draw();
             e.preventDefault();
         });
     }
+    // reset
+    $(document).on('click','#btReset' ,function() {
+        $('#keySearch').val('');
+        $('#price_from').val('');
+        $('#price_to').val('');
+        $('#state').val($('#state option:first').val());
+        $('#myTable').DataTable().destroy();
+        fetch_product();
+    });
 
     // thông báo khóa
-    $(document).on('click', '.bt-Block',function(e)
+    $(document).on('click', '.btBlock',function(e)
     {
         e.preventDefault();
-        var _id=$(this).attr('value');
-        $('#BlockModal').modal('show');
+        var id = $(this).attr('value');
+        $('#BlockPro').modal('show');
         $.ajax({
-            url:'/admin/supplier/block/'+_id,
-            type:"GET",
+            url:'/admin/product/getId/'+ id,
+            type: 'get',
             success:function(response)
             {
-                $.each(response.supp, function(key, item){
-                    $('#idBlock').val(item.id);
-                    $('#nameBlock').html(item.supplier_name);
+                $.each(response.pro, function(key, item){
+                    $('#idBlock').val(item.product_id);
+                    $('#nameBlock').html(item.product_name);
                 });
             },
             error: function (err)
@@ -61,20 +69,16 @@ $(document).ready(function(){
     $(document).on('click', '.btSubmitBlock',function(e)
     {
         e.preventDefault();
-        var _id=$('#idBlock').val();
+        var _id = $('#idBlock').val();
         $.ajax({
-            url:'/admin/supplier/block/' +_id,
-            type:"put",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
+            url:'/admin/product/block/' +_id,
+            type: 'get',
             success:function(response)
             {      
                 $(".alert-success").css('display','block');
-                $('.alert-success').html(response.mess);
-                $('#BlockModal').modal('hide');
-                $('#dataTable').empty();
-                fetch_supplier();
+                $('.alert-success').html(response.messages);
+                $('#BlockPro').modal('hide');
+                $('#myTable').DataTable().ajax.reload();
             },
             error: function (err)
             {
@@ -83,19 +87,19 @@ $(document).ready(function(){
         });
     });
     // thông báo xóa 
-    $(document).on('click', '.bt-Delete',function(e)
+    $(document).on('click', '.btDelete',function(e)
     {
         e.preventDefault();
-        var _id=$(this).attr('value');
+        var _id = $(this).attr('value');
         $('#DeleteModal').modal('show');
         $.ajax({
-            url:'/admin/supplier/delete/'+_id,
+            url:'/admin/product/getId/' + _id,
             type:"GET",
             success:function(response)
             {
-                $.each(response.supp, function(key, item){
-                    $('#idDelete').val(item.id);
-                    $('#nameDelete').html(item.supplier_name);
+                $.each(response.pro, function(key, item){
+                    $('#idDelete').val(item.product_id);
+                    $('#nameDelete').html(item.product_name);
                 });
             },
             error: function (err)
@@ -108,20 +112,17 @@ $(document).ready(function(){
     $(document).on('click', '.btSubmitDelete',function(e)
     {
         e.preventDefault();
-        var _id=$('#idDelete').val();
+        var id = $('#idDelete').val();
         $.ajax({
-            url:'/admin/supplier/delete/' +_id,
-            type:"delete",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
+            url: '/admin/product/delete/' + id,
+            type: 'get',
             success:function(response)
             {      
                 $(".alert-success").css('display','block');
-                $('.alert-success').html(response.mess);
+                $('.alert-success').html(response.messages);
                 $('#DeleteModal').modal('hide');
-                $('#dataTable').empty();
-                fetch_supplier();
+                $('.alert-success').hide(3000);
+                $('#myTable').DataTable().ajax.reload();
             },
             error: function (err)
             {
@@ -129,59 +130,25 @@ $(document).ready(function(){
             }
         });
     });
-    // popup update
-    $(document).on('click', '.bt-Update',function(e)
-    {
-        e.preventDefault();
-        var _id=$(this).attr('value');
-        $('#UpdateModal').modal('show');
-        $.ajax({
-            type:'get',
-            url:'/admin/supplier/update/'+_id,
-            success: function(response){
-                $.each(response.supp, function(key, item){
-                    $('#idUp').val(item.id);
-                    $('#nameUp').val(item.supplier_name);
-                    $('#addressUp').val(item.address);
-                    $('#phoneUp').val(item.phone);
-                });
+    $(document).ready(function(){
+        $('#formUpdate').validate({
+            'rules' :{
+                'nameUp':'required',
+                'price' : {
+                    'required' : true,
+                    'digits' : true,
+                    'min' : 1
+                },
             },
-            error: function (err)
-            {
-                alert('Lỗi');
-            }
-        });
-    });
-
-    $(document).on('click', '.btSubmitUpdate',function(e)
-    {
-        e.preventDefault();
-        var id=$('#idUp').val();
-        var data={
-            'nameUp':$('#nameUp').val(),
-            'addressUp':$('#addressUp').val(),
-            'phoneUp':$('#phoneUp').val()
-        }
-        console.log(id);
-        $.ajax({
-            url:'/admin/supplier/update/' +id,
-            type:"put",
-            data:data,
-            dataType:'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response)
-            {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.mess);
-                $('#UpdateModal').modal('hide');
-                $('#dataTable').empty();
-                fetch_supplier();
-            },
-            error: function (err)
-            {
-                 alert('Lỗi');
+            'messages' :{
+                'nameUp' : {
+                    'required' : 'Nhập mật khẩu mới',
+                    'minlength' : 'Không nhỏ hơn 6 ký tự'
+                },
+                'renewpass': {
+                    'required' : 'Xác nhận lại mật khẩu',
+                   'equalTo' : 'Mật khẩu nhập lại không đúng'
+                }
             }
         });
     });
@@ -189,17 +156,21 @@ $(document).ready(function(){
     $(document).on('click', '.btDetail',function(e)
     {
         e.preventDefault();
-        var _id=$(this).attr('value');
+        var _id = $(this).attr('value');
         $('#DetailModal').modal('show');
-        console.log(_id);
         $.ajax({
             type : 'get',
-            url : '/admin/product/detail/' + _id,
+            url : '/admin/product/getId/' + _id,
             success : function(response){
-                console.log(response);
                 $.each(response.pro, function(key, item){
-                    $('#name').html(item.product_name);
-                    $('#price').html(item.unit_price);
+                    $('#idUp').val(item.product_id)
+                    $('#nameUp').val(item.product_name);
+                    $('#priceUp').val(item.unit_price);
+                    $('#descrip').val(item.description);
+                    $('#supp').val(item.supplier_id);
+                    $('#supp').html(item.supplier_name);
+                    $url = 'http://127.0.0.1:8000/img/' + item.image ;
+                    $('#imgId').attr('src',$url);
                 });
             },
             error: function(err)
@@ -208,5 +179,63 @@ $(document).ready(function(){
             }
         });
         
+    });
+
+    $(document).on('click', '.btSubmitUpload',function(e)
+    {
+        e.preventDefault();
+        var id = $('#idUp').val();
+        var data = {
+            'nameUp' :  $('#nameUp').val(),
+            'priceUp' :  $('#priceUp').val(),
+            'descrip' :  $('#descrip').val(),
+            'supp':  $('#suppid').val(),
+        }
+        $.ajax({
+            url:'/admin/product/update/' + id,
+            type:"put",
+            data: data,
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response)
+            {      
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.messages);
+                $('.alert-success').hide(3000);
+            },
+            error: function (err)
+            {
+                 alert('Lỗi');
+            }
+        });
+    });
+
+    $(document).on('click', '.Upload',function(e)
+    {
+        e.preventDefault();
+        var id = $('#idUp').val();
+        $.ajax({
+            url:'/admin/product/loadImg/' + id,
+            type:'put',
+            data: new FormData($('#uploadImg')[0]),
+            contentType: false,
+            processData: false,
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response)
+            {
+                $('#AddModal').modal('hide');
+                $('#myTable').DataTable().ajax.reload();
+                $('.alert-success').hide(8000);
+            },
+            error: function (err)
+            {
+            //     alert('Lỗi');
+            }
+        });
     });
 });

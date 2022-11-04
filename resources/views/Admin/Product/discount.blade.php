@@ -13,7 +13,7 @@
             <span class="text">Thêm mới</span>
         </a>
     </div>
-    <form class="row" id="formSearch">
+    <!-- <form class="row" id="formSearch">
     <div class="col-sm">
         <div class="input-group ">
             <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
@@ -39,13 +39,13 @@
     <div class="col-sm-3">
         <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
     </div>
-    </form>
+    </form> -->
 </div>
 <div class="alert alert-success" style="display:none">
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Home >> Nhà cung ứng hàng hóa</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Home >> Khuyến mãi</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -53,9 +53,11 @@
                 <thead>
                     <tr>
                         <th >STT</th>
-                        <th>Tên nhà cung ứng</th>
-                        <th>Địa chỉ</th>
-                        <th>Liên hệ</th>
+                        <th>Chương trình khuyến mãi</th>
+                        <th>Loại khuyến mãi</th>
+                        <th>Giá trị áp dụng</th>
+                        <th >Thời gian áp dụng</th>
+                        <th>Thời gian kết thúc</th>
                         <th>Trạng thái</th>
                         <th></th>
                     </tr>
@@ -71,7 +73,7 @@
 
 
     <!-- Add Supplier Modal -->
-    <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="AddDiscount" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content add-user">
@@ -81,27 +83,42 @@
                     </button>
                 </div>
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Thêm nhà cung ứng mới</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Thêm chương trình khuyến mãi</h1>
                 </div>
                 <div class="modal-body">
                     <form  class="user" id='formadd' >
                         <fieldset>                                                  
                             <div class="">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="namesupp" name="namesupp"
-                                        placeholder="Nhập tên nhà cung ứng" required>
+                                    <input type="text" class="form-control form-control-user" id="namedis" name="namedis"
+                                        placeholder="Nhập tên chương trình khuyến mãi" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id='addressnew' name="address"
-                                    placeholder="Nhập địa chỉ" required>
+                                <select class="form-control select" id="typedis" name='typedis' required>
+                                    <option disabled selected hidden>Chọn loại khuyến mãi</option>
+                                    <option value="1">Giảm theo % giá trị</option>
+                                    <option value="2">Giảm theo số tiền</option>
+                                    <option value="3">Sản phẩm tặng kèm</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <div class="">
                                     <input type="text" class="form-control form-control-user"
-                                        name="phonenew" id='phonenew' placeholder="Nhập SĐT liên hệ" required>
+                                        name="value" id='value' placeholder="Giá trị khuyến mãi áp dụng" required>
                                 </div>
-                                <p style="color:red" class="help is-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="text" class="form-control form-control-user"
+                                        name="startday" id='startday' placeholder="Ngày bắt đầu" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="text" class="form-control form-control-user"
+                                        name="endday" id='endday' placeholder="Ngày kết thúc" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <button  class="btn btn-success btn-user btn-block btSubmitAdd"> Thêm mới</button> 
@@ -114,7 +131,7 @@
     </div>
 
     <!-- Update Supplier Modal -->
-    <div class="modal fade" id="UpdateModal" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="UpdateDis" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content add-user">
@@ -124,7 +141,7 @@
                     </button>
                 </div>
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Cập nhật nhà cung ứng mới</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Cập nhật chương trình khuyến mãi</h1>
                 </div>
                 <div class="alert alert-success" style="display:none">
                 </div>
@@ -136,24 +153,41 @@
                             <div class="">
                                 <input type="hidden" class="form-control form-control-user" id='idUp' >
                             </div>
-                        </div>                      
-                        <div class="form-group">
-                            <div class="">
-                                <input type="text" class="form-control form-control-user" id='nameUp' name="txtname"
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="nameUp" name="nameUp"
                                      required>
                             </div>
-                            <p style="color:red" class="help is-danger"></p>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" id='addressUp' name="address">
-                            <p style="color:red" class="help is-danger"></p>
+                            <select class="form-control select" id="typedisUp" name='typedisUp' required>
+                                <option selected id='typeOld'></option>
+                                <option value="1">Giảm theo % giá trị</option>
+                                <option value="2">Giảm theo số tiền</option>
+                                <option value="3">Sản phẩm tặng kèm</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <div class="">
+                                <label>Giá trị khuyến mãi</label>
                                 <input type="text" class="form-control form-control-user"
-                                    name="phone" id='phoneUp'  required>
+                                    name="valueUp" id='valueUp' placeholder="Giá trị khuyến mãi áp dụng" required>
                             </div>
-                            <p style="color:red" class="help is-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <label>Ngày áp dụng</label>
+                                <input type="date" class="form-control form-control-user"
+                                    name="startdayUp" id='startdayUp' required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+                                <label>Ngày kết thúc</label>
+                                <input type="date" class="form-control form-control-user"
+                                    name="enddayUp" id='enddayUp'   required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <a type='submit' class="btn btn-success btn-user btn-block btSubmitUpdate" >Lưu</a> 
@@ -177,11 +211,11 @@
                     </button>
                 </div>
                 <div class="">
-                    <input type="" class="form-control form-control-user" id='idDelete' >
+                    <input type="hidden" class="form-control form-control-user" id='idDelete' >
                 </div>
-                <div class="modal-body">Xác nhận xóa người dùng <span id='nameDelete'></span></div>
+                <div class="modal-body">Xác nhận xóa khuyến mãi <span id='nameDelete'></span></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary DeleteSupp" >Xác nhận</button>
+                    <button type="button" class="btn btn-primary DeleteDis" >Xác nhận</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
                 </div>
             </div>
@@ -189,7 +223,7 @@
     </div>  
     
     <!-- Block Modal-->
-    <div class="modal fade" id="BlockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="BlockDis" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -202,13 +236,12 @@
                 <div class="">
                     <input type="hidden" class="form-control form-control-user" id='idBlock' >
                 </div>
-                <form method='put'>
-                    @csrf
-                <div class="modal-body">Xác nhận khóa/mở người dùng <span id='nameBlock'></span></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btSubmitBlock" >Xác nhận</button>
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
-                </div>
+                <form >
+                    <div class="modal-body">Xác nhận đóng khuyến mãi  <span id='nameBlock'></span></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btSubmitBlock" >Xác nhận</button>
+                        <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
+                    </div>
                 </form>
             </div>
         </div>
@@ -223,7 +256,7 @@
 
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
-<script src="{{asset('js/ajax/ajax_supplier.js')}}"></script>
+<script src="{{asset('js/ajax/ajax_discount.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
  
 @endsection

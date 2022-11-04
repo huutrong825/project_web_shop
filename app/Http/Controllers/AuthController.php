@@ -21,7 +21,13 @@ class AuthController extends Controller
 
     public function postLogin(LoginRequest $req)
     {
-        if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password])) {
+        $remember = $req->customCheck;
+        if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password, 'is_active' => 1], $remember)) {
+            Auth::user()->update(
+                [
+                    'last_login_at' => date('Y-m-d H:i:s')
+                ]
+            );
             return redirect('/admin');
         } else {
             return redirect('/login')->with('thongbao', 'Email hoặc mật khẩu không đúng');
@@ -45,7 +51,6 @@ class AuthController extends Controller
                 'is_delete'=> 0,
                 'group_role'=> 1,
                 'last_login_at' => date('Y-m-d H:i:s'),
-                'last_login_ip' => fake()->numerify($string = '###.##.###'),
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d")
             ]
