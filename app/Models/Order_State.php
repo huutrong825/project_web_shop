@@ -12,7 +12,7 @@ class Order_State extends Model
     protected $table='order_state';
 
     protected $fillable=[
-        'state_order'
+        'state_name'
     ];
 
     public function order()

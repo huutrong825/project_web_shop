@@ -65,9 +65,11 @@ class ProductController extends Controller
             )
             ->addColumn(
                 'action', function ($p ) {
-                    return '<a value=" '. $p->product_id .'" class="btn btn-danger btn-circle btn-sm btDelete" >
-                        <i class="fas fa-trash"></i>
+                    return '<a value=" '. $p->product_id .'" class="btn btn-primary btn-circle btn-sm btDropImg" >
+                        <i class="fas fa-images"></i>
                     </a>
+                    <a value=" '. $p->product_id .'" class="btn btn-danger btn-circle btn-sm btDelete" >
+                        <i class="fas fa-trash"></i></a>
                     <a value=" '. $p->product_id .'" class="btn btn-warning btn-circle btn-sm btBlock">
                         <i class="fas fa-lock"></i>
                     </a>';
@@ -156,6 +158,7 @@ class ProductController extends Controller
     
     public function uploadImg(Request $req, $id)
     {
+        // dd($req->imgUp->getClientOriginalName());
         if ($req->imgUp) {
             $img_name = $req->imgUp->getClientOriginalName();
             $req->imgUp->move(public_path('img'), $img_name);
@@ -169,8 +172,13 @@ class ProductController extends Controller
         return response()->json(
             [ 
                 'state'=>200,
-                'messages'=> 'Cập nhật thành công'
+                'image'=> $img_name
             ]
         );
+    }
+
+    public function imageDrop()
+    {
+        return view('Admin.Product.drop_image');
     }
 }

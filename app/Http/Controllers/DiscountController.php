@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use App\Models\Discount;
+use App\Models\Product;
 
 class DiscountController extends Controller
 {
     public function index()
     {
-        return view('Admin.Product.discount');
+        return view('Admin.Discount.discount');
     }
 
     public function listDis()
@@ -151,4 +152,6 @@ class DiscountController extends Controller
             ]
         );
     }
+
+    
 }

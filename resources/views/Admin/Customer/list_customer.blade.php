@@ -42,7 +42,7 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 style='float:left' class="m-0 font-weight-bold text-primary">Danh sách khách hàng</h6>
-        <a style='float:right' class="text-success btn bt-success"><i class="fas fa-cloud-download-alt"> Truy xuất</i></a>
+        <a href='/admin/customer/export'style='float:right' class="text-success btn bt-success"><i class="fas fa-cloud-download-alt"> Truy xuất</i></a>
     </div>
     <div class="card-body">
         <div class="table-responsive">

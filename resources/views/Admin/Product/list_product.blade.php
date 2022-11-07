@@ -94,9 +94,9 @@
                     <div class="left">
                         <img  id="imgId" alt='picture'/>
                         <div >
-                            <form id='uploadImg' method="put" enctype="multipart/form-data">
+                            <form id='uploadImg' method="post" enctype="multipart/form-data">
                                 @csrf
-                                <button type='submit'class='Upload'>Upload</button>
+                                <a type='submit' class='btn btn-primary Upload' >Upload</a>
                                 <input id='imgUp' name='imgUp' type="file" >
                             </form>
                         </div>
@@ -196,6 +196,24 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="DropImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content add-user">
+                <div class="modal-header">
+                </div>
+                <div class="text-center">
+                    <h1 class="h2 text-green mb-4">Hình ảnh sản phẩm</h1>
+                </div>
+                <div class="alert alert-success " style="display:none">
+                </div>
+                <div class="modal-body detail">
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('script')
@@ -208,6 +226,5 @@
 
 <script src="{{asset('js/ajax/ajax_product.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css"></script>
 
 @endsection

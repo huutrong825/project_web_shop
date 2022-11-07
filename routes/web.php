@@ -36,7 +36,7 @@ Route::group(
         Route::post('/profile', ['uses'=>'AuthController@updateProfile']);
 
         Route::get('/logout', ['uses'=>'AuthController@getLogout']);
-
+        //User
         Route::group(
             ['prefix'=>'user'], function () {
 
@@ -55,7 +55,7 @@ Route::group(
                 Route::put('/update/{id}', ['uses'=>'UserManagerController@putUpdateUser']);
             }
         );
-
+        //Supplier
         Route::group(
             ['prefix'=>'supplier'], function () {
 
@@ -108,7 +108,9 @@ Route::group(
 
                 Route::put('/update/{id}', ['uses'=>'ProductController@updatePro']);
 
-                Route::put('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
+                Route::post('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
+
+                Route::get('/image', ['uses'=>'ProductController@imageDrop']);
             }
         );
 
@@ -128,7 +130,7 @@ Route::group(
                 Route::put('/update/{id}', ['uses'=>'UnitController@updateUnit']);
             }
         );
-
+        //Discount
         Route::group( 
             ['prefix'=>'discount'], function () {
 
@@ -147,7 +149,7 @@ Route::group(
                 Route::put('/update/{id}', ['uses'=>'DiscountController@updateDis']);
             }
         );
-
+        //Customer
         Route::group(
             ['prefix'=>'customer'], function () {
 
@@ -160,6 +162,32 @@ Route::group(
                 Route::get('/getId/{id}', ['uses'=>'CustomerController@getId']);
 
                 Route::put('/update/{id}', ['uses'=>'CustomerController@updateCus']);
+
+                Route::get('/export', ['uses'=>'CustomerController@export']);
             }
         );
-});
+
+        Route::group( 
+            ['prefix'=>'order'], function () {
+
+                Route::get('/', ['uses'=>'OrderController@index']);
+
+                Route::get('/fetch', ['uses'=>'OrderController@listOrder']);
+
+                Route::get('/detail/{id}', ['uses'=>'OrderController@detail']);
+
+                Route::get('/getId/{id}', ['uses'=>'ProductController@detail']);
+
+                Route::get('/block/{id}', ['uses'=>'ProductController@blockProduct']);
+
+                Route::get('/delete/{id}', ['uses'=>'ProductController@deleteProduct']);
+
+                Route::put('/update/{id}', ['uses'=>'ProductController@updatePro']);
+
+                Route::post('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
+
+                Route::get('/image', ['uses'=>'ProductController@imageDrop']);
+            }
+        );
+    }
+);

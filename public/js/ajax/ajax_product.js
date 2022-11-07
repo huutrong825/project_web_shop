@@ -218,24 +218,29 @@ $(document).ready(function(){
         var id = $('#idUp').val();
         $.ajax({
             url:'/admin/product/loadImg/' + id,
-            type:'put',
+            type:'post',
             data: new FormData($('#uploadImg')[0]),
             contentType: false,
             processData: false,
-            dataType:'json',
+            dataType: 'json',
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'contentType': 'multipart/form-data',
             },
             success: function(response)
             {
-                $('#AddModal').modal('hide');
+                $url = 'http://127.0.0.1:8000/img/' + response.image ;
+                $('#imgId').attr('src',$url);
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(8000);
             },
             error: function (err)
             {
-            //     alert('Lỗi');
             }
         });
+    });
+
+    $(document).on('click', '.btDropImg', function(e){
+        e.preventDefault();
+        $('#DropImage').modal('show');
     });
 });

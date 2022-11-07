@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use App\Exports\CustomerExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -90,5 +92,10 @@ class CustomerController extends Controller
                 'messages' => 'Cập nhật thành công'
             ]
         );
+    }
+
+    public function export() 
+    {
+        return Excel::download(new CustomerExport, 'customer.xlsx');
     }
 }

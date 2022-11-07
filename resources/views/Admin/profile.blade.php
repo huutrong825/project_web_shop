@@ -50,22 +50,10 @@
                     <label for="">Địa chỉ</label>
                     <input type="text" class="form-control" name="address" value="{{ $u->address }}">
                 </div>
-                <div class=" form-group custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="Check" name="checkPass">
-                    <label class="custom-control-label" for="Check">Thay đổi mật khẩu</label>
-                </div>
-                <div class="col-xs-6" id="pass1"  style="display:none">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control"  name="password"  placeholder="password" title="enter your password.">
-                </div>
-                <div class="col-xs-6" id="pass2"  style="display:none">
-                <label for="password2">Repassword</label>
-                    <input type="password" class="form-control"  name="repass"  placeholder="password2" title="enter your password2.">
-                </div>
                 <div class="col-xs-12">
                     <br>
                     <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                    <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                    <button class="btn btn-lg btn-danger" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                 </div>
             </div>
         </form>
