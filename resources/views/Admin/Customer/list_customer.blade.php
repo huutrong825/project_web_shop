@@ -39,10 +39,20 @@
     </div>
     </form>
 </div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 style='float:left' class="m-0 font-weight-bold text-primary">Danh sách khách hàng</h6>
-        <a href='/admin/customer/export'style='float:right' class="text-success btn bt-success"><i class="fas fa-cloud-download-alt"> Truy xuất</i></a>
+        <div class="dropdown" style='float:right'>
+            <button type="button" class="text-success btn bt-success dropdown-toggle" data-toggle="dropdown">
+                <i class="fas fa-cloud-download-alt"> Truy xuất</i>
+            </button>
+            <div class="dropdown-menu">
+                <a href='/admin/customer/export' class="btn bt-success dropdown-item" value='.xlsx'>File (.xlsx)</a>
+                <a class="btn bt-success dropdown-item" value='.csv'>File (.csv)</a>
+            </div>
+        </div>
+        
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -54,7 +64,6 @@
                         <th>Email</th>
                         <th>Liên hệ</th>
                         <th>Địa chỉ</th>
-                        <th>Ngày đặt hàng</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -117,8 +126,6 @@
         </div>
     </div>
 
-    
-
     <!-- Update Supplier Modal -->
     <div class="modal fade" id="UpdateModal" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -172,6 +179,8 @@
             </div>
         </div>
     </div>
+
+    
 @endsection
 
 @section('script')
@@ -185,6 +194,5 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
  <!-- Page level custom scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"></script>
     
 @endsection

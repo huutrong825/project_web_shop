@@ -21,6 +21,8 @@ class Order extends Model
         'state'
     ];
 
+    protected $primaryKey = 'order_id';
+
     public function history()
     {
         return $this->hasOne(Order_History::class);

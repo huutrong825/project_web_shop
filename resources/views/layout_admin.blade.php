@@ -127,6 +127,8 @@
                 <div id="orderPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/admin/order">Danh sách đơn hàng</a>
+                        <a class="collapse-item" href="/admin/order/process">Xử lý đơn hàng</a>
+                        <a class="collapse-item" href="/admin/order/complete">Lịch sử đơn hàng</a>
                         <div class="collapse-divider"></div>
                     </div>
                 </div>

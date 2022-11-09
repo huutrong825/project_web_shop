@@ -45,7 +45,7 @@
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Home >> Khuyến mãi</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Khuyến mãi</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -56,7 +56,7 @@
                         <th>Chương trình khuyến mãi</th>
                         <th>Loại khuyến mãi</th>
                         <th>Giá trị áp dụng</th>
-                        <th >Thời gian áp dụng</th>
+                        <th>Thời gian áp dụng</th>
                         <th>Thời gian kết thúc</th>
                         <th>Trạng thái</th>
                         <th></th>

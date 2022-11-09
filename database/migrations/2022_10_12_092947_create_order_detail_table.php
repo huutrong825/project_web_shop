@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('quanity_order');
             $table->decimal('price');
-            $table->tinyInteger('discount');
+            $table->integer('discount')->nullable();
             $table->timestamps();
             // $table->increments('detail_id', 20);
             // $table->integer('order_id')->unsigned();

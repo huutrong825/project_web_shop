@@ -7,6 +7,7 @@ use Illuminate\Pagination\Paginator;
 use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Unit;
+use App\Models\Order_State;
 use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
 
         $unit=Unit::all();
         View::share('unit',$unit);
+
+        $ostate=Order_State::all();
+        View::share('ostate',$ostate);
 
         Paginator::useBootstrap();
     }

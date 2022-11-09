@@ -206,9 +206,15 @@
                 <div class="text-center">
                     <h1 class="h2 text-green mb-4">Hình ảnh sản phẩm</h1>
                 </div>
-                <div class="alert alert-success " style="display:none">
-                </div>
                 <div class="modal-body detail">
+                    
+                    <form id="form-example-1" enctype="multipart/form-data">
+                        <div class="input-field">
+                            <label class="active">Photos</label>
+                            <div class="input-images-1" style="padding-top: .5rem;"></div>
+                        </div>
+                        <button>Submit and display data</button>
+                    </form>
                 </div>
             </div>
         </div>

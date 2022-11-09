@@ -25,7 +25,8 @@ $(document).ready(function(){
                 { 'data': 'is_active' },
                 { 'data': 'action','orderable': false, 'searchable': false},
             ],
-            'order' : [[0, 'desc']]
+            'order' : [[0, 'desc']],
+            'searching':false,
         });
 
         $('#formSearch').on('keyup click' ,function(e) {

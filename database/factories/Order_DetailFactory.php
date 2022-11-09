@@ -23,7 +23,7 @@ class Order_DetailFactory extends Factory
             'product_id'=> fake()->numberBetween($min=1, $max=20),
             'quanity_order' => fake()->numberBetween($min=1, $max=10),
             'price' => fake()->numberBetween($min=200000, $max=900000),
-            'discount'=> fake()->numberBetween($min=0, $max=5),
+            'discount'=> fake()->numberBetween($min=50000, $max=200000),
         ];
     }
 }

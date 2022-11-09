@@ -18,7 +18,8 @@ $(document).ready(function(){
                 { 'data': 'is_state' },
                 { 'data': 'action','orderable': false, 'searchable': false},
             ],
-            'order' : [[0, 'desc']]
+            'order' : [[0, 'desc']],
+            'searching':false,
         });
     }
     //show popup add

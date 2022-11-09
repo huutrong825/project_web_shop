@@ -23,10 +23,10 @@ $(document).ready(function (){
                 { 'data' : 'email' },
                 { 'data' : 'phone' },
                 { 'data' : 'address' },
-                {},
                 { 'data' : 'action', 'orderable' : false,'searchable' : false},
             ],
-            'order' : [[0, 'desc']]
+            'order' : [[0, 'desc']],
+            'searching':false,
         });   
         $('#formSearch').on('keyup' ,function(e) {
             $('#myTable').DataTable().draw();
@@ -140,4 +140,5 @@ $(document).ready(function (){
             }
         });
     });
+
 });

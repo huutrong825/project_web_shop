@@ -22,6 +22,7 @@ class OrderFactory extends Factory
             'customer_id'=>fake()->numberBetween($min=1, $max=20),
             'order_date'=>fake()->date("Y-m-d H:i:s"),
             'receive_date'=>fake()->date("Y-m-d H:i:s"),
+            'cancel_date'=>fake()->date("Y-m-d H:i:s"),
             'type_payment' => fake()->numberBetween($min=1, $max=2),
             'total_price' =>fake()->numberBetween($min=200000, $max=900000),
             'description'=>fake()->sentence(50),

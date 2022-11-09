@@ -50,21 +50,20 @@
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Danh sách đặt hàng</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Xử lý đơn hàng</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="myTable" width="100%">
+            <table class="table table-bordered" id="processTable" width="100%">
                 <thead>
                     <tr>
                         <th >STT</th>
                         <th>Khách hàng</th>
                         <th>Thời gian đặt</th>
-                        <th>Thời gian nhận</th>
-                        <th>Thời gian hủy</th>
                         <th>Loại hình thanh toán</th>
                         <th>Giá trị đơn hàng</th>
                         <th>Trạng thái</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

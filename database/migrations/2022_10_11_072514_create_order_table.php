@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->timestamp('order_date');
             $table->timestamp('receive_date')->nullable();
+            $table->timestamp('cancel_date')->nullable();
             $table->tinyInteger('type_payment');
             $table->decimal('total_price');
             $table->text('description')->nullable();

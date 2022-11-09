@@ -171,22 +171,19 @@ Route::group(
             ['prefix'=>'order'], function () {
 
                 Route::get('/', ['uses'=>'OrderController@index']);
+                Route::get('/process', ['uses'=>'OrderController@processIndex']);
+                Route::get('/complete', ['uses'=>'OrderController@completeIndex']);
 
                 Route::get('/fetch', ['uses'=>'OrderController@listOrder']);
+                Route::get('/fetchprocess', ['uses'=>'OrderController@processOrder']);
+                Route::get('/fetchcomplete', ['uses'=>'OrderController@orderComplete']);
+
+                Route::get('/info/{id}', ['uses'=>'OrderController@infoOrder']);
+
+                Route::put('/stateUp/{id}', ['uses'=>'OrderController@stateOrder']);
 
                 Route::get('/detail/{id}', ['uses'=>'OrderController@detail']);
 
-                Route::get('/getId/{id}', ['uses'=>'ProductController@detail']);
-
-                Route::get('/block/{id}', ['uses'=>'ProductController@blockProduct']);
-
-                Route::get('/delete/{id}', ['uses'=>'ProductController@deleteProduct']);
-
-                Route::put('/update/{id}', ['uses'=>'ProductController@updatePro']);
-
-                Route::post('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
-
-                Route::get('/image', ['uses'=>'ProductController@imageDrop']);
             }
         );
     }

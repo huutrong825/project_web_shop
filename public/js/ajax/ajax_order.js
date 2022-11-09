@@ -18,16 +18,95 @@ $(document).ready(function(){
                 // }
             },
             'columns':[
-                {'data' : 'order_id', 'visiable' : false},
+                {'data' : 'order_id', 'visible' : false},
                 {'data' : 'customer_name'},
                 {'data' : 'order_date'},
                 {'data' : 'receive_date'},
+                {'data' : 'cancel_date'},
                 {'data' : 'type_payment'},
                 {'data' : 'total_price'},
                 {'data' : 'state_name'},
             ],
+            'order': [[0, 'desc']],
+            'searching':false,
         });
+        $('button').click(function () {
+            var data = table.$('input, select').serialize();
+            alert('The following data would have been submitted to the server: \n\n' + data.substr(0, 120) + '...');
+            return false;
+        });
+        
+        // $('#formSearch').on('keyup click' ,function(e) {
+        //     $('#myTable').DataTable().draw();
+        //     e.preventDefault();
+        // });
+    }
 
+    fetch_processing();
+    // Đổ data ra bảng xử lý
+    function fetch_processing()
+    {  
+        $('#processTable').DataTable({
+            'processing':true,
+            'serverSide':true,
+            'ajax':
+            {
+                url : '/admin/order/fetchprocess',
+                // data : function (d){
+                //     d.key = $('#keySearch').val();
+                //     d.pricefrom = $('#price_from').val();
+                //     d.priceto = $('#price_to').val();
+                //     d.state = $('#state').val();
+                // }
+            },
+            'columns':[
+                {'data' : 'order_id', 'visible' : false},
+                {'data' : 'customer_name'},
+                {'data' : 'order_date'},
+                {'data' : 'type_payment'},
+                {'data' : 'total_price'},
+                {'data' : 'state_name', 'orderable' : false, 'searchable' : false},
+                {'data' : 'action', 'orderable' : false, 'searchable' : false}
+            ],
+            'order': [[0, 'desc']],
+            'searching':false,
+        });
+        
+        // $('#formSearch').on('keyup click' ,function(e) {
+        //     $('#myTable').DataTable().draw();
+        //     e.preventDefault();
+        // });
+    }
+
+    fetch_complete();
+    // Đổ data ra bảng xử lý
+    function fetch_complete()
+    {  
+        $('#completeTable').DataTable({
+            'processing':true,
+            'serverSide':true,
+            'ajax':
+            {
+                url : '/admin/order/fetchcomplete',
+                // data : function (d){
+                //     d.key = $('#keySearch').val();
+                //     d.pricefrom = $('#price_from').val();
+                //     d.priceto = $('#price_to').val();
+                //     d.state = $('#state').val();
+                // }
+            },
+            'columns':[
+                {'data' : 'order_id'},
+                {'data' : 'customer_name'},
+                {'data' : 'order_date'},
+                {'data' : 'receive_date'},
+                {'data' : 'cancel_date'},
+                {'data' : 'description'},
+                {'data' : 'state_name'},
+            ],
+            'order': [[0, 'desc']],
+            'searching':false,
+        });
         
         // $('#formSearch').on('keyup click' ,function(e) {
         //     $('#myTable').DataTable().draw();
@@ -39,10 +118,22 @@ $(document).ready(function(){
         e.preventDefault();
         var id = $(this).attr('value');
         $('#DetailOrder').modal('show');
-        
-        $('#DetailTable').DataTable({
-            'processing':true,
-            'serverSide':true,
+        $.ajax({
+            url : '/admin/order/info/' + id,
+            type: 'get',
+            success: function(response){
+                $.each(response.order, function(key,item){
+                    $('#cus_name').html(item.customer_name);
+                    $('#time').html(item.order_date);                    
+                    $('#phone').html(item.phone);
+                    $('#address').html(item.address);
+                    $('#email').html(item.email);
+                    $('#notes').html(item.description);
+                    $('#Total').html(item.total_price);
+                });
+            }
+        });
+        table = $('#DetailTable').DataTable({
             'ajax':
             {
                 url : '/admin/order/detail/' + id,
@@ -52,18 +143,53 @@ $(document).ready(function(){
                 {'data' : 'product_name'},
                 {'data' : 'quanity_order'},
                 {'data' : 'price'},
-                {'data' : 'action'},
+                {'data' : 'into_money'},
             ],
-            
-            // $.ajax({
-            //     url : '/admin/order/detail/' + id,
-            //     type: 'get',
-            //     success: function(response){
-            //         $.each(response.order, function(key,item){
-            //             $('#cus_name').html(item.customer_name);
-            //             $('#address').html(item.address);
-            //         });
-            //         console.log(response);
+            'searching':false,
+            'ordering': false,
+            'paging': false,
+            'info':false
+        });
+        table.destroy();
+    });
+    // export PDF
+    $(document).on('click', '.btExportPDF', function(){
+        html2canvas($('#detailPDF')[0],{
+            onrendered: function(canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500,
+                    }]
+                };
+                var number = 1 + Math.floor(Math.random() * 6);
+                $name = 'detail_order' + number + '.pdf';
+                pdfMake.createPdf(docDefinition).download($);
+            }
+        })
+    });
+
+    $(document).on('click', '.btState', function(e){
+        e.preventDefault();
+        var id = $(this).attr('value');
+        var data = {
+            'state' : $('#selecteState').val()
+        }
+        $.ajax({
+            url : '/admin/order/stateUp/' + id,
+            type: 'put',
+            data: data,
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response){
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.messages);
+                $('.alert-success').hide(3000);
+                $('#myTable').DataTable().ajax.reload();
+            }
         });
     });
 });

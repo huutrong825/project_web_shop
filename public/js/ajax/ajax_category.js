@@ -13,7 +13,8 @@ $(document).ready(function(){
                 { 'data': 'category_name' },
                 { 'data': 'action','orderable': false, 'searchable': false},
             ],
-            'order' : [[0, 'desc']]
+            'order' : [[0, 'desc']],
+            'searching':false,
         });
     }
 
