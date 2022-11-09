@@ -123,7 +123,7 @@ class OrderController extends Controller
                 'order_date',
                 'receive_date',
                 'cancel_date',
-                'description',
+                'reason_cancel',
                 'state_name'
             );
         $o->get();

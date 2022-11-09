@@ -46,7 +46,6 @@
     
 </div>
 
-   
 
 <div class="alert alert-success" style="display:none">
 </div>
@@ -63,8 +62,8 @@
                         <th>Tên sản phẩm</th>
                         <th>Giá</th>
                         <th>Hình ảnh</th>
-                        <th>Trạng thái</th>
                         <th>Shop</th>
+                        <th>Trạng thái</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -206,15 +205,12 @@
                 <div class="text-center">
                     <h1 class="h2 text-green mb-4">Hình ảnh sản phẩm</h1>
                 </div>
-                <div class="modal-body detail">
+                <div class="modal-body ">
                     
-                    <form id="form-example-1" enctype="multipart/form-data">
-                        <div class="input-field">
-                            <label class="active">Photos</label>
-                            <div class="input-images-1" style="padding-top: .5rem;"></div>
-                        </div>
-                        <button>Submit and display data</button>
+                    <form id="form-upload"  enctype="multipart/form-data" class="dropzone" id="DropzoneForm">
+                        
                     </form>
+                    <button id="btDrop">Submit and display data</button>
                 </div>
             </div>
         </div>
@@ -227,10 +223,36 @@
 <!-- Page level plugins -->
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
 <script src="{{asset('js/ajax/ajax_product.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet"  href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"  type="text/css"/>
+
+<script type="text/javascript">
+
+   Dropzone.autoDiscover = false;
+
+  
+        Dropzone.options.DropzoneForm = {
+            autoProcessQueue: false,
+            acceptedFiles:".png,.jpg,.gif,.bmp,.jpeg",
+            init: function(){
+            var submitButton = document.querySelector('#btDrop');
+            myDropzone = this;
+            submitButton.addEventListener("click", function(){
+                myDropzone.processQueue();
+            });
+            this.on("complete", function(){
+                if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0)
+                {
+                var _this = this;
+                _this.removeAllFiles();
+                }
+            });
+            },
+        }
+</script>
 @endsection

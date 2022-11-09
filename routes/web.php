@@ -110,10 +110,10 @@ Route::group(
 
                 Route::post('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
 
-                Route::get('/image', ['uses'=>'ProductController@imageDrop']);
+                Route::post('/dropImage/{id}', ['uses'=>'ProductController@imageDrop']);
             }
         );
-
+        // Unit
         Route::group( 
             ['prefix'=>'unit'], function () {
 
@@ -147,6 +147,8 @@ Route::group(
                 Route::get('/block/{id}', ['uses'=>'DiscountController@blockDis']);
 
                 Route::put('/update/{id}', ['uses'=>'DiscountController@updateDis']);
+
+                Route::post('/add-product', ['uses'=>'DiscountController@linkPro']);
             }
         );
         //Customer
@@ -166,7 +168,7 @@ Route::group(
                 Route::get('/export', ['uses'=>'CustomerController@export']);
             }
         );
-
+        // Order
         Route::group( 
             ['prefix'=>'order'], function () {
 

@@ -81,7 +81,6 @@
                         <a class="collapse-item" href="/admin/supplier">Nhà cung ứng</a>
                         <a class="collapse-item" href="/admin/category">Danh mục loại hàng</a>
                         <a class="collapse-item" href="/admin/unit">Đơn vị tính</a>
-                        <a class="collapse-item" href="/admin/product/image">Cập nhật ảnh</a>
                     </div>
                 </div>
             </li>
@@ -97,7 +96,6 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/admin/discount">Danh sách khuyến mãi</a>
-                        <a class="collapse-item" href="">Thêm sản phẩm khuyến mãi</a>
                     </div>
                 </div>
             </li>
@@ -121,7 +119,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#orderPages"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-boxes"></i>
                     <span>Đơn hàng</span>
                 </a>
                 <div id="orderPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">

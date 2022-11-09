@@ -236,4 +236,36 @@ $(document).ready(function(){
             }
         });
     });
+
+    $(document).on('click', '.btLink',function(e)
+    {
+        e.preventDefault();
+        $('#LinkProduct').modal('show');
+    });
+
+    $(document).on('click', '.btSubmitLink',function(e)
+    {
+        e.preventDefault();
+        $.ajax({
+            url: '/admin/discount/add-product',
+            type : "post",
+            headers : {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data : new FormData($('#form-link')[0]),
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            success : function(response){
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.messages);
+                $('#LinkProduct').modal('hide');
+                $('.alert-success').hide(5000);
+            },
+            error: function (err) {
+                alert('Lỗi');
+            }
+
+        });
+    });
 });

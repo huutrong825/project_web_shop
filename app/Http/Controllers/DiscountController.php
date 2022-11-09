@@ -12,7 +12,10 @@ class DiscountController extends Controller
 {
     public function index()
     {
-        return view('Admin.Discount.discount');
+        $disc = Discount::all();
+
+        $pro = Product::all();
+        return view('Admin.Discount.discount', compact('disc', 'pro'));
     }
 
     public function listDis()
@@ -152,6 +155,21 @@ class DiscountController extends Controller
             ]
         );
     }
-
     
+    public function linkPro(Request $req)
+    {
+        
+        $pro = Product::where('product_id', $req->product)->first();
+        $pro->update(
+            [
+                'discount_id' => $req->namedis
+            ]
+        );
+
+        return response()->json(
+            [
+                'messages' => 'Thành công'
+            ]
+        );
+    }
 }

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\Unit;
 use App\Models\Order_State;
+
 use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider

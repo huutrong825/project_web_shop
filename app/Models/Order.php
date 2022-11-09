@@ -14,11 +14,13 @@ class Order extends Model
     protected $fillable=[
         'customer_id',
         'order_date',
+        'cancel_date',
         'receive_date',
         'type_payment',
         'total_price',
         'description',
-        'state'
+        'state',
+        'reason_cancel'
     ];
 
     protected $primaryKey = 'order_id';

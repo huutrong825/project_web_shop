@@ -18,7 +18,7 @@ $(document).ready(function(){
                 // }
             },
             'columns':[
-                {'data' : 'order_id', 'visible' : false},
+                {'data' : 'order_id',},
                 {'data' : 'customer_name'},
                 {'data' : 'order_date'},
                 {'data' : 'receive_date'},
@@ -29,11 +29,6 @@ $(document).ready(function(){
             ],
             'order': [[0, 'desc']],
             'searching':false,
-        });
-        $('button').click(function () {
-            var data = table.$('input, select').serialize();
-            alert('The following data would have been submitted to the server: \n\n' + data.substr(0, 120) + '...');
-            return false;
         });
         
         // $('#formSearch').on('keyup click' ,function(e) {
@@ -60,7 +55,7 @@ $(document).ready(function(){
                 // }
             },
             'columns':[
-                {'data' : 'order_id', 'visible' : false},
+                {'data' : 'order_id', },
                 {'data' : 'customer_name'},
                 {'data' : 'order_date'},
                 {'data' : 'type_payment'},
@@ -101,7 +96,7 @@ $(document).ready(function(){
                 {'data' : 'order_date'},
                 {'data' : 'receive_date'},
                 {'data' : 'cancel_date'},
-                {'data' : 'description'},
+                {'data' : 'reason_cancel'},
                 {'data' : 'state_name'},
             ],
             'order': [[0, 'desc']],
@@ -124,7 +119,7 @@ $(document).ready(function(){
             success: function(response){
                 $.each(response.order, function(key,item){
                     $('#cus_name').html(item.customer_name);
-                    $('#time').html(item.order_date);                    
+                    $('#time').html(item.order_date);
                     $('#phone').html(item.phone);
                     $('#address').html(item.address);
                     $('#email').html(item.email);
@@ -152,6 +147,17 @@ $(document).ready(function(){
         });
         table.destroy();
     });
+
+    // reset
+    $(document).on('click','#btReset' ,function() {
+        $('#keySearch').val('');
+        $('#price_from').val('');
+        $('#price_to').val('');
+        $('#state').val($('#state option:first').val());
+        $('#myTable').DataTable().destroy();
+        fetch_order();
+    });
+
     // export PDF
     $(document).on('click', '.btExportPDF', function(){
         html2canvas($('#detailPDF')[0],{
@@ -167,9 +173,9 @@ $(document).ready(function(){
                 $name = 'detail_order' + number + '.pdf';
                 pdfMake.createPdf(docDefinition).download($);
             }
-        })
+        });
     });
-
+    //cập nhật trạng thái đơn hàng
     $(document).on('click', '.btState', function(e){
         e.preventDefault();
         var id = $(this).attr('value');

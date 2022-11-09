@@ -13,6 +13,14 @@
             <span class="text">Thêm mới</span>
         </a>
     </div>
+    <div class="input-group mb-3 col-sm-3">
+        <a class="btn btn-success btn-icon-user btLink" >
+            <span class="icon text-white-50">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Gắn sản phẩm</span>
+        </a>
+    </div>
     <!-- <form class="row" id="formSearch">
     <div class="col-sm">
         <div class="input-group ">
@@ -69,9 +77,6 @@
     </div>
 </div>
 
-    
-
-
     <!-- Add Supplier Modal -->
     <div class="modal fade" id="AddDiscount" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -124,6 +129,48 @@
                                 <button  class="btn btn-success btn-user btn-block btSubmitAdd"> Thêm mới</button> 
                             </div>
                         </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Product Modal -->
+    <div class="modal fade" id="LinkProduct" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content add-user">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Gắn khuyến mãi sản phẩm</h1>
+                </div>
+                <div class="modal-body">
+                    <form  class="user" id='form-link' >
+                        <fieldset class="row"> 
+                            <div class="form-group col-sm-6">
+                                <select class="form-control select" id="namedis" name='namedis' required>
+                                    <option disabled selected hidden>Chọn khuyến mãi</option>
+                                    @foreach ($disc as $d)
+                                    <option value="{{ $d->dis_id }}">{{ $d->dis_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <select class="form-control select" id="product" name='product' required>
+                                    <option disabled selected hidden>Chọm sản phẩm</option>
+                                    @foreach( $pro as $p)
+                                    <option value="{{ $p->product_id }}">{{ $p->product_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </fieldset>
+                        <div class="">
+                            <button type='submit' class="btn btn-success btn-user btn-block btSubmitLink"> Thêm mới</button> 
+                        </div>
                     </form>
                 </div>
             </div>

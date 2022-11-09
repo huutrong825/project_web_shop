@@ -179,6 +179,6 @@ class ProductController extends Controller
 
     public function imageDrop()
     {
-        return view('Admin.Product.drop_image');
+        
     }
 }

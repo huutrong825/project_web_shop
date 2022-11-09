@@ -22,8 +22,8 @@ $(document).ready(function(){
                 {'data' : 'product_name'},
                 {'data' : 'unit_price'},
                 {'data' : 'image'},
-                {'data' : 'is_sale'},
                 {'data' : 'supplier_name'},
+                {'data' : 'is_sale'},
                 {'data' : 'action', 'orderable' : false, 'searchable' : false}
             ],
             'order' : [[0, 'desc']],
@@ -242,6 +242,8 @@ $(document).ready(function(){
 
     $(document).on('click', '.btDropImg', function(e){
         e.preventDefault();
+        var id = $(this).attr('value');
         $('#DropImage').modal('show');
+        
     });
 });

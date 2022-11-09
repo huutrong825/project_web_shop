@@ -5,15 +5,8 @@
 @endsection
 @section('content')
 
-<div class="input-group row">
-    <div class="input-group mb-3 col-sm-3">
-        <a href="/admin/product/add" class="btn btn-primary btn-icon-user" >
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">Thêm mới</span>
-        </a>
-    </div>
+<div class="input-group  mb-3 col-sm row">
+   
     <form class="row" id="formSearch" method='post'>
         @csrf
         <div class="col-sm">
