@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product_Img extends Model
 {
@@ -13,9 +14,11 @@ class Product_Img extends Model
 
     protected $fillable=[
         'product_id',
-        'image_url'
+        'img_url'
     ];
 
+    protected $dates =['deleted_at'];
+    
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');

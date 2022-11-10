@@ -51,8 +51,13 @@ class UserManagerController extends Controller
         if ($req->active != '') {
             $user = $user->where('is_active', $req->active);
         }
+
+        if ($req->key != '') {
+            $user = $user->where('name', 'like', '%'. $req->key .'%')
+                ->orWhere('email', 'like', '%'. $req->key .'%');
+        }
         
-        $user->where('is_delete', 0)->get();
+        $user->get();
 
         return Datatables::of($user)->
         addColumn(
@@ -140,11 +145,7 @@ class UserManagerController extends Controller
     {
         $userDel = User::where('id', $id)->first();
         if ($userDel) {
-            $userDel->update(
-                [
-                    'is_delete' => 1
-                ]
-            );
+            $userDel->delete();
             return response()->json(
                 [
                     'status' => 200,

@@ -16,7 +16,7 @@ class CategoryController extends Controller
 
     public function getCate()
     {
-        $cate = Category::where('is_delete', 0)->get();
+        $cate = Category::all();
 
         return Datatables::of($cate)
             ->addColumn(
@@ -71,11 +71,7 @@ class CategoryController extends Controller
     public function deleteCate($id)
     {
         $cate = Category::where('category_id', $id)-> first();
-        $cate->update(
-            [
-                'is_delete' => 1
-            ]
-        );
+        $cate->delete();
         return response()->json(
             [
                 'status' => 200,

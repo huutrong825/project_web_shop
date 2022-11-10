@@ -29,7 +29,7 @@ $(document).ready(function(){
             'order' : [[0, 'desc']],
             'searching':false,
         });
-        $('#formSearch').on('keyup click' ,function(e) {
+        $('#formSearch').on('keyup change' ,function(e) {
             $('#myTable').DataTable().draw();
             e.preventDefault();
         });
@@ -212,7 +212,7 @@ $(document).ready(function(){
             }
         });
     });
-
+    //upload ảnh trong product
     $(document).on('click', '.Upload',function(e)
     {
         e.preventDefault();
@@ -238,12 +238,5 @@ $(document).ready(function(){
             {
             }
         });
-    });
-
-    $(document).on('click', '.btDropImg', function(e){
-        e.preventDefault();
-        var id = $(this).attr('value');
-        $('#DropImage').modal('show');
-        
     });
 });

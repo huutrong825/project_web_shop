@@ -4,45 +4,58 @@
     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="input-group row">
-    <div class="input-group mb-3 col-sm-3">
-        <a class="btn btn-primary btn-icon-user bt-Add" >
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">Thêm mới</span>
-        </a>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 style="float:left"  class="m-0 font-weight-bold text-primary">Thao tác</h6>
+        <a style="float:right" class="text-success" data-toggle="collapse" data-target="#demo"><i class="fas fa-plus"></i></a>
     </div>
-    <form class="row" id="formSearch">
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
-        </div>                       
+    <div class="card-body collapse" id="demo">
+        <div class="table-responsive">
+            <div class="input-group row">
+                <div class="input-group mb-3 col-sm-3">
+                    <a class="btn btn-primary btn-icon-user bt-Add" >
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Thêm mới</span>
+                    </a>
+                </div>
+                <form class="row" id="formSearch">
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
+                        </div>                       
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='phone' name="phone" placeholder="Nhập liên hệ">                
+                        </div>                       
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='address' name="address" placeholder="Địa chỉ">                
+                        </div>                       
+                    </div>
+                    <div class="col-sm">
+                        <select class="form-control filter" id="state"  >
+                            <option disabled selected hidden>Chọn trạng thái</option>
+                            <option value="1">Đang hoạt động</option>
+                            <option value="0">Ngưng hoạt động</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='phone' name="phone" placeholder="Nhập liên hệ">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='address' name="address" placeholder="Địa chỉ">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <select class="form-control filter" id="state"  >
-            <option disabled selected hidden>Chọn trạng thái</option>
-            <option value="1">Đang hoạt động</option>
-            <option value="0">Ngưng hoạt động</option>
-        </select>
-    </div>
-    <div class="col-sm-3">
-        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
-    </div>
-    </form>
 </div>
+
 <div class="alert alert-success" style="display:none">
 </div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Nhà cung ứng hàng hóa</h6>

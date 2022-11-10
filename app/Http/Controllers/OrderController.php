@@ -16,9 +16,9 @@ class OrderController extends Controller
         return view('Admin.Order.list_order');
     }
 
-    public function listOrder()
+    public function listOrder(Request $req)
     {
-        $state = Order_State::all();
+        
         $o = DB::table('order')
             ->join('customer', 'order.customer_id', '=', 'customer.customer_id')
             ->join('order_state', 'order.state', '=', 'order_state.id')
@@ -30,8 +30,19 @@ class OrderController extends Controller
                 'cancel_date',
                 'type_payment',
                 'total_price',
+                'order_state.id',
                 'state_name'
             );
+
+        if ($req->orderday != '') {
+            $o = $o->where('order_date', '>=', $req->orderday);
+        }
+        if ($req->key != '') {
+            $o = $o->where('customer_name', 'like', '%'. $req->key .'%');
+        }
+        if ($req->state != '') {
+            $o = $o->where('order_state.id',  $req->state);
+        }
         $o->get();
 
         return Datatables::of($o)->
@@ -55,7 +66,7 @@ class OrderController extends Controller
         return view('Admin.Order.processing_order');
     }
 
-    public function processOrder()
+    public function processOrder(Request $req)
     {
         $state = Order_State::all();
         $o = DB::table('order')
@@ -70,6 +81,9 @@ class OrderController extends Controller
                 'total_price',
                 'state_name'
             );
+        
+        
+        
         $o->get();
 
         return Datatables::of($o)->

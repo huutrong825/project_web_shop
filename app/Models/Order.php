@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
@@ -22,6 +23,8 @@ class Order extends Model
         'state',
         'reason_cancel'
     ];
+
+    protected $dates =['deleted_at'];
 
     protected $primaryKey = 'order_id';
 

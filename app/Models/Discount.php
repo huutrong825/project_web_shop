@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Discount extends Model
 {
@@ -18,8 +19,9 @@ class Discount extends Model
         'start_day',
         'end_day',
         'is_state',
-        'is_delete'
     ];
+
+    protected $dates =['deleted_at'];
     
     protected $primaryKey = 'dis_id';
 }

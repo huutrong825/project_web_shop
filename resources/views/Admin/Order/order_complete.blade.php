@@ -5,38 +5,48 @@
 @endsection
 @section('content')
 
-<div class="input-group  mb-3 col-sm row">
-   
-    <form class="row" id="formSearch" method='post'>
-        @csrf
-        <div class="col-sm">
-            <div class="input-group ">
-                <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
-            </div>                       
-        </div>
-        <div class="col-sm">
-            <div class="input-group ">
-                
-                <input type="text" class="form-control" id='price_from' name="price_from" placeholder="Giá bán từ">                
-            </div> 
-        </div>
-        <div class="col-sm">
-            <div class="input-group ">
-                <input type="text" class="form-control" id='price_to' name="price_to" placeholder="Giá bán đến">                
-            </div> 
-        </div>
-        <div class="col-sm">
-            <select class="form-control filter" id="state"  >
-                <option disabled selected hidden>Chọn trạng thái</option>
-                <option value="1">Đang bán</option>
-                <option value="o">Ngừng bán</option>
-            </select>
-        </div>
-        <div class=" col-sm-3">
-        <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 style="float:left"  class="m-0 font-weight-bold text-primary">Thao tác</h6>
+        <a style="float:right" class="text-success" data-toggle="collapse" data-target="#demo"><i class="fas fa-plus"></i></a>
     </div>
-    </form>
-    
+    <div class="card-body collapse" id="demo">
+        <div class="table-responsive">
+            <div class="input-group  mb-3 col-sm row">
+                <form class="row" id="formSearch" method='post'>
+                    @csrf
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
+                        </div>                       
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            
+                            <input type="text" class="form-control" id='price_from' name="price_from" placeholder="Giá bán từ">                
+                        </div> 
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='price_to' name="price_to" placeholder="Giá bán đến">                
+                        </div> 
+                    </div>
+                    <div class="col-sm">
+                        <select class="form-control filter" id="state"  >
+                            <option disabled selected hidden>Chọn trạng thái</option>
+                            <option value="1">Đang bán</option>
+                            <option value="o">Ngừng bán</option>
+                        </select>
+                    </div>
+                    <div class=" col-sm-3">
+                        <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="alert alert-success" style="display:none">

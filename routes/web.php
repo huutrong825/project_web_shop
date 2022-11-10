@@ -110,7 +110,13 @@ Route::group(
 
                 Route::post('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
 
+                Route::get('/dropImage/{id}', ['uses'=>'ProductController@dropIndex']);
+
                 Route::post('/dropImage/{id}', ['uses'=>'ProductController@imageDrop']);
+
+                Route::get('/preview/{id}', ['uses'=>'ProductController@getImage']);
+
+                Route::get('/remove/{id}', ['uses'=>'ProductController@removeImage']);
             }
         );
         // Unit

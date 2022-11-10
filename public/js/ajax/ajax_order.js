@@ -10,12 +10,12 @@ $(document).ready(function(){
             'ajax':
             {
                 url : '/admin/order/fetch',
-                // data : function (d){
-                //     d.key = $('#keySearch').val();
-                //     d.pricefrom = $('#price_from').val();
-                //     d.priceto = $('#price_to').val();
-                //     d.state = $('#state').val();
-                // }
+                data : function (d){
+                    d.key = $('#keySearch').val();
+                    d.orderday = $('#orderday').val();
+                    d.receiveday = $('#receiveday').val();
+                    d.state = $('#state').val();
+                }
             },
             'columns':[
                 {'data' : 'order_id',},
@@ -31,12 +31,20 @@ $(document).ready(function(){
             'searching':false,
         });
         
-        // $('#formSearch').on('keyup click' ,function(e) {
-        //     $('#myTable').DataTable().draw();
-        //     e.preventDefault();
-        // });
+        $('#formSearch').on('keyup change' ,function(e) {
+            $('#myTable').DataTable().draw();
+            e.preventDefault();
+        });
     }
-
+        // reset
+        $(document).on('click','#btReset' ,function() {
+            $('#keySearch').val('');
+            $('#orderday').val('');
+            $('#receiveday').val('');
+            $('#state').val($('#state option:first').val());
+            $('#myTable').DataTable().destroy();
+            fetch_order();
+        });
     fetch_processing();
     // Đổ data ra bảng xử lý
     function fetch_processing()

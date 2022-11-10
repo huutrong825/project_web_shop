@@ -29,8 +29,8 @@ $(document).ready(function(){
             'searching':false,
         });
 
-        $('#formSearch').on('keyup click' ,function(e) {
-            $('#myTable').DataTable().search($('#keySearch').val()).draw();
+        $('#formSearch').on('keyup change' ,function(e) {
+            $('#myTable').DataTable().draw();
             e.preventDefault();
         });
     }

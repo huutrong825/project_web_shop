@@ -43,8 +43,10 @@
                     <input type="text" class="form-control" name="phone" value="{{ $u->phone }}" >
                 </div>
                 <div class="col-xs-6">
-                    <label for="date">Ngày sinh</label>
-                    <input type="date" class="form-control" name="date" value=" {{ $u->birth }}">
+                    <label for="birth">Ngày sinh</label>
+                    <input type="text" class="form-control "
+                        name="birth" placeholder = " {{ $u->birth }}" onfocus="(this.type='date')" onblur="(this.type='text')" >
+                    <!-- <input type="date" class="form-control" name="date" value=" {{ $u->birth }}"> -->
                 </div>
                 <div class="col-xs-6">
                     <label for="">Địa chỉ</label>
@@ -57,8 +59,8 @@
                 </div>
             </div>
         </form>
+        <a >Đổi mật khẩu</a>
     @endforeach
-    <hr>
 </div>
 
 <!-- Modal upload image -->
@@ -82,14 +84,7 @@
 @endsection
 
 @section('script')
-<script>
-    $(document).ready(function (){
-        $("#Check").click(function(){
-            $("#pass1").toggle();
-            $("#pass2").toggle();
-        });
-    });
-</script>
+
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script> -->

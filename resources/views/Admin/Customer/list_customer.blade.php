@@ -4,40 +4,51 @@
     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="input-group row">
-    <div class="input-group mb-3 col-sm-3">
-        <a class="btn btn-primary btn-icon-user bt-Add" >
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">Thêm mới</span>
-        </a>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 style="float:left"  class="m-0 font-weight-bold text-primary">Thao tác</h6>
+        <a style="float:right" class="text-success" data-toggle="collapse" data-target="#demo"><i class="fas fa-plus"></i></a>
     </div>
-    <form class="row" id="formSearch">
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Nhập tên">                
-        </div>                       
+    <div class="card-body collapse" id="demo">
+        <div class="table-responsive">
+            <div class="input-group row">
+                <div class="input-group mb-3 col-sm-3">
+                    <a class="btn btn-primary btn-icon-user bt-Add" >
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="text">Thêm mới</span>
+                    </a>
+                </div>
+                <form class="row" id="formSearch">
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Nhập tên">                
+                        </div> 
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='phone' name="phone" placeholder="Nhập liên hệ">                
+                        </div> 
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='email' name="email" placeholder="Email">                
+                        </div>                       
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" id='address' name="address" placeholder="Địa chỉ">                
+                        </div>
+                    </div>
+                </form>
+                <div class="col-sm-3">
+                    <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='phone' name="phone" placeholder="Nhập liên hệ">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='email' name="email" placeholder="Email">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='address' name="address" placeholder="Địa chỉ">                
-        </div>                       
-    </div>
-    <div class="col-sm-3">
-        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
-    </div>
-    </form>
 </div>
 
 <div class="card shadow mb-4">
@@ -49,7 +60,7 @@
             </button>
             <div class="dropdown-menu">
                 <a href='/admin/customer/export' class="btn bt-success dropdown-item" value='.xlsx'>File (.xlsx)</a>
-                <a class="btn bt-success dropdown-item" value='.csv'>File (.csv)</a>
+                <a class="btn bt-success dropdown-item " id="tableExcel">File (.csv)</a>
             </div>
         </div>
         
@@ -190,6 +201,10 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
 <script src="{{asset('js/ajax/ajax_customer.js')}}"></script>
+<script src="{{asset('js/ajax/tableToExcel.js')}}"></script>
+<script src=
+"//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js">
+</script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>

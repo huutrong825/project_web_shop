@@ -46,7 +46,7 @@ class SupplierController extends Controller
         if ($req->key !='') {
             $supp = $supp->where('supplier_name', 'like', '%'. $req->key .'%');
         }
-        $supp->where('is_delete', 0)->get();
+        $supp->get();
         
         return Datatables::of($supp)->
         addColumn(
@@ -148,11 +148,7 @@ class SupplierController extends Controller
     {
         $supp = Supplier::where('id', $id)->first();
         if ($supp) {
-            $supp->update(
-                [
-                    'is_delete' => 1
-                ]
-            );;
+            $supp->delete();
             return response()->json(
                 [
                     'status' => 200,

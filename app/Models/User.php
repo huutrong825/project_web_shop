@@ -28,12 +28,11 @@ class User extends Authenticatable
         'birth',
         'address',
         'is_active',
-        'is_delete',
         'group_role',
         'last_login_at',
     ];
 
-    protected $dates =['is_delete'];
+    protected $dates =['deleted_at'];
 
     /**
      * The attributes that should be hidden for serialization.

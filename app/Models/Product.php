@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
@@ -22,12 +23,11 @@ class Product extends Model
         'discount',
         'supplier_id',
         'is_sale',
-        'is_delete'
     ];
 
     protected $primaryKey = 'product_id';
 
-    
+    protected $dates = ['deleted_at'];
 
     public function image()
     {

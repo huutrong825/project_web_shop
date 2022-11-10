@@ -141,4 +141,11 @@ $(document).ready(function (){
         });
     });
 
+    $(document).on('click', '#tableExcel', function(e){
+        e.preventDefault();
+        $('#myTable').table2excel({
+            exclude: ".noExport",
+            filename: "name-of-the-file",
+        });
+    });
 });

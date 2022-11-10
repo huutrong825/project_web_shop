@@ -28,8 +28,8 @@ return new class extends Migration
             $table->tinyInteger('is_active')->default(1);
             $table->tinyInteger('group_role');
             $table->timestamp('last_login_at')->nullable();
-            $table->tinyInteger('is_delete')->default(0);
             $table->timestamps();
+            $table->softDeletes();
             // $table->increments('id');
             // $table->string('name');
             // $table->string('email')->unique();
@@ -45,7 +45,7 @@ return new class extends Migration
             // $table->tinyInteger('group_role');
             // $table->timestamp('last_login_at')->nullable();
             // $table->timestamps();
-            $table->softDeletes();
+            
         });
     }
 

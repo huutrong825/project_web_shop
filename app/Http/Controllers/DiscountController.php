@@ -20,7 +20,7 @@ class DiscountController extends Controller
 
     public function listDis()
     {
-        $dis = Discount::where('is_delete', 0)->get();
+        $dis = Discount::all();
         return Datatables::of($dis)->
         addColumn(
             'type_disc', function ($dis) {
@@ -143,11 +143,7 @@ class DiscountController extends Controller
     public function deleteDis($id)
     {
         $dis = Discount::where('dis_id', $id)->first();
-        $dis->update(
-            [
-                'is_delete' => 1
-            ]
-        );
+        $dis->delete();
         return response()->json(
             [
                 'state' =>200,
@@ -158,7 +154,6 @@ class DiscountController extends Controller
     
     public function linkPro(Request $req)
     {
-        
         $pro = Product::where('product_id', $req->product)->first();
         $pro->update(
             [

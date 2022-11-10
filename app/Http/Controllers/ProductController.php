@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Product_Img;
 use App\Models\Supplier;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
@@ -19,7 +21,6 @@ class ProductController extends Controller
         
         $p = DB::table('product')
             ->join('supplier', 'product.supplier_id', '=', 'supplier.id')
-            ->where('product.is_delete', 0)
             ->select(
                 'product_id', 
                 'product_name',
@@ -30,8 +31,12 @@ class ProductController extends Controller
             );
 
         
-        if (!empty($req->pricefrom) && !empty($req->pricefrom)) {
-            $p = $p->whereBetween('unit_price', [$req->pricefrom, $req->priceto]);
+        if ($req->pricefrom != '') {
+            $p = $p->where('unit_price', '>=', $req->pricefrom);
+        }
+
+        if ($req->priceto != '') {
+            $p = $p->where('unit_price', '<=', $req->priceto);
         }
 
         if (!empty($req->state)) {
@@ -40,7 +45,7 @@ class ProductController extends Controller
 
         if (!empty($req->key)) {
             $p = $p->where('product_name', 'like', '%'. $req->key .'%')
-                ->orWhere('product_name', 'like', '%'. $req->key .'%');
+                ->orWhere('email', 'like', '%'. $req->key .'%');
         }
         $p->get();
 
@@ -65,7 +70,7 @@ class ProductController extends Controller
             )
             ->addColumn(
                 'action', function ($p ) {
-                    return '<a value=" '. $p->product_id .'" class="btn btn-primary btn-circle btn-sm btDropImg" >
+                    return '<a href="/admin/product/dropImage/'. $p->product_id .'" class="btn btn-primary btn-circle btn-sm btDropImg" >
                         <i class="fas fa-images"></i>
                     </a>
                     <a value=" '. $p->product_id .'" class="btn btn-danger btn-circle btn-sm btDelete" >
@@ -124,11 +129,7 @@ class ProductController extends Controller
     {
         $pro = Product::where('product_id', $id)->first();
         
-        $pro->update(
-            [
-                'is_delete' => 1
-            ]
-        );
+        $pro->delete();
         return response()->json(
             [ 
                 'state'=>200,
@@ -158,7 +159,6 @@ class ProductController extends Controller
     
     public function uploadImg(Request $req, $id)
     {
-        // dd($req->imgUp->getClientOriginalName());
         if ($req->imgUp) {
             $img_name = $req->imgUp->getClientOriginalName();
             $req->imgUp->move(public_path('img'), $img_name);
@@ -176,9 +176,57 @@ class ProductController extends Controller
             ]
         );
     }
-
-    public function imageDrop()
+    public function dropIndex($id)
     {
-        
+        $pro = Product::where('product_id', $id)->first();
+        return view('Admin.Product.drop_image', compact('pro'));
+    }
+
+    public function imageDrop(Request $req, $id)
+    {
+        if ($req->ajax()) {
+            if ($req->file) {
+                $img_name = $req->file->getClientOriginalName();
+                $req->file->move(public_path('img'), $img_name);
+            }
+        }
+        Product_Img::create(
+            [
+                'product_id' => $id,
+                'img_url' => $img_name
+            ]
+        );
+    }
+
+    public function getImage($id)
+    {
+        $img = Product_Img::where('product_id', $id)->get();
+     
+        $output = '<div class="row">';
+        foreach ($img as $i) {
+            $output .= '
+            <div class="col-md-2">
+                <img src="http://127.0.0.1:8000/img/'. $i->img_url .'" class="img-thumbnail" width="175" height="175" style="height:175px;" />
+                <button type="button" class="btn btn-link remove_image" value="'. $i->id .'">Remove</button>
+            </div>';
+        }
+        $output .= '</div>';
+
+        return response()->json(
+            [
+                'img' => $output
+            ]
+        );
+    }
+
+    public function removeImage($id)
+    {
+        $img = Product_Img::where('id', $id)->first();
+        $img->delete();
+        return response()->json(
+            [
+                'message' => 'Suucess'
+            ]
+        );
     }
 }

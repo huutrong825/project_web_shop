@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order_State extends Model
 {
@@ -14,6 +15,8 @@ class Order_State extends Model
     protected $fillable=[
         'state_name'
     ];
+
+    protected $dates =['deleted_at'];
 
     public function order()
     {

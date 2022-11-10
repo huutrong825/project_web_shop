@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order_History extends Model
 {
@@ -16,4 +17,6 @@ class Order_History extends Model
         'order_id',
         'state_order'
     ];
+
+    protected $dates =['deleted_at'];
 }
