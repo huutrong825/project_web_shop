@@ -19,6 +19,7 @@ class Customer extends Model
         'address'
     ];
 
+    protected $primaryKey = 'customer_id';
     protected $dates =['deleted_at'];
 
     public function order()

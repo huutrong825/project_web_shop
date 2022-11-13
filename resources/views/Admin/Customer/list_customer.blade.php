@@ -59,7 +59,7 @@
                 <i class="fas fa-cloud-download-alt"> Truy xuất</i>
             </button>
             <div class="dropdown-menu">
-                <a href='/admin/customer/export' class="btn bt-success dropdown-item" value='.xlsx'>File (.xlsx)</a>
+                <a class="btn bt-success dropdown-item" id="exportExcel" value='.xlsx'>File (.xlsx)</a>
                 <a class="btn bt-success dropdown-item " id="tableExcel">File (.csv)</a>
             </div>
         </div>
@@ -205,7 +205,6 @@
 <script src=
 "//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js">
 </script>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
  <!-- Page level custom scripts -->

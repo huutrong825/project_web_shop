@@ -134,9 +134,19 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Thống kê</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#statisticalPages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-database"></i>
+                    <span>Thống kê</span>
+                </a>
+                <div id="statisticalPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/statistical/overview">Tổng quan</a>
+                        <a class="collapse-item" href="">Báo cáo đơn hàng</a>
+                        <a class="collapse-item" href="">Lịch sử đơn hàng</a>
+                        <div class="collapse-divider"></div>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->

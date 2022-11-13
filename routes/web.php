@@ -194,5 +194,15 @@ Route::group(
 
             }
         );
+        // Statistical
+        Route::group( 
+            ['prefix'=>'statistical'], function () {
+
+                Route::get('/overview', ['uses'=>'StatisticalController@overview_index']);
+
+                Route::get('/fetch', ['uses'=>'StatisticalController@data']);
+
+            }
+        );
     }
 );

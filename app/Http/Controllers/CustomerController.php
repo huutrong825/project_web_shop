@@ -94,8 +94,9 @@ class CustomerController extends Controller
         );
     }
 
-    public function export() 
+    public function export(Request $req) 
     {
-        return Excel::download(new CustomerExport, 'customer.xlsx');
+        
+        return Excel::download(new CustomerExport($req), "customer.xlsx");
     }
 }

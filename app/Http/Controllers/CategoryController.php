@@ -16,7 +16,7 @@ class CategoryController extends Controller
 
     public function getCate()
     {
-        $cate = Category::all();
+        $cate = Category::where('is_delete', 0)->get();
 
         return Datatables::of($cate)
             ->addColumn(

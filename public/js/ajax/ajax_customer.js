@@ -15,7 +15,8 @@ $(document).ready(function (){
                     d.phone = $('#phone').val();
                     d.address = $('#address').val();
                     d.email = $('#email').val();
-                }
+                },
+                
             },
             'columns':[
                 { 'data' : 'customer_id', 'visible':false},
@@ -139,6 +140,30 @@ $(document).ready(function (){
                 alert('Lỗi');
             }
         });
+    });
+
+    
+    $(document).on('click','#exportExcel',function(e){
+        e.preventDefault();
+
+        var key = $('#keySearch').val();
+        var phone = $('#phone').val();
+        var address = $('#address').val();
+        var email = $('#email').val();
+
+        var data;
+
+        if (key != '' || phone != '' || address != '' || email != '') {
+           data = {
+                key : key,
+                phone : phone,
+                address : address,
+                email : email
+            }
+        }
+
+        window.location = '/admin/customer/export?' + $.param(data);
+        
     });
 
     $(document).on('click', '#tableExcel', function(e){
