@@ -55,12 +55,12 @@ $(document).ready(function(){
             'ajax':
             {
                 url : '/admin/order/fetchprocess',
-                // data : function (d){
-                //     d.key = $('#keySearch').val();
-                //     d.pricefrom = $('#price_from').val();
-                //     d.priceto = $('#price_to').val();
-                //     d.state = $('#state').val();
-                // }
+                data : function (d){
+                    d.key = $('#keySearch').val();
+                    d.orderday = $('#orderday').val();
+                    d.type_payment = $('#type_payment').val();
+                    d.state = $('#state').val();
+                }
             },
             'columns':[
                 {'data' : 'order_id', },
@@ -75,12 +75,20 @@ $(document).ready(function(){
             'searching':false,
         });
         
-        // $('#formSearch').on('keyup click' ,function(e) {
-        //     $('#myTable').DataTable().draw();
-        //     e.preventDefault();
-        // });
+        $('#formSearch').on('keyup change' ,function(e) {
+            $('#processTable').DataTable().draw();
+            e.preventDefault();
+        });
     }
-
+        // reset
+        $(document).on('click','#btReset' ,function() {
+            $('#keySearch').val('');
+            $('#orderday').val('');
+            $('#type_payment').val($('#type_payment option:first').val());
+            $('#state').val($('#state option:first').val());
+            $('#processTable').DataTable().destroy();
+            fetch_processing();
+        });
     fetch_complete();
     // Đổ data ra bảng xử lý
     function fetch_complete()
@@ -91,12 +99,13 @@ $(document).ready(function(){
             'ajax':
             {
                 url : '/admin/order/fetchcomplete',
-                // data : function (d){
-                //     d.key = $('#keySearch').val();
-                //     d.pricefrom = $('#price_from').val();
-                //     d.priceto = $('#price_to').val();
-                //     d.state = $('#state').val();
-                // }
+                data : function (d){
+                    d.key = $('#keySearch').val();
+                    d.orderday = $('#orderday').val();
+                    d.receiveday = $('#receiveday').val();
+                    d.cancelday = $('#cancelday').val();
+                    d.state = $('#state').val();
+                }
             },
             'columns':[
                 {'data' : 'order_id'},
@@ -111,11 +120,22 @@ $(document).ready(function(){
             'searching':false,
         });
         
-        // $('#formSearch').on('keyup click' ,function(e) {
-        //     $('#myTable').DataTable().draw();
-        //     e.preventDefault();
-        // });
+        $('#formSearch').on('keyup change' ,function(e) {
+            $('#completeTable').DataTable().draw();
+            e.preventDefault();
+        });
     }
+
+    // reset
+    $(document).on('click','#btReset' ,function() {
+        $('#keySearch').val('');
+        $('#orderday').val('');
+        $('#receiveday').val('');
+        $('#cancelday').val('');
+        $('#state').val($('#state option:first').val());
+        $('#completeTable').DataTable().destroy();
+        fetch_complete();
+    });
 
     $(document).on('click', '.btDetail', function(e){
         e.preventDefault();

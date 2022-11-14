@@ -60,7 +60,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="btn bt-success dropdown-item" id="exportExcel" value='.xlsx'>File (.xlsx)</a>
-                <a class="btn bt-success dropdown-item " id="tableExcel">File (.csv)</a>
+                <a class="btn bt-success dropdown-item " id="exportPDF">File (.pdf)</a>
             </div>
         </div>
         

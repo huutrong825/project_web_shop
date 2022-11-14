@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('product_add', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pro_id', 20);
-            $table->interger('quanity_add', 20);
+            $table->integer('pro_id');
+            $table->integer('quanity_add');
             $table->decimal('price', 20);
             $table->timestamp('date_add');
             $table->timestamps();

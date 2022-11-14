@@ -82,7 +82,20 @@ class OrderController extends Controller
                 'state_name'
             );
         
-        
+        if ($req->orderday != '') {
+            $o = $o->where('order_date', '>=', $req->orderday);
+        }
+        if ($req->key != '') {
+            $o = $o->where('customer_name', 'like', '%'. $req->key .'%');
+        }
+
+        if ($req->type_payment != '') {
+            $o = $o->where('type_payment',  $req->type_payment);
+        }
+
+        if ($req->state != '') {
+            $o = $o->where('order_state.id',  $req->state);
+        }
         
         $o->get();
 
@@ -124,7 +137,7 @@ class OrderController extends Controller
         return view('Admin.Order.order_complete');
     }
 
-    public function orderComplete()
+    public function orderComplete(Request $req)
     {
         $state = Order_State::all();
         $o = DB::table('order')
@@ -140,6 +153,26 @@ class OrderController extends Controller
                 'reason_cancel',
                 'state_name'
             );
+
+        if ($req->orderday != '') {
+            $o = $o->where('order_date', '>=', $req->orderday);
+        }
+        if ($req->key != '') {
+            $o = $o->where('customer_name', 'like', '%'. $req->key .'%');
+        }
+
+        if ($req->receiveday != '') {
+            $o = $o->where('receive_date', '>=',  $req->receiveday);
+        }
+
+        if ($req->cancelday != '') {
+            $o = $o->where('cancel_date', '>=',  $req->cancelday);
+        }
+
+        if ($req->state != '') {
+            $o = $o->where('order_state.id',  $req->state);
+        }
+
         $o->get();
 
         return Datatables::of($o)->

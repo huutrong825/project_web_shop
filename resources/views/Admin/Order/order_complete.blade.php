@@ -15,35 +15,48 @@
     <div class="card-body collapse" id="demo">
         <div class="table-responsive">
             <div class="input-group  mb-3 col-sm row">
-                <form class="row" id="formSearch" method='post'>
-                    @csrf
-                    <div class="col-sm">
-                        <div class="input-group ">
-                            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
-                        </div>                       
+            <form class="row" id="formSearch" method='post'>
+                @csrf
+                <div class="col-sm">
+                    <div class="input-group ">
+                        <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
                     </div>
-                    <div class="col-sm">
-                        <div class="input-group ">
-                            
-                            <input type="text" class="form-control" id='price_from' name="price_from" placeholder="Giá bán từ">                
-                        </div> 
-                    </div>
-                    <div class="col-sm">
-                        <div class="input-group ">
-                            <input type="text" class="form-control" id='price_to' name="price_to" placeholder="Giá bán đến">                
-                        </div> 
-                    </div>
-                    <div class="col-sm">
-                        <select class="form-control filter" id="state"  >
-                            <option disabled selected hidden>Chọn trạng thái</option>
-                            <option value="1">Đang bán</option>
-                            <option value="o">Ngừng bán</option>
-                        </select>
-                    </div>
-                    <div class=" col-sm-3">
-                        <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
-                    </div>
-                </form>
+                </div>
+                <div class="col-sm">
+                    <div >
+                        <input type="text" class="form-control"
+                            name="orderday" id='orderday' placeholder="Thời gian đặt" onfocus="(this.type='date')"
+                            onblur="(this.type='text')">
+                    </div> 
+                </div>
+                <div class="col-sm">
+                    <div >
+                        <input type="text" class="form-control"
+                            name="orderday" id='receiveday' placeholder="Thời gian nhận" onfocus="(this.type='date')"
+                            onblur="(this.type='text')">
+                    </div> 
+                </div>
+                <div class="col-sm">
+                    <div >
+                        <input type="text" class="form-control"
+                            name="orderday" id='cancelday' placeholder="Thời gian hủy" onfocus="(this.type='date')"
+                            onblur="(this.type='text')">
+                    </div> 
+                </div>
+                <div class="col-sm">
+                    <select class="form-control filter" id="state"  >
+                        <option disabled selected hidden>Chọn trạng thái</option>
+                        @foreach( $ostate as $o)
+                            @if ($o->id > 4)
+                                <option value="{{ $o->id }}">{{ $o->state_name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class=" col-sm-3">
+                    <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                </div>
+            </form>
             </div>
         </div>
     </div>

@@ -4,6 +4,49 @@
     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection
 @section('content')
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 style="float:left"  class="m-0 font-weight-bold text-primary">Thao tác</h6>
+        <a style="float:right" class="text-success" data-toggle="collapse" data-target="#demo"><i class="fas fa-plus"></i></a>
+    </div>
+    <div class="card-body collapse" id="demo">
+        <div class="table-responsive">
+            <div class="input-group row">
+                <div class="input-group mb-3 col-sm-3">
+                    
+                </div>
+                <form class="row" id="formSearch" method='post'>
+                    @csrf
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control"
+                                name="orderday" id='orderday' placeholder="Thời gian từ" onfocus="(this.type='date')"
+                                onblur="(this.type='text')">                
+                        </div> 
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                         <input type="text" class="form-control"
+                                name="orderday" id='orderday' placeholder="Thời gian đến" onfocus="(this.type='date')"
+                                onblur="(this.type='text')">   
+                        </div> 
+                    </div>
+                    <div class="col-sm">
+                        <select class="form-control filter" id="state"  >
+                            <option disabled selected hidden>Chọn mốc thời gian</option>
+                            <option value="dd">Theo ngày</option>
+                            <option value="MM">Theo tháng</option>
+                        </select>
+                    </div>
+                    <div class=" col-sm-3">
+                    <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -165,53 +208,15 @@
         role="button" aria-expanded="true" aria-controls="collapseCardExample">
         <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
     </a>
-    <div class="collapse show" id="collapseChart">
+    <div class="collapse show" id="collapseChart" width="400px" height="100px">
         <div class="card-body">
-            <div class="chart-area">
-                {!! $myChart->container() !!}
+            <div class="chart-area" width="400px" height="100px">
+                <canvas id="popalChart"  width="400px" height="100px"></canvas>
             </div>
         </div>
     </div>
 </div>
 
-<div class="card shadow mb-4">
-    <a href="#collapseChart1" class="d-block card-header py-3" data-toggle="collapse"
-        role="button" aria-expanded="true" aria-controls="collapseCardExample">
-        <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
-    </a>
-    <div class="collapse show" id="collapseChart1">
-        <div class="card-body">
-            <div class="chart-area">
-                <canvas id="myChart"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- <div class="card shadow mb-4">
-    <a href="#collapseTable" class="d-block card-header py-3" data-toggle="collapse"
-        role="button" aria-expanded="true" aria-controls="collapseCardExample">
-        <h6 class="m-0 font-weight-bold text-primary">Data Table</h6>
-    </a>
-    <div class="collapse show" id="collapseTable">
-        <div class="card-body">
-            <table class="table table-bordered" id="myTable" width="100%">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> -->
 
 @endsection
 
@@ -224,8 +229,8 @@
 
 <script src="{{asset('js/ajax/overview.js')}}"></script>
 
-    <!-- Page level plugins -->
-    <!-- <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script> -->
+    
+    
 
     <!-- Page level custom scripts -->
     <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>

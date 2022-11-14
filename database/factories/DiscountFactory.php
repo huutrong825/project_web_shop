@@ -19,6 +19,7 @@ class DiscountFactory extends Factory
     {
         return [
             'dis_name'=>fake()->name(),
+            'typeDis' =>fake()->numberBetween($min = 1, $max = 6),
             'value'=>fake()->numerify(),
             'start_day'=>fake()->date("Y-m-d H:i:s"),
             'end_day'=>fake()->date("Y-m-d H:i:s"),

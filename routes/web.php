@@ -202,6 +202,8 @@ Route::group(
 
                 Route::get('/fetch', ['uses'=>'StatisticalController@data']);
 
+                Route::get('/order_statis', ['uses'=>'StatisticalController@order_statis']);
+
             }
         );
     }

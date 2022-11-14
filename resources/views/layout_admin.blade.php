@@ -142,7 +142,7 @@
                 <div id="statisticalPages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/admin/statistical/overview">Tổng quan</a>
-                        <a class="collapse-item" href="">Báo cáo đơn hàng</a>
+                        <a class="collapse-item" href="/admin/statistical/order_statis">Báo cáo đơn hàng</a>
                         <a class="collapse-item" href="">Lịch sử đơn hàng</a>
                         <div class="collapse-divider"></div>
                     </div>
