@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 <div class="input-group row">
-    <div class="input-group mb-3 col-sm-3">
+    <div class="input-group mb-3 col-sm">
         <a class="btn btn-primary btn-icon-user bt-Add" >
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
@@ -13,42 +13,16 @@
             <span class="text">Thêm mới</span>
         </a>
     </div>
-    <div class="input-group mb-3 col-sm-3">
+    <div class="input-group mb-3 col-sm-9">
         <a class="btn btn-success btn-icon-user btLink" >
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
             <span class="text">Gắn sản phẩm</span>
         </a>
-    </div>
-    <!-- <form class="row" id="formSearch">
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='keySearch' name="key" placeholder="Search">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='phone' name="phone" placeholder="Nhập liên hệ">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <div class="input-group ">
-            <input type="text" class="form-control" id='address' name="address" placeholder="Địa chỉ">                
-        </div>                       
-    </div>
-    <div class="col-sm">
-        <select class="form-control filter" id="state"  >
-            <option disabled selected hidden>Chọn trạng thái</option>
-            <option value="1">Đang hoạt động</option>
-            <option value="0">Ngưng hoạt động</option>
-        </select>
-    </div>
-    <div class="col-sm-3">
-        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
-    </div>
-    </form> -->
+    </div>    
 </div>
+
 <div class="alert alert-success" style="display:none">
 </div>
 <div class="card shadow mb-4">

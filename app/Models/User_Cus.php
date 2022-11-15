@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User_Cus extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table='user_cus';
 

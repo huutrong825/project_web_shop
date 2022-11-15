@@ -26,102 +26,91 @@ return s.join(dec);
 
 $(document).ready(function(){
 
-    var datas = [];
-    var label = [];
+   
 
     $.ajax({
         url: '/admin/statistical/fetch',
         type: 'get',
         success: function(response){
-            $('#sum_total').html(number_format(response.array.sum_total,2,',', ' '));
+            $('#sum_total').html(number_format(response.array.sum_total, 2, ',', ' '));
             $('#sum_sale').html(response.array.sum_sale);
             $('#sum_order').html(response.array.sum_order);
             $('#complete_order').html(response.array.complete_order);
             $('#cancel_order').html(response.array.cancel_order);
-            $('#quanity').html(number_format(response.array.quanity,0,',',' '));
-            $('#myAreaChart').html(response.chart);
-            $.each(response.order, function(key, item){
-                datas.push(item.total_price);
-                label.push(item.order_date);
-            });
+            $('#quanity').html(number_format(response.array.store, 0, ',', ' '));
+            $('#fee_add').html(number_format(response.array.fee_add, 2, ',', ' '));
+            $('#product_add').html(number_format(response.array.product_add, 0, ',', ' '));
 
             
+            const data = {
+                labels: response.date,
+                datasets: [{
+                    type: 'line',
+                    label: 'Tiền đơn hàng',
+                    backgroundColor: 'rgb(117, 176, 235)',
+                    borderColor: 'rgb(117, 176, 245)',
+                    data: response.data,
+                }],
+            };
+            const config = {
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        
+            const data1 = {
+                labels: response.date_add,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Sô lượng nhập',
+                        data: response.sum_quanity,
+                        backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+                        borderColor: ['rgb(75, 192, 192)'],
+                        borderWidth: 1
+                    },
+                    {
+                        type: 'line',
+                        label: 'Giá nhập',
+                        data: response.sum_price,
+                        backgroundColor: ['rgb(255, 205, 86)'],
+                        borderColor:['rgb(255, 205, 80, 0.5)'],
+                        
+                    }
+                ]
+                };
+                const config1 = {
+                data: data1,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                          beginAtZero: true
+                        },
+                    }
+                }
+                };
+        
+                const popalChart = new Chart(
+                document.getElementById('myChart1'),
+                config1
+                );
             
         },
 
     });
-    
-    $e = ['1','2','3','4','5'];
-
-    console.log($e);
-    console.log(datas);
-
-    const data = {
-        labels: $e,
-        datasets: [{
-            type: 'line',
-            label: 'My First dataset',
-            backgroundColor: 'blue',
-            borderColor: 'blue',
-            data: ['120000','100000','195000','50000','10000'],
-        },
-        {
-            type:'bar',
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: ['50000','120000','20000','30000','2000'],
-        }]
-    };
-    const config = {
-        data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    };
-
-    
-    
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-        );
-
-        const data1 = {
-            labels: [
-                'Đơn hàng đang vận chuyển',
-                'Đang giao',
-                'Đã hủy',
-                'Hoàn thành',
-                'Đang xử lý'
-            ],
-            datasets: [{
-                label: 'My First Dataset',
-                data: [11, 16, 7, 3, 14],
-                backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(75, 192, 192)',
-                'rgb(255, 205, 86)',
-                'rgb(201, 203, 207)',
-                'rgb(54, 162, 235)'
-                ]
-            }]
-            };
-            const config1 = {
-            type: 'polarArea',
-            data: data1,
-            options: {
-
-            }
-            };
-    
-            const popalChart = new Chart(
-            document.getElementById('popalChart'),
-            config1
-            );
+   
 });
 

@@ -43,7 +43,7 @@ class UserManagerController extends Controller
     public function listUser(Request $req)
     {
         
-        $user = DB::table('users');
+        $user = DB::table('users')->where('deleted_at', null);
 
         if ($req->group != '') {
             $user = $user->where('group_role', $req->group);

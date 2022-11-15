@@ -60,7 +60,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="btn bt-success dropdown-item" id="exportExcel" value='.xlsx'>File (.xlsx)</a>
-                <a class="btn bt-success dropdown-item " id="exportPDF">File (.pdf)</a>
+                <a href='/admin/customer/exportPDF'class="btn bt-success dropdown-item " id="exportPDF">File (.pdf)</a>
             </div>
         </div>
         
@@ -75,6 +75,7 @@
                         <th>Email</th>
                         <th>Liên hệ</th>
                         <th>Địa chỉ</th>
+                        <th>Số đơn đặt</th>
                         <th></th>
                     </tr>
                 </thead>

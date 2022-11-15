@@ -17,7 +17,7 @@ class Unit extends Model
         'unit_name',
     ];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at']; 
 
     public function product()
     {

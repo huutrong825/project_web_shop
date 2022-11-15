@@ -47,10 +47,10 @@
                             <option value="o">Ngừng bán</option>
                         </select>
                     </div>
-                    <div class=" col-sm-3">
-                    <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
-                </div>
-                </form>
+                </form>                
+                <div class=" col-sm">
+                        <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                    </div>
             </div>
         </div>
     </div>
@@ -156,6 +156,37 @@
         </div>
     </div>
 
+    <div class="modal fade" id="DropModal" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content add-user">
+                <div class="modal-header">
+                </div>
+                <div class="text-center">
+                    <h1 class="h2 text-green mb-4">Chi tiết sản phẩm</h1>
+                </div>
+                <div class="alert alert-success " style="display:none">
+                </div>
+                <div class="modal-body detail">
+                <div class="table-responsive col-sm">
+                    <input type="hidden" class="form-control form-control-user" id='idDrop' >
+                    <form method='post' class="dropzone" id="DropzoneForm" name="DropzoneForm"enctype="multipart/form-data" >
+                        @csrf
+                    </form>
+                    <br />
+                    <br />
+                    <div style="align:center" >
+                        <a  class="btn btn-primary btn-sm" id="btDrop" title="Click to drop"><i class="fas fa-cloud-upload"></i>Xác nhận</a>
+                    </div>
+                    <br />
+                    <div class="dropzone" id="preview"></div>
+                    <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Modal-->
     <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -205,7 +236,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="DropImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- <div class="modal fade" id="DropImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content add-user">
@@ -215,19 +246,27 @@
                     <h1 class="h2 text-green mb-4">Hình ảnh sản phẩm</h1>
                 </div>
                 <div class="modal-body ">
-                    <div id="preview"></div>
-                    <div>
-                    <input type="hidden" class="form-control form-control-user" id='idDrop' >
-                    <form method='post' action="/admin/product/dropImage" class="dropzone" id="DropzoneForm" name="DropzoneForm"enctype="multipart/form-data" >
-                        @csrf
+                    <div class="table-responsive col-sm">
                         <input type="hidden" class="form-control form-control-user" id='idDrop' >
-                    </form>
-                    <button type="button" class="btn btn-primary" id="btDrop">Submit and display data</button>
+                        <form method='post' action="/admin/product/dropImage" class="dropzone" id="DropzoneForm" name="DropzoneForm"enctype="multipart/form-data" >
+                            @csrf
+                        </form>
+                        <br />
+                        <br />
+                        <div style="align:center" >
+                            <a  class="btn btn-primary btn-sm" id="btDrop" title="Click to drop"><i class="fas fa-cloud-upload"></i>Xác nhận</a>
+                        </div>
+                        <br />
+                        <div class="dropzone" id="preview"></div>
+                        <br />
+                    </div>
+                    <div style="align:center" >
+                        <a href='/admin/product' class="btn btn-danger btn-sm"  title="Click to back"><i class="fas fa-cloud-upload"></i>Trở lại</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 @endsection
 
@@ -240,5 +279,10 @@
 
 <script src="{{asset('js/ajax/ajax_product.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+
+<script src="{{asset('js/ajax/drop_images.js')}}" >
 
 @endsection

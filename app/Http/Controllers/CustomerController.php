@@ -8,6 +8,7 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Exports\CustomerExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class CustomerController extends Controller
 {
@@ -18,7 +19,11 @@ class CustomerController extends Controller
 
     public function listCus(Request $req)
     {
-        $cus = DB::table('customer');
+        $cus = DB::table('customer')
+            ->join('order', 'order.customer_id', '=', 'customer.customer_id')
+            ->selectRaw('customer.customer_id, customer_name, address, email, phone, count(order.customer_id) as num_order')
+            ->groupBy('customer.customer_id', 'customer_name', 'address', 'email', 'phone');
+            
 
         if ($req->phone !='') {
             $cus = $cus->where('phone', 'like', '%'. $req->phone .'%');
@@ -96,7 +101,14 @@ class CustomerController extends Controller
 
     public function export(Request $req) 
     {
-        
         return Excel::download(new CustomerExport($req), "customer.xlsx");
+    }
+
+    public function exportPDF(Request $req) 
+    {
+        $cus = Customer::all();
+
+        $pdf = PDF::loadView('list_customer', $cus);
+        return $pdf->download('DanhMucSanPham.pdf');
     }
 }

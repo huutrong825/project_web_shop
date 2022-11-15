@@ -172,6 +172,7 @@ Route::group(
                 Route::put('/update/{id}', ['uses'=>'CustomerController@updateCus']);
 
                 Route::get('/export', ['uses'=>'CustomerController@export']);
+                Route::get('/exportPDF', ['uses'=>'CustomerController@exportPDF']);
             }
         );
         // Order
@@ -203,6 +204,8 @@ Route::group(
                 Route::get('/fetch', ['uses'=>'StatisticalController@data']);
 
                 Route::get('/order_statis', ['uses'=>'StatisticalController@order_statis']);
+
+                Route::get('/fetch_order', ['uses'=>'StatisticalController@order_product']);
 
             }
         );

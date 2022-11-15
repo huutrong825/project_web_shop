@@ -13,7 +13,7 @@
     <div class="card-body collapse" id="demo">
         <div class="table-responsive">
             <div class="input-group row">
-                <div class="input-group mb-3 col-sm-3">
+                <div class="input-group mb-3 col-sm">
                     <a class="btn btn-primary btn-icon-user bt-Add" >
                         <span class="icon text-white-50">
                             <i class="fas fa-plus"></i>
@@ -44,10 +44,10 @@
                             <option value="0">Ngưng hoạt động</option>
                         </select>
                     </div>
-                    <div class="col-sm-3">
-                        <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
-                    </div>
                 </form>
+                <div class="col-sm">
+                    <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                </div>
             </div>
         </div>
     </div>

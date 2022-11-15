@@ -24,6 +24,7 @@ $(document).ready(function (){
                 { 'data' : 'email' },
                 { 'data' : 'phone' },
                 { 'data' : 'address' },
+                { 'data' : 'num_order' },
                 { 'data' : 'action', 'orderable' : false,'searchable' : false},
             ],
             'order' : [[0, 'desc']],

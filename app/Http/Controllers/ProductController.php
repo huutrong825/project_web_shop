@@ -91,7 +91,8 @@ class ProductController extends Controller
 
     public function getIdProduct($id)
     {
-        $pro = Product::where('product_id', $id)->get();
+        $pro = Product::join('supplier', 'product.supplier_id', '=', 'supplier.id')
+            ->where('product_id', $id)->get();
         return response()->json(
             [ 
                 'state'=>200,

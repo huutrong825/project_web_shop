@@ -239,4 +239,9 @@ $(document).ready(function(){
             }
         });
     });
+
+    // $(document).on('click', '.btDropImg',function(e){
+    //     e.preventDefault();
+    //     $('#DropImage').modal('show');
+    // });
 });

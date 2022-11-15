@@ -20,19 +20,19 @@
                     <div class="col-sm">
                         <div class="input-group ">
                             <input type="text" class="form-control"
-                                name="orderday" id='orderday' placeholder="Thời gian từ" onfocus="(this.type='date')"
+                                name="fromDate" id='fromDate' placeholder="Thời gian từ" onfocus="(this.type='date')"
                                 onblur="(this.type='text')">                
                         </div> 
                     </div>
                     <div class="col-sm">
                         <div class="input-group ">
                          <input type="text" class="form-control"
-                                name="orderday" id='orderday' placeholder="Thời gian đến" onfocus="(this.type='date')"
+                                name="toDate" id='toDate' placeholder="Thời gian đến" onfocus="(this.type='date')"
                                 onblur="(this.type='text')">   
                         </div> 
                     </div>
                     <div class="col-sm">
-                        <select class="form-control filter" id="state"  >
+                        <select class="form-control filter" id="type"  >
                             <option disabled selected hidden>Chọn mốc thời gian</option>
                             <option value="dd">Theo ngày</option>
                             <option value="MM">Theo tháng</option>
@@ -55,8 +55,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Doanh thu bán</div>
-                        <div class="h5 mb-0 font-weight-bold text-800" id='sum_total'></div>
+                            Tổng đơn hàng</div>
+                        <div class="h5 mb-0 font-weight-bold text-800" id='sum_order'></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-300"></i>
@@ -72,11 +72,11 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Số lượng đã bán
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng sản phẩm bán ra
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-800" id='sum_sale'></div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-800" id='sum_prod'></div>
                             </div>
                         </div>
                     </div>
@@ -94,11 +94,11 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Số đơn hàng
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Số sản phẩm có đơn hàng
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-800" id='sum_order'></div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-800" id='num_prod'></div>
                             </div>
                         </div>
                     </div>
@@ -130,89 +130,18 @@
     
 </div>
 
-<div class="row">
-
-    <!-- Earnings (Annual) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Phí chi</div>
-                        <div class="h5 mb-0 font-weight-bold text-800">$215,000</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Earnings (Annual) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Số lượng nhập</div>
-                        <div class="h5 mb-0 font-weight-bold text-800">$215,000</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-cart-plus fa-2x text-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-     <!-- Pending Requests Card Example -->
-     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Đơn hàng hoàn thành</div>
-                        <div class="h5 mb-0 font-weight-bold text-800" id='complete_order'></div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-check-circle fa-2x text-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Hàng trong kho</div>
-                        <div class="h5 mb-0 font-weight-bold text-800" id='quanity'></div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-boxes fa-2x text-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="card shadow mb-4">
     <a href="#collapseChart" class="d-block card-header py-3" data-toggle="collapse"
         role="button" aria-expanded="true" aria-controls="collapseCardExample">
-        <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Thống kê trạng thái đơn hàng</h6>
     </a>
-    <div class="collapse show" id="collapseChart" width="400px" height="100px">
-        <div class="card-body">
-            <div class="chart-area" width="400px" height="100px">
-                <canvas id="popalChart"  width="400px" height="100px"></canvas>
+    <div class="collapse show" id="collapseChart">
+        <div class="card-body" style='float:left'>
+            <div class="chart-area">
+                <canvas id="doughnutChart" style=" height:240px !important; width:380px !important;"></canvas>
             </div>
+        </div>
+        <div style='float:right'>
         </div>
     </div>
 </div>
@@ -227,14 +156,13 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}"></script>
 
-<script src="{{asset('js/ajax/overview.js')}}"></script>
 
-    
-    
+<!-- Page level custom scripts -->
+<script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{asset('js\ajax\ajax_order_sta.js')}}"></script> 
+    
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 

@@ -97,7 +97,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Phí chi</div>
-                        <div class="h5 mb-0 font-weight-bold text-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-800" id='fee_add'></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-300"></i>
@@ -114,7 +114,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Số lượng nhập</div>
-                        <div class="h5 mb-0 font-weight-bold text-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-800" id='product_add'></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-cart-plus fa-2x text-300"></i>
@@ -163,12 +163,12 @@
 <div class="card shadow mb-4">
     <a href="#collapseChart" class="d-block card-header py-3" data-toggle="collapse"
         role="button" aria-expanded="true" aria-controls="collapseCardExample">
-        <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Thống kê nhập hàng</h6>
     </a>
     <div class="collapse show" id="collapseChart">
         <div class="card-body">
             <div class="chart-area">
-                {!! $myChart->container() !!}
+            <canvas id="myChart1" style=" height:240px !important; width:380px !important;"></canvas>
             </div>
         </div>
     </div>
@@ -177,12 +177,12 @@
 <div class="card shadow mb-4">
     <a href="#collapseChart1" class="d-block card-header py-3" data-toggle="collapse"
         role="button" aria-expanded="true" aria-controls="collapseCardExample">
-        <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Thống kê bán hàng</h6>
     </a>
     <div class="collapse show" id="collapseChart1">
         <div class="card-body">
             <div class="chart-area">
-                <canvas id="myChart"></canvas>
+                <canvas id="myChart" style=" height:240px !important; width:380px !important;"></canvas>
             </div>
         </div>
     </div>
