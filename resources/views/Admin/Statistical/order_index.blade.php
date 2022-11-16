@@ -2,11 +2,12 @@
 @section('css')
     <!-- Custom styles for this page -->
     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 @endsection
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 style="float:left"  class="m-0 font-weight-bold text-primary">Thao tác</h6>
+        <h3 style="float:left"  class="m-0 font-weight-bold text-primary">Thống kê đơn hàng</h3>
         <a style="float:right" class="text-success" data-toggle="collapse" data-target="#demo"><i class="fas fa-plus"></i></a>
     </div>
     <div class="card-body collapse" id="demo">
@@ -15,8 +16,7 @@
                 <div class="input-group mb-3 col-sm-3">
                     
                 </div>
-                <form class="row" id="formSearch" method='post'>
-                    @csrf
+                <form class="row" id="formSearch" >
                     <div class="col-sm">
                         <div class="input-group ">
                             <input type="text" class="form-control"
@@ -136,14 +136,52 @@
         <h6 class="m-0 font-weight-bold text-primary">Thống kê trạng thái đơn hàng</h6>
     </a>
     <div class="collapse show" id="collapseChart">
-        <div class="card-body" style='float:left'>
+        <div class="card-body">
             <div class="chart-area">
                 <canvas id="doughnutChart" style=" height:240px !important; width:380px !important;"></canvas>
             </div>
         </div>
-        <div style='float:right'>
+        <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home">Đơn đã tiếp nhận</a></li>
+            <li><a data-toggle="tab" href="#menu1">Đơn đang vận chuyển</a></li>
+            <li><a data-toggle="tab" href="#menu2">Đơn đã hoàn thành</a></li>
+            <li><a data-toggle="tab" href="#menu3">Đơn đã hủy</a></li>
+        </ul>
+
+        <div class>
+            <div id="home" class="tab-pane fade in active">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="myTable" width="100%">
+                        <thead>
+                            <tr>
+                                <th >STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Thành tiền</th>
+                                <th>Số lượng bán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="menu1" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+            <h3>Menu 2</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+            </div>
+            <div id="menu3" class="tab-pane fade">
+            <h3>Menu 3</h3>
+            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
         </div>
     </div>
+    </div>
+    
 </div>
 
 

@@ -26,91 +26,173 @@ return s.join(dec);
 
 $(document).ready(function(){
 
-   
+    const data = {
+        labels: [],
+        datasets: [{
+            type: 'line',
+            label: 'Tiền đơn hàng',
+            backgroundColor: 'rgb(117, 176, 235,0.5)',
+            borderColor: 'rgb(117, 176, 245)',
+            tension: 0.4 ,
+            data: [],
+        }],
+    };
+    const config = {
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
 
-    $.ajax({
-        url: '/admin/statistical/fetch',
-        type: 'get',
-        success: function(response){
-            $('#sum_total').html(number_format(response.array.sum_total, 2, ',', ' '));
-            $('#sum_sale').html(response.array.sum_sale);
-            $('#sum_order').html(response.array.sum_order);
-            $('#complete_order').html(response.array.complete_order);
-            $('#cancel_order').html(response.array.cancel_order);
-            $('#quanity').html(number_format(response.array.store, 0, ',', ' '));
-            $('#fee_add').html(number_format(response.array.fee_add, 2, ',', ' '));
-            $('#product_add').html(number_format(response.array.product_add, 0, ',', ' '));
 
+    const data1 = {
+        labels: [],
+        datasets: [
+            {
+                type: 'line',
+                label: 'Giá nhập',
+                data: [],
+                backgroundColor: ['rgb(255, 0, 0, 0.5)'],
+                borderColor:['rgb(255, 0, 0, 0.5)'],
+                tension: 0.4               
+            },
+            {
+                type: 'bar',
+                label: 'Sô lượng nhập',
+                data: [],
+                backgroundColor: ['rgba(75, 192, 192,0.5)'],
+                borderColor: ['rgb(75, 192, 192, 0.6)'],
+                tension: 0.4,
+                yAxisID: 'percentage'
+            },
             
-            const data = {
-                labels: response.date,
-                datasets: [{
-                    type: 'line',
-                    label: 'Tiền đơn hàng',
-                    backgroundColor: 'rgb(117, 176, 235)',
-                    borderColor: 'rgb(117, 176, 245)',
-                    data: response.data,
-                }],
-            };
-            const config = {
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+        ]
+        };
+        const config1 = {
+            data: data1,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Số lượng nhập'
                         }
-                    }
-                }
-            };
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-                config
-            );
-        
-            const data1 = {
-                labels: response.date_add,
-                datasets: [
-                    {
-                        type: 'line',
-                        label: 'Sô lượng nhập',
-                        data: response.sum_quanity,
-                        backgroundColor: ['rgba(75, 192, 192, 0.2)'],
-                        borderColor: ['rgb(75, 192, 192)'],
-                        borderWidth: 1
                     },
-                    {
-                        type: 'line',
-                        label: 'Giá nhập',
-                        data: response.sum_price,
-                        backgroundColor: ['rgb(255, 205, 86)'],
-                        borderColor:['rgb(255, 205, 80, 0.5)'],
-                        
-                    }
-                ]
-                };
-                const config1 = {
-                data: data1,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                          beginAtZero: true
-                        },
-                    }
-                }
-                };
-        
-                const popalChart = new Chart(
-                document.getElementById('myChart1'),
-                config1
-                );
-            
-        },
+                    percentage: {
+                        // beginAtZero: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Giá nhập'
+                        }
+                    },
+                    
+                    
+            }
+        }
+        };
 
-    });
+        const myChart1 = new Chart(
+        document.getElementById('myChart1'),
+        config1
+        );
+    
+
+    fetch();
+    function fetch(time){
+        $.ajax({
+            data: {'time': time},
+            url: '/admin/statistical/fetch',
+            type: 'get',
+            data : function(d)
+            {
+                d.time = $('#time-filter').val();
+            },
+            success: function(response){
+                $('#sum_total').html(number_format(response.array.sum_total, 2, ',', ' '));
+                $('#sum_sale').html(response.array.sum_sale);
+                $('#sum_order').html(response.array.sum_order);
+                $('#complete_order').html(response.array.complete_order);
+                $('#cancel_order').html(response.array.cancel_order);
+                $('#quanity').html(number_format(response.array.store, 0, ',', ' '));
+                $('#fee_add').html(number_format(response.array.fee_add, 2, ',', ' '));
+                $('#product_add').html(number_format(response.array.product_add, 0, ',', ' ')); 
+                
+                
+                myChart.data.datasets[0].data = response.data;
+                myChart.data.labels = response.date;
+                myChart.update();
+
+                
+                myChart1.data.datasets[0].data = response.sum_quanity;
+                myChart1.data.datasets[1].data = response.sum_price;
+                myChart1.data.labels = response.date_add;
+                myChart1.update();
+
+                
+            },
+
+        });
+        $('#time-filter').on('change', function(e){
+            e.preventDefault();
+            var time = $(this).val();
+            $.ajax({
+                data: {'time': time},
+                url: '/admin/statistical/fetch',
+                type: 'get',
+                data : {'time': time},
+                success: function(response){
+                    $('#sum_total').html(number_format(response.array.sum_total, 2, ',', ' '));
+                    $('#sum_sale').html(response.array.sum_sale);
+                    $('#sum_order').html(response.array.sum_order);
+                    $('#complete_order').html(response.array.complete_order);
+                    $('#cancel_order').html(response.array.cancel_order);
+                    $('#quanity').html(number_format(response.array.store, 0, ',', ' '));
+                    $('#fee_add').html(number_format(response.array.fee_add, 2, ',', ' '));
+                    $('#product_add').html(number_format(response.array.product_add, 0, ',', ' '));
+                    
+                    myChart.data.datasets[0].data = response.data;
+                    myChart.data.labels = response.date;
+                    myChart.update();
+    
+                    myChart1.data.datasets[0].data = response.sum_quanity;
+                    myChart1.data.datasets[1].data = response.sum_price;
+                    myChart1.data.labels = response.date_add;
+                    myChart1.update();
+                    
+                
+                },
+            });
+        });
+    }
+
+    // $(document).on('change', '#time-filter', function(e){
+    //     e.preventDefault();
+    //     var time = $(this).val();
+    //     console.log(time);
+    //     $.ajax({
+    //         url: '/admin/statistical/carbon',
+    //         type: 'get',
+    //         data: {'time': time},
+    //         success: function(response){
+    //             console.log(response);
+    //         }
+
+    //     });
+    // })
    
 });
 

@@ -207,6 +207,8 @@ Route::group(
 
                 Route::get('/fetch_order', ['uses'=>'StatisticalController@order_product']);
 
+                Route::get('/carbon', ['uses'=>'StatisticalController@carbon']);
+
             }
         );
     }

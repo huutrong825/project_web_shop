@@ -4,6 +4,19 @@
     <link href="{{asset('vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 @endsection
 @section('content')
+   
+<div class="card shadow mb-4 raw">
+    <div class="card-header py-3">
+        <h2 style="float:left"  class="m-0 font-weight-bold text-primary">Thống kê tổng quan</h2>
+        <select style="float:right; text-align:center" class="form-control-sm col-sm-3" id="time-filter"  >
+            <option >---- Chọn ----</option>
+            <option value="7ngay">Dữ liệu 7 ngày</option>
+            <option value="thangtruoc">Dữ liệu tháng trước</option>
+            <option value="365ngay">Dữ liệu 1 năm</option>
+        </select>
+    </div>
+</div>
+
 <div class="row">
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
