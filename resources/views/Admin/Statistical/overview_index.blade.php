@@ -7,7 +7,7 @@
    
 <div class="card shadow mb-4 raw">
     <div class="card-header py-3">
-        <h2 style="float:left"  class="m-0 font-weight-bold text-primary">Thống kê tổng quan</h2>
+        <h4 style="float:left"  class="m-0 font-weight-bold text-primary">Thống kê tổng quan</h4>
         <select style="float:right; text-align:center" class="form-control-sm col-sm-3" id="time-filter"  >
             <option >---- Chọn ----</option>
             <option value="7ngay">Dữ liệu 7 ngày</option>

@@ -30,8 +30,7 @@
                         </div>                       
                     </div>
                     <div class="col-sm">
-                        <div class="input-group ">
-                            
+                        <div class="input-group ">                            
                             <input type="text" class="form-control" id='price_from' name="price_from" placeholder="Giá bán từ">                
                         </div> 
                     </div>
@@ -219,7 +218,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nhắc nhở</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

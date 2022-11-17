@@ -29,7 +29,7 @@ class SupplierController extends Controller
      */
     public function getSupplier(Request $req)
     {
-        $supp = DB::table('supplier');
+        $supp = DB::table('supplier')->where('deleted_at', null);
 
         if ($req->phone !='') {
             $supp = $supp->where('phone', 'like', '%'. $req->phone .'%');

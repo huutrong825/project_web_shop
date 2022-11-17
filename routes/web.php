@@ -34,6 +34,7 @@ Route::group(
 
         Route::get('/profile', ['uses'=>'AuthController@getProfile']);
         Route::post('/profile', ['uses'=>'AuthController@updateProfile']);
+        Route::post('/profile/changepass', ['uses'=>'AuthController@changePass']);
 
         Route::get('/logout', ['uses'=>'AuthController@getLogout']);
         //User
@@ -207,8 +208,9 @@ Route::group(
 
                 Route::get('/fetch_order', ['uses'=>'StatisticalController@order_product']);
 
-                Route::get('/carbon', ['uses'=>'StatisticalController@carbon']);
+                Route::get('/datatable', ['uses'=>'StatisticalController@datatable']);
 
+                Route::get('/export', ['uses'=>'StatisticalController@exportXLS']);
             }
         );
     }

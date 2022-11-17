@@ -131,6 +131,7 @@ $(document).ready(function(){
             }
         });
     });
+    //validate
     $(document).ready(function(){
         $('#formUpdate').validate({
             'rules' :{

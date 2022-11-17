@@ -106,9 +106,9 @@ class CustomerController extends Controller
 
     public function exportPDF(Request $req) 
     {
-        $cus = Customer::all();
+        // $cus = Customer::all();
 
-        $pdf = PDF::loadView('list_customer', $cus);
+        $pdf = PDF::loadView('Admin.Customer.list_customer');
         return $pdf->download('DanhMucSanPham.pdf');
     }
 }

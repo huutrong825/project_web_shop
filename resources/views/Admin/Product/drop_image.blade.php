@@ -19,16 +19,14 @@
             </form>
             <br />
             <br />
-            <div style="align:center" >
-                <a  class="btn btn-primary btn-sm" id="btDrop" title="Click to drop"><i class="fas fa-cloud-upload"></i>Xác nhận</a>
-            </div>
+            
             <br />
+            <lable>Ảnh load</lable>
             <div class="dropzone" id="preview"></div>
             <br />
         </div>
-        <div style="align:center" >
+            <a  class="btn btn-primary btn-sm" id="btDrop" title="Click to drop"><i class="fas fa-cloud-upload"></i>Xác nhận</a>
             <a href='/admin/product' class="btn btn-danger btn-sm"  title="Click to back"><i class="fas fa-cloud-upload"></i>Trở lại</a>
-        </div>
     </div>
     
 </div>

@@ -85,6 +85,17 @@ class AuthController extends Controller
         $img_name = '';
         
         if ($req->file('avatar')) {
+
+            $this->validate(
+                $req, 
+                [
+                    'avatar' => 'mimes:jpg,jpeg,png,gif'
+                ],
+                [
+                    
+                    'avatar.mimes' => 'Chỉ chấp nhận hình thẻ với đuôi .jpg .jpeg .png .gif',
+                ]
+            );
             if ($req->file('avatar')->isValid()) {
                 $img = $req->avatar;
                 $img_name = $img->getClientOriginalName();
@@ -125,7 +136,6 @@ class AuthController extends Controller
                         'birth' => $req->birth,
                         'address' => $req->address,
                         'avatar' => $img_name,
-                        'password' => Hash::make($req->repass)
                     ]
                 );
             } else {
@@ -136,11 +146,38 @@ class AuthController extends Controller
                         'phone' => $req->phone,
                         'birth' => $req->birth,
                         'address' => $req->address,
-                        'password' => Hash::make($req->repass)
                     ]
                 );
             }
         }
         return back()->with('thongbao', 'Cập nhật thành công');
+    }
+
+    public function changePass(Request $req)
+    {
+               
+        if (Auth::attempt(['email'=>$req->mail, 'password'=>$req->password])) {
+            if ($req->newpass == $req->repass) {
+                
+                Auth::user()->update(
+                    [
+                        'password' => Hash::make($req->repass)
+                    ]
+                );
+            }
+            return response()->json(
+                [
+                    'state' => 200,
+                    'messages' => 'Lưu thành công'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'state' => 402,
+                    'messages' => 'Mật khẩu sai'
+                ]
+            );
+        }
     }
 }

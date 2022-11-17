@@ -11,6 +11,8 @@ use App\Models\Order;
 use App\Models\Order_Detail;
 use App\Charts\MyChart;
 use Carbon\Carbon;
+use App\Exports\ProductSaleExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StatisticalController extends Controller
 {
@@ -223,17 +225,13 @@ class StatisticalController extends Controller
         $sum_quanity[] = null;
         $sum_price[] = null;
 
-        if ($prod != null) {
-            foreach ($prod as $p) {
-                $date_add[] = $p->date_add;
-                $sum_quanity[] = $p->quanity;
-                $sum_price[] = $p->sum_price;
-            }
-        } else {
-            $date_add[] = '';
-            $sum_quanity[] = '';
-            $sum_price[] = '';
+       
+        foreach ($prod as $p) {
+            $date_add[] = $p->date_add;
+            $sum_quanity[] = $p->quanity;
+            $sum_price[] = $p->sum_price;
         }
+       
 
         return response()->json(
             [
@@ -258,7 +256,7 @@ class StatisticalController extends Controller
         $startOfMonth = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()
             ->toDateString();
 
-        $sum_order = Order::whereBetween('order_date', [$startOfMonth, $now])->sum('order_id');
+        $sum_order = Order::whereBetween('order_date', [$startOfMonth, $now])->count('order_id');
 
         $sum_prod = Order_Detail::rightJoin('order', 'order.order_id', '=', 'order_detail.order_id')
             ->whereBetween('order_date', [$startOfMonth, $now])    //số luongj bán
@@ -274,12 +272,12 @@ class StatisticalController extends Controller
             ->selectRaw(
                 'count(order_id) as count,
                 state_name,
-                order_state.id'
-            )->groupBy('state_name', 'order_state.id')->orderBy('order_state.id')->get();
+                state'
+            )->groupBy('state_name', 'state')->orderBy('state')->get();
 
         if ($req->fromDate != '' && $req->toDate != '') {
 
-            $sum_order = Order::whereBetween('order_date', [$req->fromDate, $req->toDate])->sum('order_id');
+            $sum_order = Order::whereBetween('order_date', [$req->fromDate, $req->toDate])->count('order_id');
 
             $sum_prod = Order_Detail::rightJoin('order', 'order.order_id', '=', 'order_detail.order_id')
                 ->whereBetween('order_date', [$req->fromDate, $req->toDate])    //số luongj bán
@@ -294,8 +292,8 @@ class StatisticalController extends Controller
                 ->selectRaw(
                     'count(order_id) as count,
                     state_name,
-                    order_state.id'
-                )->groupBy('state_name', 'order_state.id')->orderBy('order_state.id')->get();
+                    state'
+                )->groupBy('state_name', 'state')->orderBy('state')->get();
         }
         
         $data_order = [
@@ -320,14 +318,36 @@ class StatisticalController extends Controller
 
     public function datatable(Request $req)
     {
-        $pro = Product::join('order_detail', 'product.product_id', '=', 'order_detail'.'product_id')->
-        selectRaw(
-            'product.product_id,
-            product_name,
-            sum(quanoity_order * price),
-            quanity'
-        )->groupBy('product.product_id')->get();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        $startOfMonth = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()
+            ->toDateString();
+
+        $pro = Product::join('order_detail', 'product.product_id', '=', 'order_detail.product_id')->
+        join('order', 'order.order_id', '=', 'order_detail.order_id')
+            ->where('order.state', 5)            
+            ->selectRaw(
+                'product_name,
+                sum(quanity_order * price) as money,
+                sum(quanity_order) as quanity_order,
+                count(order_detail.order_id) as num_order'
+            )->groupBy('product_name');
+
+        if ($req->fromDate != '' && $req->toDate != '') {
+            $pro = $pro->whereBetween('order_date', [$req->fromDate, $req->toDate]);
+        } else {
+            $pro = $pro->whereBetween('order_date', [$startOfMonth, $now]);
+        }
+
+        $pro->get();
+
+
 
         return Datatables::of($pro)->make(true);
+    }
+
+    public function exportXLS(Request $req)
+    {
+        $type = '.xls';
+        return Excel::download(new ProductSaleExport($req), "Product_sale". $type);
     }
 }

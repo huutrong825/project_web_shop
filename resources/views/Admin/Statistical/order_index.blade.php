@@ -7,7 +7,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h3 style="float:left"  class="m-0 font-weight-bold text-primary">Thống kê đơn hàng</h3>
+        <h4 style="float:left"  class="m-0 font-weight-bold text-primary">Thống kê đơn hàng</h4>
         <a style="float:right" class="text-success" data-toggle="collapse" data-target="#demo"><i class="fas fa-plus"></i></a>
     </div>
     <div class="card-body collapse" id="demo">
@@ -31,22 +31,25 @@
                                 onblur="(this.type='text')">   
                         </div> 
                     </div>
-                    <div class="col-sm">
+                    <!-- <div class="col-sm">
                         <select class="form-control filter" id="type"  >
                             <option disabled selected hidden>Chọn mốc thời gian</option>
                             <option value="dd">Theo ngày</option>
                             <option value="MM">Theo tháng</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class=" col-sm-3">
-                    <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
-                </div>
+                        <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                    </div>
                 </form>
+                <div class=" col-sm-3">
+                    <a class="btn btn-success" type="reset" id='btPDF' title="PDF"><i class="fas fa-cloud-download-alt"></i>PDF</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<div  id='detailPDF'>
 <div class="row">
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -111,7 +114,7 @@
     </div>
 
    <!-- Earnings (Monthly) Card Example -->
-   <div class="col-xl-3 col-md-6 mb-4">
+   <!-- <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-danger shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -126,7 +129,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     
 </div>
 
@@ -142,46 +145,27 @@
             </div>
         </div>
         <div class="container">
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#home">Đơn đã tiếp nhận</a></li>
-            <li><a data-toggle="tab" href="#menu1">Đơn đang vận chuyển</a></li>
-            <li><a data-toggle="tab" href="#menu2">Đơn đã hoàn thành</a></li>
-            <li><a data-toggle="tab" href="#menu3">Đơn đã hủy</a></li>
-        </ul>
-
-        <div class>
-            <div id="home" class="tab-pane fade in active">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="myTable" width="100%">
-                        <thead>
-                            <tr>
-                                <th >STT</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Thành tiền</th>
-                                <th>Số lượng bán</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-            <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-            </div>
-            <div id="menu3" class="tab-pane fade">
-            <h3>Menu 3</h3>
-            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="myTable" width="100%">
+                    <thead> 
+                        <a class="btn bt-success dropdown-item col-sm" id="exportExcel">
+                            <i class="fas fa-cloud-download-alt"> Truy xuất</i>
+                        </a>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Doanh thu bán được</th>
+                            <th>Số lượng bán</th>
+                            <th>Số đơn hàng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    </div>
     
+</div>
 </div>
 
 
@@ -203,5 +187,7 @@
     
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 @endsection

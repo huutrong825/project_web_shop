@@ -77,4 +77,77 @@ $(document).ready(function() {
             }
         });   
     });
+
+    fetch_datatable();
+
+    function fetch_datatable()
+    {
+        $('#myTable').DataTable({
+            'processing' : true,
+            'serverSide' : true,
+            'ajax':
+            {
+                url : '/admin/statistical/datatable',
+                data : function (d){
+                    d.fromDate = $('#fromDate').val();
+                    d.toDate = $('#toDate').val();
+                },
+                
+            },
+            'columns':[
+                { 'data' : 'product_name' },
+                { 'data' : 'money' },
+                { 'data' : 'quanity_order' },
+                { 'data' : 'num_order'}
+            ],
+            'order' : [[1, 'desc']],
+            'searching':false,
+            'paging': false,
+            'info' :false
+        });   
+        $('#formSearch').on('keyup change' ,function(e) {
+            $('#myTable').DataTable().draw();
+            e.preventDefault();
+        });
+    }
+
+    $('#exportExcel').on('click', function(e){
+        e.preventDefault();
+
+        var fromDate = $('#fromDate').val();
+        var toDate = $('#toDate').val();
+
+        var data;
+
+        if (fromDate!= '' || toDate != '' ) {
+           data = {
+                toDate : toDate,
+                fromDate : fromDate,
+            }
+        }
+
+        window.location = '/admin/statistical/export?' + $.param(data);
+    });
+
+    $(document).on('click', '#btPDF', function(){
+        html2canvas($('#detailPDF')[0],{
+            onrendered: function(canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500,
+                    }]
+                };
+                var number = 1 + Math.floor(Math.random() * 6);
+                $name = 'detail_order' + number + '.pdf';
+                pdfMake.createPdf(docDefinition).download($);
+            }
+        });
+    });
+
+    $(document).on('click','#btReset' ,function() {
+        $('#fromDate').val('');
+        $('#toDate').val('');
+    });
 });

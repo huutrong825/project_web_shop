@@ -21,6 +21,7 @@ class ProductController extends Controller
         
         $p = DB::table('product')
             ->join('supplier', 'product.supplier_id', '=', 'supplier.id')
+            ->where('product.deleted_at', null)
             ->select(
                 'product_id', 
                 'product_name',
