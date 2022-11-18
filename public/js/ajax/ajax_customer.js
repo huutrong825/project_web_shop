@@ -45,56 +45,56 @@ $(document).ready(function (){
         fetch_customer();
     });
 
-    $(document).on('click', '.bt-Add',function(e)
-    {
-        e.preventDefault();
-        $('#AddModal').modal('show');
-    });
+    // $(document).on('click', '.bt-Add',function(e)
+    // {
+    //     e.preventDefault();
+    //     $('#AddModal').modal('show');
+    // });
 
-    $('#addForm').validate({
-        rules :
-        {
-            'name' : 'required',
-            'email' : 'required',
-            'address' : 'required',
-            'phone' : 'required'
-        },
-        messages:
-        {
-            'name' : 'Tên không được trống',
-            'email' : 'Email không được trống',
-            'address' : 'Địa chỉ không được trống',
-            'phone' : 'Số điện thoại không được trống'
-        }
-    });
+    // $('#addForm').validate({
+    //     rules :
+    //     {
+    //         'name' : 'required',
+    //         'email' : 'required',
+    //         'address' : 'required',
+    //         'phone' : 'required'
+    //     },
+    //     messages:
+    //     {
+    //         'name' : 'Tên không được trống',
+    //         'email' : 'Email không được trống',
+    //         'address' : 'Địa chỉ không được trống',
+    //         'phone' : 'Số điện thoại không được trống'
+    //     }
+    // });
 
-    $(document).on('click', '.btSubmitAdd',function(e)
-    {
-        e.preventDefault();
-        $('#addForm').submit();
-        $.ajax({
-            url : '/admin/customer/add',
-            type : 'post',
-            data : new FormData($('#addForm')[0]),
-            contentType: false,
-            processData: false,
-            dataType : 'json',
-            headers : {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response)
-            {  
-                $('#AddModal').modal('hide');
-                $('#AddModal').reset();
-                $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(8000);
-            },
-            error: function (err)
-            {
-                $('#addForm').validate().messages;
-            }
-        });
-    });
+    // $(document).on('click', '.btSubmitAdd',function(e)
+    // {
+    //     e.preventDefault();
+    //     $('#addForm').submit();
+    //     $.ajax({
+    //         url : '/admin/customer/add',
+    //         type : 'post',
+    //         data : new FormData($('#addForm')[0]),
+    //         contentType: false,
+    //         processData: false,
+    //         dataType : 'json',
+    //         headers : {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         },
+    //         success:function(response)
+    //         {  
+    //             $('#AddModal').modal('hide');
+    //             $('#AddModal').reset();
+    //             $('#myTable').DataTable().ajax.reload();
+    //             $('.alert-success').hide(8000);
+    //         },
+    //         error: function (err)
+    //         {
+    //             $('#addForm').validate().messages;
+    //         }
+    //     });
+    // });
 
     $(document).on('click', '.bt-Update', function(e){
         e.preventDefault();

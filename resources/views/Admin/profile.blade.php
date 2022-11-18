@@ -113,9 +113,8 @@
 
 @section('script')
 
+<script src="{{asset('js\crop_image\cropzee.js')}}"></script>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script> -->
 <script src="{{asset('js\ajax\upload_avatar.js')}}"></script>
 <script src="{{asset('js\ajax\ajax_password.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>

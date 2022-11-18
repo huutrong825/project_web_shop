@@ -58,12 +58,15 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck" name="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Ghi nhớ đăng nhập</label>
+                                                <label style="color:white" class="custom-control-label" for="customCheck">Ghi nhớ đăng nhập</label>
                                             </div>
                                         </div>
                                         <button style="text-align: center" type="submit" class="btn btn-success btn-user btn-block">Đăng nhập</button>
                                     </form>
                                     <hr>
+                                    <div class="text-center">
+                                        <a style="color:white" href="/forget-password">Quên mật khẩu?</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

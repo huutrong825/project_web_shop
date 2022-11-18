@@ -10872,6 +10872,14 @@ a:focus {
   background-size: cover;
 }
 
+.bg-pass-image {
+  background: url("https://media.kasperskydaily.com/wp-content/uploads/sites/92/2015/12/06023401/passwords-10x10-featured.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.bg-pass{
+  background-color: #3d396c ;
+}
 .bg-login{
   background-color:#4f81a6 ;
 }

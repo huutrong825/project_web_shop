@@ -29,6 +29,7 @@ $(document).ready(function(){
             }
         });
     });
+    
     $(document).on('click','.btsave',function(e){
         e.preventDefault();
         // $('#formpassword').submit();
@@ -54,4 +55,85 @@ $(document).ready(function(){
             },           
         });
     })
+
+    $(document).ready(function(){
+        $('#forgetForm').validate({
+            'rules' :{
+                'emailRe':'required',
+            },
+            'messages' :{
+                'emailRe': 'Email không được trống',
+            }
+        });
+    });
+
+    $(document).on('click','.btResetPass', function(e){
+        e.preventDefault();
+        var data = { 'email': $('#emailRe').val() }
+        $('#forgetForm').submit();
+        $.ajax({
+            url: '/forget-password',
+            type: 'post',
+            data: data,
+            dataType:'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response){
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.message);
+            }
+
+        });
+    });
+
+    $(document).ready(function(){
+        $('#resetForm').validate({
+            'rules' :{
+                'newpass' : {
+                    'required' : true,
+                    'minlength' : 6,
+                },
+                'repass' : {
+                    'required' : true,
+                    'equalTo' : '#newpass',
+                },
+            },
+            'messages' :{
+                'newpass' : {
+                    'required' : 'Mật khẩu không được trống',
+                    'minlength' : 'Không nhỏ hơn 6 ký tự'
+                },
+                'repass': {
+                    'required' : 'Mật khẩu không được trống',
+                   'equalTo' : 'Mật khẩu nhập lại không đúng'
+                },
+            }
+        });
+    });
+
+    $(document).on('click','.btResetNew', function(e){
+        e.preventDefault(); 
+        var token = $('#token').val();
+        $('#resetForm').submit();       
+        $.ajax({
+            url: '/reset-password/' + token,
+            type: 'post',
+            data: new FormData($('#resetForm')[0]),
+            contentType: false,
+            processData: false,
+            dataType : 'json',
+            headers : {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response){
+                $("#login").css('display','block');
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.message);
+                $("#resetForm").hide();
+                
+            }
+
+        });
+    });
 });

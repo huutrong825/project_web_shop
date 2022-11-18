@@ -44,6 +44,81 @@ $(document).ready(function(){
         fetch_product();
     });
 
+    $(document).on('click', '.btAdd',function(e)
+    {
+        e.preventDefault();
+        $('#AddProd').modal('show');
+    });
+
+    $('#formadd').validate({
+        rules :
+        {
+            'txtname' : 'required',
+            'category' : 'required',
+            'suppl' : 'required',
+            'quanity' : {
+                'required': true,
+                'number' : true
+            },
+            'price' : {
+                'required': true,
+                'number': true
+            },
+            'units' : 'required',
+            'image' : {
+                'required': true,
+                'extension' : "jpg|jpeg|png|ico|bmp",
+            }
+        },
+        messages:
+        {
+            'txtname' : 'Nhập tên sản phẩm',
+            'category' : 'Chọn loại hàng',
+            'suppl' : 'Chọn nhà cung ứng',
+            'quanity' : {
+                'required' : 'Nhập số lượng',
+                'number' : 'Ký tự không phù hợp'
+              },
+            'price' : {
+                'required' : 'Nhập giá sản phẩm',
+                'number' : 'Ký tự không phù hợp'
+              },
+            'units' : 'Chọn đơn vị',
+            'image' : {
+                'required': 'Chọn ảnh',
+                'extension' : 'File không phù hợp'
+            }
+            
+        }
+    });
+    // thêm product
+    $(document).on('click', '.btAddProd',function(e) {
+        e.preventDefault();
+        $('#formadd').submit();
+        $.ajax({
+            url : '/admin/product/add',
+            type : 'post',
+            data : new FormData($('#formadd')[0]),
+            contentType: false,
+            processData: false,
+            dataType : 'json',
+            headers : {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response)
+            {  
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.messages);
+                $('#AddProd').modal('hide');
+                $('#myTable').DataTable().ajax.reload();
+            },
+            error: function (err)
+            {
+                alert('lỗi');
+            }
+        });
+    });
+
     // thông báo khóa
     $(document).on('click', '.btBlock',function(e)
     {
@@ -78,6 +153,7 @@ $(document).ready(function(){
             {      
                 $(".alert-success").css('display','block');
                 $('.alert-success').html(response.messages);
+                $('.alert-success').hide(3000);
                 $('#BlockPro').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
             },
@@ -241,8 +317,57 @@ $(document).ready(function(){
         });
     });
 
-    // $(document).on('click', '.btDropImg',function(e){
-    //     e.preventDefault();
-    //     $('#DropImage').modal('show');
-    // });
+    $(document).on('click', '.btAddQua',function(e)
+    {
+        e.preventDefault();
+        var _id = $(this).attr('value');
+        $('#UpQuanity').modal('show');
+        $.ajax({
+            type : 'get',
+            url : '/admin/product/getId/' + _id,
+            success : function(response){
+                $.each(response.pro, function(key, item){
+                    $('#idUp').val(item.product_id)
+                    $('#nameProd').val(item.product_name);
+                    $('#quani').val(item.quanity);
+                });
+            },
+            error: function(err)
+            {
+                alert('Lỗi');
+            }
+        });
+        
+    });
+
+    $(document).on('click', '.btUpdateQua',function(e)
+    {
+        e.preventDefault();
+        var id = $('#idUp').val();
+        var data = {
+            'quanityAdd' : $('#quaniAdd').val()
+        }
+        $.ajax({
+            url:'/admin/product/updateQuanity/' + id,
+            type:"put",
+            data: data,
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response)
+            {      
+                $(".alert-success").css('display','block');
+                $('.alert-success').html(response.messages);
+                $('.alert-success').hide(3000);
+                $('#UpQuanity').modal('hide');
+                $('#myTable').DataTable().ajax.reload();
+            },
+            error: function (err)
+            {
+                 alert('Lỗi');
+            }
+        });
+    });
+    
 });

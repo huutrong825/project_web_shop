@@ -51,23 +51,23 @@ class CustomerController extends Controller
         ->make(true);
     }
 
-    public function addCus(Request $req)
-    {
-        Customer::create(
-            [
-                'customer_name' => $req->name,
-                'email' => $req->email,
-                'phone' => $req->phone,
-                'address' => $req->address
-            ]
-        );
-        return response()->json(
-            [
-                'state' => 200,
-                'messages' => 'Thêm thành công'
-            ]
-        );
-    }
+    // public function addCus(Request $req)
+    // {
+    //     Customer::create(
+    //         [
+    //             'customer_name' => $req->name,
+    //             'email' => $req->email,
+    //             'phone' => $req->phone,
+    //             'address' => $req->address
+    //         ]
+    //     );
+    //     return response()->json(
+    //         [
+    //             'state' => 200,
+    //             'messages' => 'Thêm thành công'
+    //         ]
+    //     );
+    // }
 
     public function getId($id)
     {

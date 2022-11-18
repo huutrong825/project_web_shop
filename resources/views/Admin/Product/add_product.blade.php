@@ -8,7 +8,6 @@
 <div class="text-center">
 <h1 class="h4 text-gray-900 mb-4">Thêm sản phẩm mới</h1>
 </div>
-<div class="modal-body">
 <form class="user" id='formadd' method="post">
     <fieldset>
         @csrf                      

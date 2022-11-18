@@ -14,12 +14,12 @@
         <div class="table-responsive">
             <div class="input-group row">
                 <div class="input-group mb-3 col-sm-3">
-                    <a class="btn btn-primary btn-icon-user bt-Add" >
+                    <!-- <a class="btn btn-primary btn-icon-user bt-Add" >
                         <span class="icon text-white-50">
                             <i class="fas fa-plus"></i>
                         </span>
                         <span class="text">Thêm mới</span>
-                    </a>
+                    </a> -->
                 </div>
                 <form class="row" id="formSearch">
                     <div class="col-sm">
@@ -90,7 +90,7 @@
 
 
     <!-- Add Supplier Modal-->
-    <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content add-user">
@@ -136,7 +136,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Update Supplier Modal -->
     <div class="modal fade" id="UpdateModal" role="dialog" aria-labelledby="exampleModalLabel"

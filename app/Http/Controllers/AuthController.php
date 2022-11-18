@@ -32,6 +32,10 @@ class AuthController extends Controller
         } else {
             return redirect('/login')->with('thongbao', 'Email hoặc mật khẩu không đúng');
         }
+
+        if (Auth::viaRemember()) {
+            return redirect('/admin');
+        }
     }
     public function getRegister()
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Product_Add;
 use App\Models\Product_Img;
 use App\Models\Supplier;
 use Yajra\Datatables\Datatables;
@@ -71,12 +72,15 @@ class ProductController extends Controller
             )
             ->addColumn(
                 'action', function ($p ) {
-                    return '<a href="/admin/product/dropImage/'. $p->product_id .'" class="btn btn-primary btn-circle btn-sm btDropImg" >
+                    return '<a href="/admin/product/dropImage/'. $p->product_id .'" title="Thêm ảnh phụ" class="btn btn-primary btn-circle btn-sm btDropImg" >
                         <i class="fas fa-images"></i>
                     </a>
-                    <a value=" '. $p->product_id .'" class="btn btn-danger btn-circle btn-sm btDelete" >
+                    <a value=" '. $p->product_id .'" class="btn btn-primary btn-circle btn-sm btAddQua" title="Thêm số lượng">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a value=" '. $p->product_id .'" class="btn btn-danger btn-circle btn-sm btDelete" title="Xóa" >
                         <i class="fas fa-trash"></i></a>
-                    <a value=" '. $p->product_id .'" class="btn btn-warning btn-circle btn-sm btBlock">
+                    <a value=" '. $p->product_id .'" class="btn btn-warning btn-circle btn-sm btBlock" title="Khóa sản phẩm">
                         <i class="fas fa-lock"></i>
                     </a>';
                 }
@@ -85,9 +89,36 @@ class ProductController extends Controller
             ->make(true);
     }
 
-    public function addProduct()
+    public function addProduct(Request $req)
     {
-        return view('Admin.Product.add_product');
+        
+        $imageName = '';
+        if ($req->image) {
+            $imageName = $req->image->getClientOriginalName();
+            $req->image->move(public_path('img'), $imageName);
+        }
+        
+        $user = Product::create(
+            [
+                'product_name' => $req->txtname,
+                'category_id' => $req->category,
+                'quanity' => $req->quanity,
+                'unit_price' => $req->price,
+                'unit' => $req->units,
+                'description' => $req->descrip,
+                'supplier_id' => $req->suppl,
+                'image' => $imageName,
+            ]
+        );
+
+        $user->save();
+
+        return response()->json(
+            [
+                'state' => 200,
+                'messages' => 'Thêm thành công'
+            ]
+        );
     }
 
     public function getIdProduct($id)
@@ -228,6 +259,33 @@ class ProductController extends Controller
         return response()->json(
             [
                 'message' => 'Suucess'
+            ]
+        );
+    }
+
+    public function upQuanity(Request $req, $id)
+    {
+       
+        $pro = Product::where('product_id', $id)->first();
+        $pro->update(
+            [
+                'quanity' => ($pro->quanity + $req->quanityAdd),
+            ]
+        );
+
+        Product_Add::create(
+            [
+                'pro_id' => $pro->product_id,
+                'quanity_add' => $req->quanityAdd,
+                'price' => $pro->unit_price,
+                'date' => date('Y-m-d H:i:s')
+            ]
+        );
+
+        return response()->json(
+            [ 
+                'state' => 200,
+                'messages' => 'Cập nhật thành công'
             ]
         );
     }

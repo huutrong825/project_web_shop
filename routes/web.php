@@ -13,15 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/login', ['uses'=>'AuthController@getLogin']);
 Route::post('/login', ['uses'=>'AuthController@postLogin']);
 
 Route::get('/register', ['uses'=>'AuthController@getRegister']);
 Route::post('/register', ['uses'=>'AuthController@postRegister']);
+
+Route::get('/forget-password', ['uses'=>'ResetPasswordController@forget']);
+Route::post('/forget-password', ['uses'=>'ResetPasswordController@sendMail']);
+Route::get('/reset-password/{token}', ['uses'=>'ResetPasswordController@resetPage']);
+Route::post('/reset-password/{token}', ['uses'=>'ResetPasswordController@reset']);
+
+
 
 Route::group(
     ['middleware'=>'AdminLogin', 'prefix'=>'admin'], function () {
@@ -99,7 +106,7 @@ Route::group(
 
                 Route::get('/fetch', ['uses'=>'ProductController@listProduct']);
 
-                Route::get('/add', ['uses'=>'ProductController@addProduct']);
+                Route::post('/add', ['uses'=>'ProductController@addProduct']);
 
                 Route::get('/getId/{id}', ['uses'=>'ProductController@getIdProduct']);
 
@@ -108,6 +115,8 @@ Route::group(
                 Route::get('/delete/{id}', ['uses'=>'ProductController@deleteProduct']);
 
                 Route::put('/update/{id}', ['uses'=>'ProductController@updatePro']);
+                
+                Route::put('/updateQuanity/{id}', ['uses'=>'ProductController@upQuanity']);
 
                 Route::post('/loadImg/{id}', ['uses'=>'ProductController@uploadImg']);
 
@@ -166,7 +175,7 @@ Route::group(
 
                 Route::get('/fetch', ['uses'=>'CustomerController@listCus']);
 
-                Route::post('/add', ['uses'=>'CustomerController@addCus']);
+                // Route::post('/add', ['uses'=>'CustomerController@addCus']);
 
                 Route::get('/getId/{id}', ['uses'=>'CustomerController@getId']);
 
