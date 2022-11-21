@@ -2,44 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-
 use App\Http\Requests\LoginRequest;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     
     public function getLogin()
     {
-        return view('login');
+        return view('Auth.login');
     }
 
     public function postLogin(LoginRequest $req)
     {
         $remember = $req->customCheck;
-        if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password, 'is_active' => 1], $remember)) {
-            Auth::user()->update(
-                [
-                    'last_login_at' => date('Y-m-d H:i:s')
-                ]
-            );
-            return redirect('/admin');
-        } else {
-            return redirect('/login')->with('thongbao', 'Email hoặc mật khẩu không đúng');
-        }
+        try {
 
-        if (Auth::viaRemember()) {
-            return redirect('/admin');
+            if (Auth::viaRemember()) {
+                return redirect('/admin');
+            } else if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password, 'is_active' => 1], $remember)) {
+                Auth::user()->update(
+                    [
+                        'last_login_at' => date('Y-m-d H:i:s')
+                    ]
+                );
+                return redirect('/admin');
+            } else {
+                return redirect('/login')->with('error', 'Email hoặc mật khẩu không đúng');
+            }
+        } catch (Exception $e) {
+            Log::error($e);
+
         }
     }
     public function getRegister()
     {
-        return view('register');
+        return view('Auth.register');
     }
 
     public function postRegister(Request $req)

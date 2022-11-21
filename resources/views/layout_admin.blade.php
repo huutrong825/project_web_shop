@@ -79,6 +79,7 @@
                         <a class="collapse-item" href="/admin/product">Danh sách sản phẩm</a>
                         <a class="collapse-item" href="/admin/supplier">Nhà cung ứng</a>
                         <a class="collapse-item" href="/admin/category">Danh mục loại hàng</a>
+                        <a class="collapse-item" href="/admin/product/add-store">Lịch sử nhập kho</a>
                         <a class="collapse-item" href="/admin/unit">Đơn vị tính</a>
                     </div>
                 </div>

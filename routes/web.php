@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 
 Route::get('/login', ['uses'=>'AuthController@getLogin']);
 Route::post('/login', ['uses'=>'AuthController@postLogin']);
@@ -103,8 +101,10 @@ Route::group(
             ['prefix'=>'product'], function () {
 
                 Route::get('/', ['uses'=>'ProductController@index']);
-
                 Route::get('/fetch', ['uses'=>'ProductController@listProduct']);
+
+                Route::get('/add-store', ['uses'=>'ProductController@addStoreIndex']);
+                Route::get('/store', ['uses'=>'ProductController@addStore']);
 
                 Route::post('/add', ['uses'=>'ProductController@addProduct']);
 
@@ -127,6 +127,8 @@ Route::group(
                 Route::get('/preview/{id}', ['uses'=>'ProductController@getImage']);
 
                 Route::get('/remove/{id}', ['uses'=>'ProductController@removeImage']);
+
+                Route::get('/export', ['uses'=>'ProductController@exportEx']);
             }
         );
         // Unit
@@ -182,7 +184,7 @@ Route::group(
                 Route::put('/update/{id}', ['uses'=>'CustomerController@updateCus']);
 
                 Route::get('/export', ['uses'=>'CustomerController@export']);
-                Route::get('/exportPDF', ['uses'=>'CustomerController@exportPDF']);
+                // Route::get('/exportPDF', ['uses'=>'CustomerController@exportPDF']);
             }
         );
         // Order
@@ -224,3 +226,8 @@ Route::group(
         );
     }
 );
+
+
+Route::get('/', function () {
+    return view('HomePage.homepage_index');
+});

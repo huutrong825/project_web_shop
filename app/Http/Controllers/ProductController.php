@@ -9,12 +9,15 @@ use App\Models\Product_Img;
 use App\Models\Supplier;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use App\Exports\AddStoreExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class ProductController extends Controller
 {
     public function index()
     {
+     
         return view('Admin.Product.list_product');
     }
     public function listProduct(Request $req)
@@ -89,6 +92,51 @@ class ProductController extends Controller
             ->make(true);
     }
 
+    public function addStoreIndex()
+    {
+     
+        return view('Admin.Product.add_store');
+    }
+
+    public function addStore(Request $req)
+    {
+        
+        $p = DB::table('product')
+            ->join('product_add', 'product_id', '=', 'pro_id')
+            ->select(
+                'pro_id', 
+                'product_name',
+                'quanity_add',
+                'price',                
+                'date_add',
+            );
+
+        
+        if ($req->pricefrom != '') {
+            $p = $p->where('price', '>=', $req->pricefrom);
+        }
+
+        if ($req->priceto != '') {
+            $p = $p->where('price', '<=', $req->priceto);
+        }
+
+        if ($req->key != '') {
+            $p = $p->where('product_name', 'like', '%'. $req->key .'%');
+        }
+
+        if ($req->fromday != '') {
+            $p = $p->where('date_add', '>=', $req->fromday);
+        }
+
+        if ($req->today != '') {
+            $p = $p->where('date_add', '<=', $req->today);
+        }
+
+        $p->get();
+
+        return Datatables::of($p)->make(true);
+    }
+
     public function addProduct(Request $req)
     {
         
@@ -98,7 +146,7 @@ class ProductController extends Controller
             $req->image->move(public_path('img'), $imageName);
         }
         
-        $user = Product::create(
+        Product::create(
             [
                 'product_name' => $req->txtname,
                 'category_id' => $req->category,
@@ -111,7 +159,16 @@ class ProductController extends Controller
             ]
         );
 
-        $user->save();
+        $user = DB::table('product')->orderByDesc('product_id')->limit(1)->first();
+
+        Product_Add::create(
+            [
+                'pro_id' => $user->product_id,
+                'quanity_add' => $user->quanity,
+                'price' => $user->unit_price,
+                'date' => $user->created_at
+            ]
+        );
 
         return response()->json(
             [
@@ -288,5 +345,11 @@ class ProductController extends Controller
                 'messages' => 'Cập nhật thành công'
             ]
         );
+    }
+
+    public function exportEx(Request $req)
+    {
+        $type = '.xlsx';
+        return Excel::download(new AddStoreExport($req), "Nhập kho". $type);
     }
 }

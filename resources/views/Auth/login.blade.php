@@ -42,6 +42,11 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome !</h1>
                                     </div>
+                                    @if(session('error'))
+                                        <div class="alert alert-danger">
+                                            {{session('error')}}
+                                        </div>
+                                    @endif
                                     <form action="/login" class="user" method='post'>
                                         @csrf
                                         <div class="form-group">

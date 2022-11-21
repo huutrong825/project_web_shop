@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
             //
-            'email'=>'required',
+            'email'=>'required|exists:users,email',
             'password'=>'required'
         ];
     }
@@ -33,6 +33,7 @@ class LoginRequest extends FormRequest
     public function messages(){
         return [
             'email.required'=>'Email không được trống',
+            'email.exists' => 'Email không tồn tại',
             'password.required' => 'Mật khẩu không được trống',
         ];
     }

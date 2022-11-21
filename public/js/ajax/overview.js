@@ -60,7 +60,7 @@ $(document).ready(function(){
         datasets: [
             {
                 type: 'line',
-                label: 'Giá nhập',
+                label: 'Số lượng nhập',
                 data: [],
                 backgroundColor: ['rgb(255, 0, 0, 0.5)'],
                 borderColor:['rgb(255, 0, 0, 0.5)'],
@@ -68,7 +68,7 @@ $(document).ready(function(){
             },
             {
                 type: 'bar',
-                label: 'Sô lượng nhập',
+                label: 'Giá nhập',
                 data: [],
                 backgroundColor: ['rgba(75, 192, 192,0.5)'],
                 borderColor: ['rgb(75, 192, 192, 0.6)'],

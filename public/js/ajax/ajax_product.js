@@ -44,6 +44,50 @@ $(document).ready(function(){
         fetch_product();
     });
 
+    fetch_add_store();
+    function fetch_add_store()
+    {  
+        $('#store_pro').DataTable({
+            'processing':true,
+            'serverSide':true,
+            'ajax':
+            {
+                url : '/admin/product/store',
+                data : function (d){
+                    d.key = $('#keySearch').val();
+                    d.pricefrom = $('#price_from').val();
+                    d.priceto = $('#price_to').val();
+                    d.fromday = $('#from-day').val();
+                    d.today = $('#to-day').val();
+                }
+            },
+            'columns':[
+                {'data' : 'pro_id','visible':false},
+                {'data' : 'product_name'},
+                {'data' : 'quanity_add'},
+                {'data' : 'price'},          
+                {'data' : 'date_add'},
+            ],
+            'order' : [[4, 'desc']],
+            'searching':false,
+        });
+        $('#formSearch').on('keyup change' ,function(e) {
+            $('#store_pro').DataTable().draw();
+            e.preventDefault();
+        });
+    }
+
+    // reset
+    $(document).on('click','#btReset' ,function() {
+        $('#keySearch').val('');
+        $('#price_from').val('');
+        $('#price_to').val('');
+        $('#from-day').val('');
+        $('#to-day').val('');
+        $('#store_pro').DataTable().destroy();
+        fetch_add_store();
+    });
+
     $(document).on('click', '.btAdd',function(e)
     {
         e.preventDefault();
@@ -368,6 +412,31 @@ $(document).ready(function(){
                  alert('Lỗi');
             }
         });
+    });
+
+    $(document).on('click','#storeExcel',function(e){
+        e.preventDefault();
+
+        var key = $('#keySearch').val();
+        var pricefrom = $('#price_from').val();
+        var priceto = $('#price_to').val();
+        var fromday = $('#from-day').val();
+        var today = $('#to-day').val();
+
+        var data;
+
+        if (key != '' || pricefrom != '' || priceto != '' || fromday != '' || today !='') {
+           data = {
+                key : key,
+                pricefrom : pricefrom,
+                priceto : priceto,
+                fromday : fromday,
+                today : today
+            }
+        }
+
+        window.location = '/admin/product/export?' + $.param(data);
+        
     });
     
 });

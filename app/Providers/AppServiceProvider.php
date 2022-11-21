@@ -31,16 +31,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $category=Category::all();
-        View::share('category',$category);
+        View::share('category', $category);
 
         $supplier=Supplier::all();
-        View::share('supplier',$supplier);
+        View::share('supplier', $supplier);
 
         $unit=Unit::all();
-        View::share('unit',$unit);
+        View::share('unit', $unit);
 
         $ostate=Order_State::all();
-        View::share('ostate',$ostate);
+        View::share('ostate', $ostate);
 
         Paginator::useBootstrap();
     }

@@ -202,7 +202,7 @@
                 </div>
                 <form method='delete'>
                     @csrf
-                <div class="modal-body">Xác nhận xóa người dùng <span id='nameDelete'></span></div>
+                <div class="modal-body">Xác nhận xóa sản phẩm <span id='nameDelete'></span></div>
                 <div class="modal-footer">
                     <a class="btn btn-primary btSubmitDelete" >Xác nhận</a>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
@@ -226,7 +226,7 @@
                 <div class="">
                     <input type="hidden" class="form-control form-control-user" id='idBlock' >
                 </div>
-                <div class="modal-body">Xác nhận khóa/mở người dùng <span id='nameBlock'></span></div>
+                <div class="modal-body">Xác nhận khóa/mở sản phẩm <span id='nameBlock'></span></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btSubmitBlock" >Xác nhận</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    

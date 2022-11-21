@@ -104,11 +104,11 @@ class CustomerController extends Controller
         return Excel::download(new CustomerExport($req), "customer.xlsx");
     }
 
-    public function exportPDF(Request $req) 
-    {
-        // $cus = Customer::all();
+    // public function exportPDF(Request $req) 
+    // {
+    //     // $cus = Customer::all();
 
-        $pdf = PDF::loadView('Admin.Customer.list_customer');
-        return $pdf->download('DanhMucSanPham.pdf');
-    }
+    //     $pdf = PDF::loadView('Admin.Customer.list_customer');
+    //     return $pdf->download('DanhMucSanPham.pdf');
+    // }
 }
