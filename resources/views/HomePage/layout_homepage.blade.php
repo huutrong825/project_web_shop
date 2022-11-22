@@ -24,6 +24,8 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     
     @yield('css')
 
@@ -64,23 +66,24 @@
             </div>
             <div class="head">
                 <div >
-                    <h2> WEB SHOP</h2>
+                    <h2 style="padding-top:30px; float:left; color:#53a6d8"> WEB SHOP</h2>
                 </div>  
                 <div class="search" >
                     <form method="get" action=""> 
                         <div class="input-group mb-3">
                             <!-- <input id="myFind" name="search" type="text" class="form-control inputSeacrh" placeholder="Nhập sản phẩm cần tìm"> -->
-                            <div class="input-group-append">
-                                <button class="btn btn-gray" ><i class="fas fa-search"></i></button>
-                            </div>
+                            
                         </div>                    
                     </form>
-                </div>                               
-                <div class="cart">                
-                  <a href="">
-                    <button class="btn btn-gray">Giỏ Hàng <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div>
+                    <button class="btn btn-success" ><i class="fas fa-search"></i></button>
+                </div>
+                <div class="cart">
+                  <a href="/detail-cart">
+                    <button class="btn btn-danger"> <i class="fas fa-shopping-cart"></i> Giỏ Hàng
                     @if(Session::has("Cart")!=null)
-                    <span class="badge">{{Session::get('Cart')->totalQuanity}}</span>                    
+                    <span class="badge">{{Session::get('Cart')->totalQuanity}}</span>
                     @endif
                     </button>
                   </a>
@@ -120,19 +123,19 @@
                     <!-- Links -->
                     <ul class="navbar-nav">
                         <li class="nav-item col-sm-3">
-                            <a class="nav-link" href="#">Trang chủ</a>
+                            <a class="nav-link" href="/">Trang chủ</a>
                         </li>
                         <li class="nav-item col-sm-3">
-                            <a class="nav-link" href="#">Áo nam</a>
+                            <a class="nav-link" href="#">Danh mục 1</a>
                         </li>
                         <li class="nav-item col-sm-3">
-                            <a class="nav-link" href="#">Quần nam</a>
+                            <a class="nav-link" href="#">Danh mục 2</a>
                         </li>
                         <li class="nav-item col-sm-3">
-                            <a class="nav-link" href="#">Giày dép</a>
+                            <a class="nav-link" href="#">Danh mục 3</a>
                         </li>
                         <li class="nav-item col-sm-3">
-                            <a class="nav-link" href="#">Phụ kiện</a>
+                            <a class="nav-link" href="#">Danh mục 4</a>
                         </li>
                         <li class="nav-item col-sm-3">
                             <a class="nav-link" href="#">Khuyến mãi</a>
@@ -163,7 +166,7 @@
                         <div>
                             <ul>
                             <li>
-                                <a href="">
+                                <a href="/">
                                 <i class="fa fa-chevron-right"></i> Trang chủ </a>
                             </li>
                             <li>
@@ -215,16 +218,16 @@
                     <p class="pull-left">Copyright &copy;  Web vật liệu xây dựng | Thiết kế bởi Trong Huu</p>
                     <p class="pull-right pay-options">
                     <a href="#">
-                        <img src="{{asset('images/mastercard.jpg')}}" alt="" width="48" height="48"/>
+                        <img src="{{asset('image-page/mastercard.png')}}" alt="" width="48" height="48"/>
                     </a>
                     <a href="#">
-                        <img src="{{asset('images/pay.png')}}" alt="" width="48" height="48"/>
+                        <img src="{{asset('image-page/pay.png')}}" alt="" width="48" height="48"/>
                     </a>
                     <a href="#">
-                        <img src="{{asset('images/visa.png')}}" alt=""width="48" height="48" />
+                        <img src="{{asset('image-page/visa.png')}}" alt=""width="48" height="48" />
                     </a>
                     <a href="#">
-                    <img src="{{asset('images/paypal.png')}}" alt=""width="48" height="48" />
+                    <img src="{{asset('image-page/paypal.png')}}" alt=""width="48" height="48" />
                     </a>
                     </p>
                 </div>
