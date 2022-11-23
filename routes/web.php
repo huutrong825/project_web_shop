@@ -175,26 +175,8 @@ Route::group(
 );
 
 
-Route::get(
-    '/', function () {
-        return view('HomePage.homepage_index');
-    }
-);
-
-Route::get(
-    '/detail', function () {
-        return view('HomePage.detail_product');
-    }
-);
-
-Route::get(
-    '/detail-cart', function () {
-        return view('HomePage.Cart');
-    }
-);
-
-// Route::group(
-//     ['prefix'=>'/'], function () {
-//         Route::get('/detail/', ['uses'=>'PageController@Detail']);
-//     }
-// );
+Route::get('/', ['uses'=>'HomePageController@home_index']);
+Route::get('/detail-product/{id}', ['uses'=>'HomePageController@detailProduct']);
+Route::get('/detail-cart', ['uses'=>'HomePageController@cart']);
+Route::get('/checkOut', ['uses'=>'HomePageController@checkOut']);
+Route::get('/addToCart/{id}', ['uses'=>'HomePageController@addToCart']);

@@ -38,8 +38,7 @@ class AuthController extends Controller
                 return redirect('/login')->with('error', 'Email hoặc mật khẩu không đúng');
             }
         } catch (Exception $e) {
-            Log::error($e);
-
+            return $e->getMessage();
         }
     }
     public function getRegister()
