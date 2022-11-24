@@ -15,7 +15,7 @@
             <div class="input-group row">
                 <div class="input-group mb-3 col-sm">
                     <a class="btn btn-primary btn-icon-user bt-Add" >
-                        <span class="icon text-white-50">
+                        <span class="icon text-white">
                             <i class="fas fa-plus"></i>
                         </span>
                         <span class="text">Thêm mới</span>

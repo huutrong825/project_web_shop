@@ -39,7 +39,7 @@ $(document).ready(function(){
             {
                 $('#AddModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(8000);
+                alertify.success(response.mess);
             },
             error: function (err)
             {
@@ -85,11 +85,9 @@ $(document).ready(function(){
             },
             success:function(response)
             {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.mess);
+                alertify.success(response.mess);
                 $('#DeleteUnit').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(8000);
             },
             error: function (err)
             {
@@ -138,11 +136,9 @@ $(document).ready(function(){
             },
             success:function(response)
             {   
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
+                alertify.success(response.messages);
                 $('#DeleteModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(5000);
             },
             error: function (err)
             {

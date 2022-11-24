@@ -46,6 +46,7 @@
                                     <div class="alert alert-success" style="display:none">
                                     </div>                      
                                     <form id='resetForm' class="user" method='post'>
+                                        @csrf
                                         <fieldset>
                                             <input type="hidden" name="token" id ='token' value="{{ $token }}">
                                             <div class="form-group">

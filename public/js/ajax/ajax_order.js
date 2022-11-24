@@ -219,9 +219,7 @@ $(document).ready(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response){
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
-                $('.alert-success').hide(3000);
+                alertify.success(response.messages);
                 $('#myTable').DataTable().ajax.reload();
             }
         });

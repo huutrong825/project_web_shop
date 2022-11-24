@@ -46,8 +46,7 @@ $(document).ready(function(){
             success:function(response)
             {      
                 if (response.state == 200) {
-                    $(".alert-success").css('display','block');
-                    $('.alert-success').html(response.messages);
+                    alertify.success(response.messages);
                     $('#NewPassword').modal('hide');
                 } else if (response.state == 402) {
                     $('.is-danger').html(response.messages);
@@ -69,21 +68,21 @@ $(document).ready(function(){
 
     $(document).on('click','.btResetPass', function(e){
         e.preventDefault();
-        var data = { 'email': $('#emailRe').val() }
+        var data = { 'emailRe': $('#emailRe').val() }
         $('#forgetForm').submit();
         $.ajax({
             url: '/forget-password',
             type: 'post',
             data: data,
             dataType:'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
+            // headers: {
+            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            // },
             success: function(response){
-                $(".alert-success").css('display','block');
+                $('.alert-success').css('display', 'block');
                 $('.alert-success').html(response.message);
+                // alertify.success(response.message);
             }
-
         });
     });
 
@@ -128,10 +127,8 @@ $(document).ready(function(){
             },
             success: function(response){
                 $("#login").css('display','block');
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.message);
+                alertify.success(response.message);
                 $("#resetForm").hide();
-                
             }
 
         });

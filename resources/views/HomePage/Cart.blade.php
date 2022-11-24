@@ -44,19 +44,25 @@
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-primary btn-minus" >
-                                        <i class="fa fa-minus"></i>
+                                            <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="{{ $p['quanity'] }}">
+                                    <!-- <form method='post'>
+                                        @csrf -->
+                                    <input type="text" id='changeQua' class="form-control form-control-sm bg-secondary border-0 text-center" value="{{ $p['quanity'] }}">
+                                    <!-- </form> -->
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
+                                        <button  class="btn btn-sm btn-primary btn-plus ">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
                             </td>
                             <td class="align-middle"><?php echo number_format($p['price'], 0, '.', ' ');?> đ</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+                            <td class="align-middle">
+                                <a class="btn btn-sm btn-danger btDelPro" value ="{{ $p['prodInfo']->product_id }} "><i class="fa fa-times"></i></a>
+                                <a class="btn btn-sm btn-success btUpQua" value ="{{ $p['prodInfo']->product_id }} "><i class="fa fa-save"></i></a>
+                            </td>
                         </tr>
                         @endforeach
                         @else
@@ -80,6 +86,7 @@
                         </div>
                     </div>
                 </form> -->
+                @if (Session::has("Cart") != null)
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom pb-2">
@@ -100,6 +107,7 @@
                         <a href="/checkOut" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</a>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

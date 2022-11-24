@@ -70,9 +70,7 @@ $(document).ready(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response){
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
-                $('#AddDiscount').modal('hide');
+                alertify.success(response.messages);
                 $('#myTable').DataTable().ajax.reload();
             },
             error: function(err)
@@ -136,9 +134,7 @@ $(document).ready(function(){
             dataType : 'json',
             success : function(response){
                 $('#myTable').DataTable().ajax.reload();
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
-                $('.alert-success').hide(8000);              
+                alertify.success(response.messages);
             },
             error: function (err) {
                 alert('Lỗi');
@@ -179,12 +175,9 @@ $(document).ready(function(){
             type : 'get',
             success : function(response)
             {      
-                console.log(response);
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
+                alertify.success(response.messages);
                 $('#BlockDis').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(5000);
             },
             error : function (err)
             {
@@ -224,11 +217,9 @@ $(document).ready(function(){
             type : 'get',
             success : function(response)
             {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
+                alertify.success(response.messages);
                 $('#DeleteModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(8000);
             },
             error : function (err)
             {
@@ -257,10 +248,8 @@ $(document).ready(function(){
             contentType: false,
             processData: false,
             success : function(response){
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
+                alertify.success(response.messages);
                 $('#LinkProduct').modal('hide');
-                $('.alert-success').hide(5000);
             },
             error: function (err) {
                 alert('Lỗi');

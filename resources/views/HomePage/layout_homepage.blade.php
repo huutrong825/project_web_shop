@@ -8,7 +8,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" >
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.ico') }}" rel="icon">
 
@@ -79,7 +79,7 @@
         </div> -->
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-4">
-                <a href="" class="text-decoration-none">
+                <a href="/" class="text-decoration-none">
                     <span class="h1 text-uppercase text-primary bg-dark px-2">Men</span>
                     <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
                 </a>
@@ -126,14 +126,6 @@
                         @foreach ($category as $c)
                         <a href="" class="nav-item nav-link">{{ $c->category_name }}</a>
                         @endforeach
-                        <!-- <a href="" class="nav-item nav-link">Jeans</a>
-                        <a href="" class="nav-item nav-link">Swimwear</a>
-                        <a href="" class="nav-item nav-link">Sleepwear</a>
-                        <a href="" class="nav-item nav-link">Sportswear</a>
-                        <a href="" class="nav-item nav-link">Jumpsuits</a>
-                        <a href="" class="nav-item nav-link">Blazers</a>
-                        <a href="" class="nav-item nav-link">Jackets</a>
-                        <a href="" class="nav-item nav-link">Shoes</a> -->
                     </div>
                 </nav>
             </div>
@@ -160,7 +152,7 @@
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
-                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
+                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block cart">
                             <a href="" class="btn px-0">
                                 <i class="fas fa-user text-primary" type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"></i>
                                 <div class="dropdown-menu dropdown-menu-right">
@@ -168,10 +160,42 @@
                                     <button class="dropdown-item" type="button">Đăng ký</button>
                                 </div>
                             </a>
-                            <a href="/detail-cart" class="btn px-0 ml-3">
+                            <a href="/detail-cart" id="btCart" class="btn px-0 ml-3 btCart">
                                 <i class="fas fa-shopping-cart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                                @if(Session::has("Cart") != null)
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;"> {{ Session::get('Cart')->totalQuanity }} </span>
+                                @endif
                             </a>
+                            <div class="cart-change">
+                                @if(Session::has("Cart")!=null)
+                                <div class="cart-body">
+                                    <div class="cart-item">
+                                        @foreach(Session::get("Cart")->products as $p)
+                                        <div class="media">
+                                            <a class="pull-left" href="#"><img src="{{asset('img')}}/{{$p['prodInfo']->image}}" width="50" height="50" alt=""/></a>
+                                            <div class="media-body">
+                                            <span class="cart-item-title">{{$p['prodInfo']->product_name}}</span>
+                                            <span class="cart-item-amount">{{$p['quanity']}} * <span><?php echo number_format($p['prodInfo']->unit_price, 0, '.', ' ');?> VNĐ</span></span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        @endforeach
+                                    </div>
+                                    <div class="cart-caption">
+                                        <div class="cart-total text-right">Tổng tiền: <span class="cart-total-value"><?php echo number_format(Session::get("Cart")->totalPrice, 0, '.', ' ');?> VNĐ</span></div>
+                                        <div class="clearfix"></div>
+                                        <div class="center">
+                                            <div class="space10">&nbsp;</div>
+                                            <a href="checkout.html" class="beta-btn primary text-center">Đặt hàng <i class="fa fa-chevron-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @else
+                                <div class="cart-body cart-null" >
+                                    <span>Chưa có sản phẩm trong giỏ</span>
+                                </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </nav>
@@ -269,7 +293,7 @@
     <script src="{{asset('js/main.js')}}"></script>
 
     <!-- Add To Cart Javascript -->
-    <script src="{{asset('js/ajax_page/ajax_addToCard.js')}}"></script>
+    <script src="{{asset('js/ajax_page/ajax_Card.js')}}"></script>
 
     <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>

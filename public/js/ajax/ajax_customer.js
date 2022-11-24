@@ -134,7 +134,7 @@ $(document).ready(function (){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success : function(response){
-
+                alertify.success(response.message);
             },
             error : function(err)
             {

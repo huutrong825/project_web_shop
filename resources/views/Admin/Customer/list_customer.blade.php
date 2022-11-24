@@ -13,7 +13,7 @@
     <div class="card-body collapse" id="demo">
         <div class="table-responsive">
             <div class="input-group row">
-                <div class="input-group mb-3 col-sm-3">
+                <div class="input-group mb-3 col-sm">
                     <!-- <a class="btn btn-primary btn-icon-user bt-Add" >
                         <span class="icon text-white-50">
                             <i class="fas fa-plus"></i>
@@ -22,7 +22,7 @@
                     </a> -->
                 </div>
                 <form class="row" id="formSearch">
-                    <div class="col-sm">
+                    <div class=" col-sm">
                         <div class="input-group ">
                             <input type="text" class="form-control" id='keySearch' name="key" placeholder="Nhập tên">                
                         </div> 
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="col-sm-3">
+                <div class="col-sm">
                     <a class="btn btn-primary" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
                 </div>
             </div>

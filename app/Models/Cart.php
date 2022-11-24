@@ -13,6 +13,7 @@ class Cart
         if ($cart) {
             $this->products = $cart->products;
             $this->totalPrice = $cart->totalPrice;
+            $this->totalQuanity = $cart->totalQuanity;
         }
     }
     // thêm vào giỏ
@@ -45,7 +46,7 @@ class Cart
         $this->totalQuanity -= $this->products[$id]['quanity'];
 
         $this->products[$id]['quanity'] = $qty;
-        $this->products[$id]['price'] = $qty * $this->products[$id]['prodInfo']->Price;
+        $this->products[$id]['price'] = $qty * $this->products[$id]['prodInfo']->unit_price;
 
         $this->totalPrice += $this->products[$id]['price'];
         $this->totalQuanity += $this->products[$id]['quanity'];

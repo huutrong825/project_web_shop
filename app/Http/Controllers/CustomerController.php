@@ -94,7 +94,7 @@ class CustomerController extends Controller
         return response()->json(
             [
                 'state' => 200,
-                'messages' => 'Cập nhật thành công'
+                'message' => 'Cập nhật thành công'
             ]
         );
     }

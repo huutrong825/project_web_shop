@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
 
 class AuthController extends Controller
 {
@@ -38,6 +39,8 @@ class AuthController extends Controller
                 return redirect('/login')->with('error', 'Email hoặc mật khẩu không đúng');
             }
         } catch (Exception $e) {
+            return $e->getMessage();
+        } catch (QueryException $e) {
             return $e->getMessage();
         }
     }

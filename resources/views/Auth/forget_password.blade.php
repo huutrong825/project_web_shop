@@ -44,8 +44,9 @@
                                         <h1 class="h4 text-white-900 text-success mb-4">Quên mật khẩu</h1>
                                     </div>
                                     <div class="alert alert-success" style="display:none">
-                                    </div>                      
+                                    </div>
                                     <form id='forgetForm' class="user" method='post'>
+                                        @csrf
                                         <fieldset>
                                             <div class="form-group">
                                                 <input type="email" class="form-control form-control-user"

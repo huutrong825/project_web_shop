@@ -130,11 +130,9 @@ $(document).ready(function(){
             },
             success : function(response)
             {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.mess);
+                alertify.success(response.mess);
                 $('#BlockModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
-                $('.alert-success').hide(5000);
             },
             error : function (err)
             {
@@ -235,9 +233,7 @@ $(document).ready(function(){
             success : function(response)
             {
                 $('#myTable').DataTable().ajax.reload();
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.mess);
-                $('.alert-success').hide(8000);
+                alertify.success(response.mess);
             },
             error : function (err)
             {

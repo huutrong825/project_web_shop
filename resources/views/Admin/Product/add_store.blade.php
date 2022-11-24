@@ -62,7 +62,7 @@
 </div>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 style='float:left' class="m-0 font-weight-bold text-primary">Sản phẩm</h6>
+        <h6 style='float:left' class="m-0 font-weight-bold text-primary">Lịch sử nhập kho</h6>
         <a style='float:right; color:green'  id="storeExcel">
             <i class="fas fa-cloud-download-alt"> Truy xuất Excel</i>
         </a>

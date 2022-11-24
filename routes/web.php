@@ -180,3 +180,6 @@ Route::get('/detail-product/{id}', ['uses'=>'HomePageController@detailProduct'])
 Route::get('/detail-cart', ['uses'=>'HomePageController@cart']);
 Route::get('/checkOut', ['uses'=>'HomePageController@checkOut']);
 Route::get('/addToCart/{id}', ['uses'=>'HomePageController@addToCart']);
+Route::get('/delOfPro/{id}', ['uses'=>'HomePageController@delOfPro']);
+Route::post('/updatePro/{id}', ['uses'=>'HomePageController@updateOfCart']);
+Route::post('/sendOrder', ['uses'=>'HomePageController@sendOrder']);

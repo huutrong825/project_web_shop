@@ -151,9 +151,7 @@ $(document).ready(function(){
             },
             success:function(response)
             {  
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
-                $('#AddProd').modal('hide');
+                alertify.success(response.messages);
                 $('#myTable').DataTable().ajax.reload();
             },
             error: function (err)
@@ -195,9 +193,7 @@ $(document).ready(function(){
             type: 'get',
             success:function(response)
             {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
-                $('.alert-success').hide(3000);
+                alertify.success(response.messages);
                 $('#BlockPro').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
             },
@@ -239,10 +235,8 @@ $(document).ready(function(){
             type: 'get',
             success:function(response)
             {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
+                alertify.success(response.messages);
                 $('#DeleteModal').modal('hide');
-                $('.alert-success').hide(3000);
                 $('#myTable').DataTable().ajax.reload();
             },
             error: function (err)
@@ -323,9 +317,7 @@ $(document).ready(function(){
             },
             success:function(response)
             {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
-                $('.alert-success').hide(3000);
+                alertify.success(response.messages);
             },
             error: function (err)
             {
@@ -401,9 +393,7 @@ $(document).ready(function(){
             },
             success:function(response)
             {      
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.messages);
-                $('.alert-success').hide(3000);
+                alertify.success(response.messages);
                 $('#UpQuanity').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
             },

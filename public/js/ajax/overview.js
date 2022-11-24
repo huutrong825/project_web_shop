@@ -100,7 +100,6 @@ $(document).ready(function(){
                         }
                     },
                     
-                    
             }
         }
         };
@@ -131,18 +130,14 @@ $(document).ready(function(){
                 $('#fee_add').html(number_format(response.array.fee_add, 2, ',', ' '));
                 $('#product_add').html(number_format(response.array.product_add, 0, ',', ' ')); 
                 
-                
                 myChart.data.datasets[0].data = response.data;
                 myChart.data.labels = response.date;
                 myChart.update();
 
-                
                 myChart1.data.datasets[0].data = response.sum_quanity;
                 myChart1.data.datasets[1].data = response.sum_price;
                 myChart1.data.labels = response.date_add;
                 myChart1.update();
-
-                
             },
 
         });
@@ -172,8 +167,6 @@ $(document).ready(function(){
                     myChart1.data.datasets[1].data = response.sum_price;
                     myChart1.data.labels = response.date_add;
                     myChart1.update();
-                    
-                
                 },
             });
         });

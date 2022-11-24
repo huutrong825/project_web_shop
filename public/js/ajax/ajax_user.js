@@ -113,7 +113,6 @@ $(document).ready(function(){
             'emails' : $('#emailUpdate').val(),
             'group_roles' : $('#role').val(),           
         }
-        console.log(data);
         $('#formUpdate').submit();
         $.ajax({
             url : '/admin/user/update/' + id_update,
@@ -124,6 +123,7 @@ $(document).ready(function(){
             data : data,
             dataType : 'json',
             success : function(response){
+                alertify.success(response.mess);
                 $('#UpdateUserModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
             },
@@ -192,11 +192,10 @@ $(document).ready(function(){
                 },
                 data : data,
                 dataType : 'json',
-                success:function(response){   
-                    
+                success:function(response){ 
+                    alertify.success(response.mess);
                     $('#AddUserModal').modal('hide');
                     $('#myTable').DataTable().ajax.reload();
-                    
                 }
             }); 
     });
@@ -233,6 +232,7 @@ $(document).ready(function(){
             type: "GET",
             success:function(response)
             {
+                alertify.success(response.mess);
                 $('#DeleteModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
             },
@@ -278,8 +278,7 @@ $(document).ready(function(){
             type:"GET",
             success:function(response)
             {               
-                $(".alert-success").css('display','block');
-                $('.alert-success').html(response.mess);
+                alertify.success(response.mess);
                 $('#BlockModal').modal('hide');
                 $('#myTable').DataTable().ajax.reload();
             },
