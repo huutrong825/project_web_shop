@@ -10,7 +10,7 @@ $(document).ready(function(){
             {
                 $('.cart-change').empty();
                 $('.cart-change').html(response);
-                alertify.success(response.message);
+                alertify.success('Thêm vào giỏ thành công');
             }
         });
     });

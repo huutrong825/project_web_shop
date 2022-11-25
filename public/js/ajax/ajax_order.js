@@ -203,6 +203,7 @@ $(document).ready(function(){
             }
         });
     });
+    
     //cập nhật trạng thái đơn hàng
     $(document).on('click', '.btState', function(e){
         e.preventDefault();

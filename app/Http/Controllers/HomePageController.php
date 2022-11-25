@@ -128,15 +128,26 @@ class HomePageController extends Controller
             return $e->getMessage();
         }
     }
-
+    /**
+     * Trang kiểm tra trước đặt hàng.
+     * 
+     * @author Mr dang.trong<dang.trong@rivercrane.com.vn>
+     */
     public function checkOut()
     {
         return view('HomePage.check_out');
     }
-
+    /**
+     * Đặt hàng.
+     *
+     * @param string $req 
+     * 
+     * @return string  json Trả dữ liệu json
+     * 
+     * @author Mr dang.trong<dang.trong@rivercrane.com.vn>
+     */
     public function sendOrder(Request $req)
     {
-        // dd($req->all());
         $cart = Session::get('Cart');
         
         $cus = Customer::create(
@@ -181,5 +192,34 @@ class HomePageController extends Controller
                 'message' => ' Đặt hàng thành công'
             ]
         );
+    }
+
+    /**
+     * Tìm kiếm sản phẩm
+     *
+     * @param string $req 
+     * 
+     * @return string  view
+     * 
+     * @author Mr dang.trong<dang.trong@rivercrane.com.vn>
+     */
+    public function search(Request $req)
+    {
+        $product = Product::where('product_name', 'like', '%'. $req->search .'%')->get();
+        return view('HomePage.product_list', compact('product'));
+    }
+    /**
+     * Tìm kiếm sản phẩm theo danh mục
+     *
+     * @param int $id 
+     * 
+     * @return string  view
+     * 
+     * @author Mr dang.trong<dang.trong@rivercrane.com.vn>
+     */
+    public function getOfCate($id)
+    {
+        $product = Product::where('category_id', $id)->get();
+        return view('HomePage.product_list', compact('product'));
     }
 }

@@ -82,7 +82,7 @@ class CustomerController extends Controller
 
     public function updateCus(Request $req, $id)
     {
-        $cus = Customer::where('customer_id', $id);
+        $cus = Customer::where('customer_id', $id)->first();
         $cus->update(
             [
                 'customer_name' => $req->nameUp,

@@ -190,9 +190,9 @@
                     </button>
                 </div>
                 <div class="">
-                    <input type="" class="form-control form-control-user" id='idDelete' >
+                    <input type="hidden" class="form-control form-control-user" id='idDelete' >
                 </div>
-                <div class="modal-body">Xác nhận xóa người dùng <span id='nameDelete'></span></div>
+                <div class="modal-body">Xác nhận xóa nhà cung ứng <span id='nameDelete'></span></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary DeleteSupp" >Xác nhận</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    
@@ -217,7 +217,7 @@
                 </div>
                 <form method='put'>
                     @csrf
-                <div class="modal-body">Xác nhận khóa/mở người dùng <span id='nameBlock'></span></div>
+                <div class="modal-body">Xác nhận khóa/mở nhà cun ứng <span id='nameBlock'></span></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btSubmitBlock" >Xác nhận</button>
                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>                    

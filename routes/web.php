@@ -178,8 +178,10 @@ Route::group(
 Route::get('/', ['uses'=>'HomePageController@home_index']);
 Route::get('/detail-product/{id}', ['uses'=>'HomePageController@detailProduct']);
 Route::get('/detail-cart', ['uses'=>'HomePageController@cart']);
-Route::get('/checkOut', ['uses'=>'HomePageController@checkOut']);
 Route::get('/addToCart/{id}', ['uses'=>'HomePageController@addToCart']);
 Route::get('/delOfPro/{id}', ['uses'=>'HomePageController@delOfPro']);
 Route::post('/updatePro/{id}', ['uses'=>'HomePageController@updateOfCart']);
+Route::get('/checkOut', ['uses'=>'HomePageController@checkOut']);
 Route::post('/sendOrder', ['uses'=>'HomePageController@sendOrder']);
+Route::get('/search', ['uses'=>'HomePageController@search']);
+Route::get('/search-cate/{id}', ['uses'=>'HomePageController@getOfCate']);

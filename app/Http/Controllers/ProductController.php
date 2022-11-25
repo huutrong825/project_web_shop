@@ -101,13 +101,12 @@ class ProductController extends Controller
     public function addStore(Request $req)
     {
         
-        $p = DB::table('product')
-            ->join('product_add', 'product_id', '=', 'pro_id')
+        $p = Product::join('product_add', 'product_id', '=', 'pro_id')
             ->select(
                 'pro_id', 
                 'product_name',
                 'quanity_add',
-                'price',                
+                'price',
                 'date_add',
             );
 
@@ -115,23 +114,18 @@ class ProductController extends Controller
         if ($req->pricefrom != '') {
             $p = $p->where('price', '>=', $req->pricefrom);
         }
-
         if ($req->priceto != '') {
             $p = $p->where('price', '<=', $req->priceto);
         }
-
         if ($req->key != '') {
             $p = $p->where('product_name', 'like', '%'. $req->key .'%');
         }
-
         if ($req->fromday != '') {
             $p = $p->where('date_add', '>=', $req->fromday);
         }
-
         if ($req->today != '') {
             $p = $p->where('date_add', '<=', $req->today);
         }
-
         $p->get();
 
         return Datatables::of($p)->make(true);
@@ -146,7 +140,7 @@ class ProductController extends Controller
             $req->image->move(public_path('img'), $imageName);
         }
         
-        Product::create(
+        $user = Product::create(
             [
                 'product_name' => $req->txtname,
                 'category_id' => $req->category,
@@ -159,14 +153,12 @@ class ProductController extends Controller
             ]
         );
 
-        $user = DB::table('product')->orderByDesc('product_id')->limit(1)->first();
-
         Product_Add::create(
             [
                 'pro_id' => $user->product_id,
                 'quanity_add' => $user->quanity,
                 'price' => $user->unit_price,
-                'date' => $user->created_at
+                'date' => date('Y-m-d H:i:s')
             ]
         );
 

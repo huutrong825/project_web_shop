@@ -7,7 +7,7 @@
             <a class="pull-left" href="#"><img src="{{asset('img')}}/{{$p['prodInfo']->image}}" width="50" height="50" alt=""/></a>
             <div class="media-body">
             <span class="cart-item-title">{{$p['prodInfo']->product_name}}</span>
-            <span class="cart-item-amount"> <span><?php echo number_format($p['prodInfo']->unit_price, 0, '.', ' ');?> VNĐ</span></span>
+            <span class="cart-item-amount">{{$p['quanity']}} * <span><?php echo number_format($p['prodInfo']->unit_price, 0, '.', ' ');?> VNĐ</span></span>
             </div>
         </div>
         <br>

@@ -25,7 +25,6 @@ class AuthController extends Controller
     {
         $remember = $req->customCheck;
         try {
-
             if (Auth::viaRemember()) {
                 return redirect('/admin');
             } else if (Auth::attempt(['email'=>$req->email, 'password'=>$req->password, 'is_active' => 1], $remember)) {
@@ -107,59 +106,34 @@ class AuthController extends Controller
                     'avatar.mimes' => 'Chỉ chấp nhận hình thẻ với đuôi .jpg .jpeg .png .gif',
                 ]
             );
+
             if ($req->file('avatar')->isValid()) {
                 $img = $req->avatar;
                 $img_name = $img->getClientOriginalName();
                 $img->move(public_path('img'), $img_name);  
             }
         }
-        if ($req->checkPass != 'on') {
-
-            if ($img_name != null) {
-                $user->update(
-                    [
-                        'name' => $req->name,
-                        'sex' => $req->sex,
-                        'phone' => $req->phone,
-                        'birth' => $req->birth,
-                        'address' => $req->address,
-                        'avatar' => $img_name
-                    ]
-                );
-            } else {
-                $user->update(
-                    [
-                        'name' => $req->name,
-                        'sex' => $req->sex,
-                        'phone' => $req->phone,
-                        'birth' => $req->birth,
-                        'address' => $req->address,
-                    ]
-                );
-            }
+        if ($img_name != null) {
+            $user->update(
+                [
+                    'name' => $req->name,
+                    'sex' => $req->sex,
+                    'phone' => $req->phone,
+                    'birth' => $req->birth,
+                    'address' => $req->address,
+                    'avatar' => $img_name
+                ]
+            );
         } else {
-            if ($img_name != null) {
-                $user->update(
-                    [
-                        'name' => $req->name,
-                        'sex' => $req->sex,
-                        'phone' => $req->phone,
-                        'birth' => $req->birth,
-                        'address' => $req->address,
-                        'avatar' => $img_name,
-                    ]
-                );
-            } else {
-                $user->update(
-                    [
-                        'name' => $req->name,
-                        'sex' => $req->sex,
-                        'phone' => $req->phone,
-                        'birth' => $req->birth,
-                        'address' => $req->address,
-                    ]
-                );
-            }
+            $user->update(
+                [
+                    'name' => $req->name,
+                    'sex' => $req->sex,
+                    'phone' => $req->phone,
+                    'birth' => $req->birth,
+                    'address' => $req->address,
+                ]
+            );
         }
         return back()->with('thongbao', 'Cập nhật thành công');
     }

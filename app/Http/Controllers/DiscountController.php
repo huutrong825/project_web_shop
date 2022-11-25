@@ -14,7 +14,7 @@ class DiscountController extends Controller
     {
         $disc = Discount::all();
 
-        $pro = Product::all();
+        $pro = Product::where('is_sale', 1)->get();
         return view('Admin.Discount.discount', compact('disc', 'pro'));
     }
 

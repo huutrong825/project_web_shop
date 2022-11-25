@@ -265,7 +265,7 @@ class UserManagerController extends Controller
      */  
     public function putUpdateUser(Request $req, $id)
     {
-        $userUp = User::where('id', $id)->first();        
+        $userUp = User::where('id', $id)->first();
         $userUp->update(
             [
                 'name'=>$req->names,

@@ -19,7 +19,7 @@ return new class extends Migration
             // $table->timestamps();
             // $table->softDeletes();
             $table->increments('id');
-            $table->string('order_state');
+            $table->string('state_name');
             $table->timestamps();
             $table->softDeletes();
         });

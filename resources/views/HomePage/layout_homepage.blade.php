@@ -85,13 +85,13 @@
                 </a>
             </div>
             <div class="col-lg-4 col-6 text-left">
-                <form action="">
+                <form action="/search" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="search" id="search">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <button class="input-group-text bg-transparent text-primary btn btn-primary " type="submit">
                                 <i class="fa fa-search"></i>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -294,6 +294,8 @@
 
     <!-- Add To Cart Javascript -->
     <script src="{{asset('js/ajax_page/ajax_Card.js')}}"></script>
+    <!-- Search Javascript -->
+    <script src="{{asset('js/ajax_page/ajax_search.js')}}"></script>
 
     <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>

@@ -75,9 +75,9 @@ $(document).ready(function(){
             type: 'post',
             data: data,
             dataType:'json',
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: function(response){
                 $('.alert-success').css('display', 'block');
                 $('.alert-success').html(response.message);

@@ -17,10 +17,11 @@ class ResetPasswordController extends Controller
     {
         return view('Auth.forget_password');
     }
+    
     public function sendMail(Request $req)
     {
         // dd($req->all());
-        // try {
+        try {
             $user = User::where('email', $req->emailRe)->firstOrFail();
             $passwordReset = PasswordReset::updateOrCreate(
                 [
@@ -40,9 +41,9 @@ class ResetPasswordController extends Controller
                     'message' => 'We have e-mailed your password reset link!'
                 ]
             );
-        // } catch (\Exception $e) {
-        //     return $e->getMessage();
-        // }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function resetPage( $token )
@@ -52,7 +53,7 @@ class ResetPasswordController extends Controller
 
     public function reset(Request $req, $token)
     {
-        // try {
+        try {
             $passwordReset = PasswordReset::where('token', $token)->firstOrFail();
             if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
                 $passwordReset->delete();
@@ -77,8 +78,8 @@ class ResetPasswordController extends Controller
                     'message' => 'Thay đổi mật khẩu thành công',
                 ]
             );
-        // } catch (\Exception $e) {
-        //     return $e->getMessage();
-        // }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
