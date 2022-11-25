@@ -172,20 +172,37 @@ $(document).ready(function(){
         });
     }
 
-    // $(document).on('change', '#time-filter', function(e){
-    //     e.preventDefault();
-    //     var time = $(this).val();
-    //     console.log(time);
-    //     $.ajax({
-    //         url: '/admin/statistical/carbon',
-    //         type: 'get',
-    //         data: {'time': time},
-    //         success: function(response){
-    //             console.log(response);
-    //         }
-
-    //     });
-    // })
+    $('#formSearch').on('change' ,function(e) {
+        e.preventDefault();
+        var data = {
+            'fromDate' : $('#fromDate').val(),
+            'toDate' : $('#toDate').val(),
+        };
+        $.ajax({
+            url: '/admin/statistical/fetch',
+            type: 'get',
+            data : data,
+            success: function(response){
+                $('#sum_total').html(number_format(response.array.sum_total, 2, ',', ' '));
+                    $('#sum_sale').html(response.array.sum_sale);
+                    $('#sum_order').html(response.array.sum_order);
+                    $('#complete_order').html(response.array.complete_order);
+                    $('#cancel_order').html(response.array.cancel_order);
+                    $('#quanity').html(number_format(response.array.store, 0, ',', ' '));
+                    $('#fee_add').html(number_format(response.array.fee_add, 2, ',', ' '));
+                    $('#product_add').html(number_format(response.array.product_add, 0, ',', ' '));
+                    
+                    myChart.data.datasets[0].data = response.data;
+                    myChart.data.labels = response.date;
+                    myChart.update();
+    
+                    myChart1.data.datasets[0].data = response.sum_quanity;
+                    myChart1.data.datasets[1].data = response.sum_price;
+                    myChart1.data.labels = response.date_add;
+                    myChart1.update();
+            }
+        });   
+    });
    
 });
 

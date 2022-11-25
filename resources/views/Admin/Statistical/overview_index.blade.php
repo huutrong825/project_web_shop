@@ -8,12 +8,40 @@
 <div class="card shadow mb-4 raw">
     <div class="card-header py-3">
         <h4 style="float:left"  class="m-0 font-weight-bold text-primary">Thống kê tổng quan</h4>
-        <select style="float:right; text-align:center" class="form-control-sm col-sm-3" id="time-filter"  >
+        <select style="float:none; text-align:center" class="form-control-sm  use col-sm-3" id="time-filter"  >
             <option >---- Chọn ----</option>
             <option value="7ngay">Dữ liệu 7 ngày</option>
             <option value="thangtruoc">Dữ liệu tháng trước</option>
             <option value="365ngay">Dữ liệu 1 năm</option>
         </select>
+        <a style="float:right" class="text-success" data-toggle="collapse" data-target="#demo"><i class="fas fa-plus"></i></a>
+    </div>
+    <div class="card-body collapse" id="demo">
+        <div class="table-responsive">
+            <div class="input-group row">
+                <div class="input-group mb-3 col-sm-3">
+                </div>
+                <form class="row" id="formSearch" >
+                    <div class="col-sm">
+                        <div class="input-group ">
+                            <input type="text" class="form-control"
+                                name="fromDate" id='fromDate' placeholder="Thời gian từ" onfocus="(this.type='date')"
+                                onblur="(this.type='text')">                
+                        </div> 
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group ">
+                         <input type="text" class="form-control"
+                                name="toDate" id='toDate' placeholder="Thời gian đến" onfocus="(this.type='date')"
+                                onblur="(this.type='text')">   
+                        </div> 
+                    </div>
+                    <div class=" col-sm-3">
+                        <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

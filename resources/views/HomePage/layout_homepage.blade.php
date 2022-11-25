@@ -124,7 +124,7 @@
                             </div>
                         </div> -->
                         @foreach ($category as $c)
-                        <a href="" class="nav-item nav-link">{{ $c->category_name }}</a>
+                        <a href="/search-cate/{{ $c->category_id }}" class="nav-item nav-link">{{ $c->category_name }}</a>
                         @endforeach
                     </div>
                 </nav>

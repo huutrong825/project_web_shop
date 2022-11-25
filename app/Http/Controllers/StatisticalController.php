@@ -205,6 +205,51 @@ class StatisticalController extends Controller
                 ->orderBy('order_date')->get();
         }
 
+        if ($req->fromDate != '' && $req->toDate != '') {
+            $sum_total = Order::where('state', 5)
+                ->whereBetween('order_date', [$req->fromDate, $req->toDate])
+                ->sum('total_price'); //doanh thu bán
+
+            $sum_order = Order::whereBetween('order_date', [$req->fromDate, $req->toDate])
+                ->count('order_id');
+
+            $cancel_order = Order::where('state', 6)
+                ->whereBetween('order_date', [$req->fromDate, $req->toDate])
+                ->count('order_id');
+
+            $complete_order = Order::where('state', 5)
+                ->whereBetween('order_date', [$req->fromDate, $req->toDate])
+                ->count('order_id');
+
+            $sum_sale = Order_Detail::rightJoin('order', 'order.order_id', '=', 'order_detail.order_id')    //số luongj bán
+                ->where('state', 5)->whereBetween('order_date', [$req->fromDate, $req->toDate])
+                ->sum('quanity_order');
+
+            $product_add = Product_Add::whereBetween('date_add', [$req->fromDate, $req->toDate])
+                ->sum('quanity_add');
+
+            $pro = Product_Add::whereBetween('date_add', [$req->fromDate, $req->toDate])
+                ->select('quanity_add', 'price', 'date_add')->get();
+            $fee_add =  0;
+            foreach ($pro as $p) {
+                $fee_add += $p->quanity_add * $p->price;
+            }
+
+            $prod = DB::table('product_add')
+                ->whereBetween('date_add', [$req->fromDate, $req->toDate])
+                ->selectRaw(
+                    'date(date_add) as date_add,
+                    sum(quanity_add) as quanity,
+                    sum(price) as sum_price'
+                )->groupBy('date_add')->orderBy('date_add')->get();
+
+            $order = Order::where('state', 5)
+                ->whereBetween('order_date', [$req->fromDate, $req->toDate])
+                ->selectRaw('date(order_date) as order_date,total_price')
+                ->orderBy('order_date')->get();
+            
+        }
+
         $array = [
             'store' => $store, 
             'sum_total' => $sum_total,
@@ -215,7 +260,8 @@ class StatisticalController extends Controller
             'product_add' => $product_add,
             'fee_add' => $fee_add
         ];
-        
+        $data[] = null;
+        $date[] = null;
         foreach ($order as $o) {
             $data[] =  $o->total_price;
             $date[] = $o->order_date;              
