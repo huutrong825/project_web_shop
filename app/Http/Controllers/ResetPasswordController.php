@@ -38,6 +38,7 @@ class ResetPasswordController extends Controller
     
             return response()->json(
                 [
+                    'url' => '/login',
                     'message' => 'We have e-mailed your password reset link!'
                 ]
             );
@@ -75,6 +76,7 @@ class ResetPasswordController extends Controller
 
             return response()->json(
                 [
+                    'url' => '/login',
                     'message' => 'Thay đổi mật khẩu thành công',
                 ]
             );

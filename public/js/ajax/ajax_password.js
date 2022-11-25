@@ -81,6 +81,8 @@ $(document).ready(function(){
             success: function(response){
                 $('.alert-success').css('display', 'block');
                 $('.alert-success').html(response.message);
+                window.location.replace(response.url);
+
                 // alertify.success(response.message);
             }
         });
@@ -126,9 +128,12 @@ $(document).ready(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response){
-                $("#login").css('display','block');
-                alertify.success(response.message);
-                $("#resetForm").hide();
+                // $("#login").css('display','block');
+                // alertify.success(response.message);
+                $('.alert-success').css('display', 'block');
+                $('.alert-success').html(response.message);
+                window.location.replace(response.url);
+                // $("#resetForm").hide();
             }
 
         });
