@@ -42,9 +42,9 @@
                         <a class="btn btn-success" type="reset" id='btReset' title="Reset"><i class="fas fa-sync"></i></a>
                     </div>
                 </form>
-                <div class=" col-sm-3">
+                <!-- <div class=" col-sm-3">
                     <a class="btn btn-success" type="reset" id='btPDF' title="PDF"><i class="fas fa-cloud-download-alt"></i>PDF</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
